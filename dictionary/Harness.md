@@ -1,17 +1,17 @@
 ---
-description: "Everything around the model that turns it into an agent: tools, system prompt, context-window management, permissions, hooks."
+description: "Tudo o que fica ao redor do modelo e o transforma em agente: ferramentas, prompt de sistema, janela de contexto, permissões e hooks."
 ---
 
-Everything around the [model](./Model.md) that turns it into an [agent](./Agent.md): [tools](./Tool.md), [system prompt](./System%20prompt.md), [context-window management](./Context%20window.md), permissions, hooks. **Claude.ai** and **Claude Code** run on the same model but behave differently because their harnesses differ.
+Harness é tudo o que fica ao redor do [modelo](./Modelo.md) e o transforma em [agente](./Agente.md): [ferramentas](./Ferramenta.md), [prompt de sistema](./Prompt%20de%20sistema.md), [gerenciamento da janela de contexto](./Janela%20de%20contexto.md), permissões, hooks. O **Claude.ai** e o **Claude Code** rodam no mesmo modelo, mas se comportam de forma diferente porque seus harnesses são diferentes.
 
-The model itself only does one thing: take text in, produce text out. It can't read a file, run a command, or remember the last [turn](./Turn.md). The harness supplies all of that. It assembles the [context](./Context.md) for each [model provider request](./Model%20provider%20request.md), executes the [tool calls](./Tool%20call.md) the model asks for, feeds the [tool results](./Tool%20result.md) back in, stores the [session](./Session.md) history, asks you for permission before risky actions, and decides when to [compact](./Compaction.md). The agent loop — model proposes, harness executes, repeat — is run by the harness.
+O modelo, sozinho, faz uma única coisa: recebe texto e devolve texto. Ele não consegue ler um arquivo, executar um comando nem lembrar do último [turno](./Turno.md). O harness fornece tudo isso. Ele monta o [contexto](./Contexto.md) de cada [requisição ao provedor de modelo](./Requisi%C3%A7%C3%A3o%20ao%20provedor%20de%20modelo.md), executa as [chamadas de ferramenta](./Chamada%20de%20ferramenta.md) que o modelo pede, devolve os [resultados de ferramenta](./Resultado%20de%20ferramenta.md), guarda o histórico da [sessão](./Sess%C3%A3o.md), pede sua permissão antes de ações arriscadas e decide quando [compactar](./Compacta%C3%A7%C3%A3o.md). O loop do agente — o modelo propõe, o harness executa, repete — é conduzido pelo harness.
 
-This matters for diagnosis. When behaviour differs between two products, or between yesterday and today, the model is often not the variable — the harness is. A different system prompt, a different set of tools, a changed permission default, or a new context-management strategy all change behaviour without any change to the model. It also means the harness is where most of your configuration lives: [AGENTS.md](./AGENTS.md.md) files, permission settings, and hooks are all instructions to the harness, not the model.
+Isso importa no diagnóstico. Quando o comportamento muda entre dois produtos, ou entre ontem e hoje, muitas vezes o modelo não é a variável — o harness é. Um prompt de sistema diferente, um conjunto diferente de ferramentas, um padrão de permissões alterado ou uma nova estratégia de gerenciamento de contexto mudam o comportamento sem nenhuma mudança no modelo. Isso também significa que o harness é onde mora a maior parte da sua configuração: arquivos [AGENTS.md](./AGENTS.md.md), configurações de permissão e hooks são todos instruções para o harness, não para o modelo.
 
-Examples: Claude Code, Cursor, Codex CLI — and Claude.ai, which is a chat harness rather than a coding one.
+Exemplos: Claude Code, Cursor, Codex CLI — e o Claude.ai, que é um harness de chat, não de programação.
 
-_Usage:_
+_Uso:_
 
-"Same model, why is Claude Code editing files and Claude.ai just answering questions?"
+"Mesmo modelo, por que o Claude Code edita arquivos e o Claude.ai só responde perguntas?"
 
-"Different harnesses — Claude Code has [filesystem](./Filesystem.md) tools, a different system prompt, and a permission layer. The model isn't the variable here."
+"Harnesses diferentes — o Claude Code tem ferramentas de [sistema de arquivos](./Sistema%20de%20arquivos.md), um prompt de sistema diferente e uma camada de permissões. O modelo não é a variável aqui."

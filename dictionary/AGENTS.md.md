@@ -1,19 +1,19 @@
 ---
-description: A file in the environment that the harness loads into the context window at session start — the project's standing brief to the agent.
+description: Arquivo no ambiente que o harness carrega na janela de contexto no início da sessão — o briefing permanente do projeto para o agente.
 ---
 
-A file in the [environment](./Environment.md) that the [harness](./Harness.md) loads into the [context window](./Context%20window.md) at [session](./Session.md) start — the project's standing brief to the [agent](./Agent.md). Cross-harness convention; some harnesses also have their own variant (Claude Code's is CLAUDE.md).
+Um arquivo no [ambiente](./Ambiente.md) que o [harness](./Harness.md) carrega na [janela de contexto](./Janela%20de%20contexto.md) no início da [sessão](./Sess%C3%A3o.md) — o briefing permanente do projeto para o [agente](./Agente.md). É uma convenção comum a vários harnesses; alguns também têm uma variante própria (a do Claude Code é o CLAUDE.md).
 
-Because it loads automatically, it's one way to avoid repeating yourself across sessions. The [model](./Model.md) is [stateless](./Stateless.md) — a correction you give in one session is gone in the next, and you end up telling every fresh session that the project uses pnpm, that tests run with a particular flag, that a directory is generated and shouldn't be touched. When you've corrected the agent for the same thing twice, that correction is a candidate line for AGENTS.md.
+Por ser carregado automaticamente, ele evita que você se repita a cada sessão. O [modelo](./Modelo.md) é [stateless](./Stateless.md) (sem estado) — uma correção que você dá numa sessão some na seguinte, e você acaba avisando cada sessão nova de que o projeto usa pnpm, de que os testes rodam com determinada flag, de que um diretório é gerado e não deve ser mexido. Se você já corrigiu o agente duas vezes pela mesma coisa, essa correção é candidata a virar uma linha do AGENTS.md.
 
-Suitable content is whatever the agent can't derive from the code: build and test commands, conventions the codebase doesn't make obvious, hard constraints ("never edit the generated client"). Short and declarative — it's a brief, not documentation.
+O conteúdo adequado é o que o agente não consegue deduzir do código: comandos de build e de teste, convenções que a base de código não deixa óbvias, restrições rígidas ("nunca edite o client gerado"). Curto e declarativo — é um briefing, não documentação.
 
-The trade-off is that everything in it is always loaded. Instructions accumulate, most of them irrelevant to any given task, and a long AGENTS.md both costs tokens and dilutes itself — the more instructions in context, the less reliably the model follows any one of them.
+O custo é que tudo o que está nele fica sempre carregado. As instruções se acumulam, a maioria irrelevante para qualquer tarefa específica, e um AGENTS.md longo gasta tokens e se dilui: quanto mais instruções no contexto, menos confiável é a obediência do modelo a cada uma delas.
 
-_Avoid:_ using AGENTS.md for content that should be [progressively disclosed](./Progressive%20disclosure.md) — anything in it pays a [token](./Token.md) cost every [turn](./Turn.md), in every session, whether or not that session needs it. A style guide can go behind a [skill](./Skill.md) or a [context pointer](./Context%20pointer.md) instead; keep AGENTS.md for the lines that apply everywhere.
+_Evite:_ usar o AGENTS.md para conteúdo que deveria ser [divulgado progressivamente](./Divulga%C3%A7%C3%A3o%20progressiva.md) — tudo o que está nele gera um custo em [tokens](./Token.md) a cada [turno](./Turno.md), em toda sessão, quer aquela sessão precise do conteúdo ou não. Um guia de estilo pode ficar atrás de uma [skill](./Skill.md) ou de um [ponteiro de contexto](./Ponteiro%20de%20contexto.md); reserve o AGENTS.md para as linhas que valem em qualquer lugar.
 
-_Usage:_
+_Uso:_
 
-"Why is every session starting with 4k tokens already burned?"
+"Por que toda sessão já começa com 4 mil tokens queimados?"
 
-"Check AGENTS.md — someone pasted the entire style guide in there instead of putting it behind a skill."
+"Olha o AGENTS.md — alguém colou o guia de estilo inteiro ali em vez de deixar atrás de uma skill."

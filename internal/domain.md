@@ -1,17 +1,17 @@
-# Domain Docs
+# Documentação de domínio
 
-How the engineering skills should consume this repo's domain documentation when exploring the codebase.
+Como as skills de engenharia devem consumir a documentação de domínio deste repositório ao explorar a base de código.
 
-## Before exploring, read these
+## Antes de explorar, leia
 
-- **`internal/CONTEXT.md`** at the repo root.
-- **`internal/adr/`** — read ADRs that touch the area you're about to work in.
+- **`internal/CONTEXT.md`**, na raiz do repositório.
+- **`internal/adr/`** — leia os ADRs que tocam a área em que você vai trabalhar.
 
-If any of these files don't exist, **proceed silently**. Don't flag their absence; don't suggest creating them upfront. The producer skill (`/grill-with-docs`) creates them lazily when terms or decisions actually get resolved.
+Se algum desses arquivos não existir, **prossiga em silêncio**. Não sinalize a ausência e não sugira criá-los de antemão. A skill produtora (`/grill-with-docs`) os cria sob demanda, quando termos ou decisões são de fato resolvidos.
 
-## File structure
+## Estrutura de arquivos
 
-Single-context repo:
+Repositório de contexto único:
 
 ```
 /
@@ -24,14 +24,14 @@ Single-context repo:
 └── Curriculum.md
 ```
 
-## Use the glossary's vocabulary
+## Use o vocabulário do glossário
 
-When your output names a domain concept (in an issue title, a refactor proposal, a hypothesis, a test name), use the term as defined in `internal/CONTEXT.md`. Don't drift to synonyms the glossary explicitly avoids.
+Quando sua saída nomear um conceito de domínio (no título de uma issue, numa proposta de refatoração, numa hipótese, no nome de um teste), use o termo como definido em `internal/CONTEXT.md`. Não derive para sinônimos que o glossário evita explicitamente.
 
-If the concept you need isn't in the glossary yet, that's a signal — either you're inventing language the project doesn't use (reconsider) or there's a real gap (note it for `/grill-with-docs`).
+Se o conceito de que você precisa ainda não está no glossário, isso é um sinal: ou você está inventando uma linguagem que o projeto não usa (reconsidere) ou existe uma lacuna real (anote para `/grill-with-docs`).
 
-## Flag ADR conflicts
+## Sinalize conflitos com ADRs
 
-If your output contradicts an existing ADR, surface it explicitly rather than silently overriding:
+Se sua saída contradiz um ADR existente, aponte isso explicitamente em vez de sobrescrevê-lo em silêncio:
 
-> _Contradicts ADR-0007 (event-sourced orders) — but worth reopening because…_
+> _Contradiz o ADR-0007 (pedidos com event sourcing) — mas vale reabrir porque…_

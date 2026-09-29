@@ -1,23 +1,23 @@
 ---
-description: A teachable capability bundled as a unit — kept out of the context window until a context pointer pulls it in for the task at hand.
+description: Capacidade ensinável empacotada como unidade — fica fora da janela de contexto até um ponteiro de contexto trazê-la para a tarefa.
 ---
 
-A teachable capability bundled as a unit — instructions and resources for doing one task well, kept in the [environment](./Environment.md) until a [context pointer](./Context%20pointer.md) pulls it into the [context window](./Context%20window.md) for the task at hand. The unit of [progressive disclosure](./Progressive%20disclosure.md) in a [harness](./Harness.md).
+Uma skill (em português, "habilidade") é uma capacidade ensinável empacotada como unidade — instruções e recursos para fazer bem uma tarefa, mantida no [ambiente](./Ambiente.md) até que um [ponteiro de contexto](./Ponteiro%20de%20contexto.md) a leve para a [janela de contexto](./Janela%20de%20contexto.md), para a tarefa em questão. É a unidade da [divulgação progressiva](./Divulga%C3%A7%C3%A3o%20progressiva.md) em um [harness](./Harness.md).
 
-Skills are an open standard, defined at [agentskills.io](https://agentskills.io) — originally developed by Anthropic and since adopted by most major harnesses, so a skill written once works across them. The format is a folder containing:
+As skills são um padrão aberto, definido em [agentskills.io](https://agentskills.io) — desenvolvido originalmente pela Anthropic e depois adotado pela maioria dos principais harnesses, de modo que uma skill escrita uma vez funciona em todos eles. O formato é uma pasta que contém:
 
-- A `SKILL.md` file — metadata (a name and description, at minimum) plus the instructions themselves
-- Optionally, scripts the [agent](./Agent.md) can run
-- Optionally, templates and reference material the instructions point to
+- Um arquivo `SKILL.md` — metadados (no mínimo um nome e uma descrição) mais as instruções em si
+- Opcionalmente, scripts que o [agente](./Agente.md) pode executar
+- Opcionalmente, templates e material de referência para os quais as instruções apontam
 
-Only the name and description sit in [context](./Context.md) by default. When the agent's task matches, it loads the rest. Until then, the skill takes up almost no room — a sentence or two of [tokens](./Token.md), however large its full instructions are.
+Apenas o nome e a descrição ficam no [contexto](./Contexto.md) por padrão. Quando a tarefa do agente combina com a skill, ele carrega o resto. Até lá, a skill ocupa quase nenhum espaço — uma ou duas frases de [tokens](./Token.md), por maiores que sejam as instruções completas.
 
-This distinguishes skills from [AGENTS.md](./AGENTS.md.md), which is loaded into every [session](./Session.md) regardless of the task. A skill is read when a particular kind of work comes up — releasing, scaffolding a new service, writing a migration — and ignored the rest of the time.
+Isso diferencia as skills do [AGENTS.md](./AGENTS.md.md), que é carregado em toda [sessão](./Sess%C3%A3o.md), seja qual for a tarefa. Uma skill é lida quando surge um tipo específico de trabalho — fazer um release, criar a estrutura de um novo serviço, escrever uma migração — e ignorada no resto do tempo.
 
-_Avoid:_ "[tool](./Tool.md)" — a tool is what the agent _calls_; a skill is instructions it _reads_.
+_Evite:_ "[ferramenta](./Ferramenta.md)" — uma ferramenta é o que o agente _chama_; uma skill são instruções que ele _lê_.
 
-_Usage:_
+_Uso:_
 
-"Where should I put the deploy runbook?"
+"Onde eu coloco o runbook de deploy?"
 
-"As a skill — the agent loads it only when the task involves deploys. In AGENTS.md it'd burn tokens on every [turn](./Turn.md) for something we use weekly."
+"Como skill — o agente só carrega quando a tarefa envolve deploy. No AGENTS.md ele gastaria tokens em todo [turno](./Turno.md) por algo que a gente usa uma vez por semana."

@@ -1,15 +1,15 @@
 ---
-description: Carries no information forward. The model is stateless across requests; an agent is stateless across sessions by default.
+description: Não carrega informação adiante. O modelo é stateless entre requisições; um agente é stateless entre sessões por padrão.
 ---
 
-Carries no information forward. The [model](./Model.md) is stateless across [model provider requests](./Model%20provider%20request.md) — each request resends the full [context window](./Context%20window.md), because the model has no way to see anything else. An [agent](./Agent.md) is stateless across [sessions](./Session.md) by default: a new session starts empty, with no trace of prior ones. Counterpart to [stateful](./Stateful.md).
+Stateless (sem estado): não carrega informação adiante. O [modelo](./Modelo.md) é stateless entre [requisições ao provedor de modelo](./Requisi%C3%A7%C3%A3o%20ao%20provedor%20de%20modelo.md) — cada requisição reenvia toda a [janela de contexto](./Janela%20de%20contexto.md), porque o modelo não tem como ver mais nada. Um [agente](./Agente.md) é stateless entre [sessões](./Sess%C3%A3o.md) por padrão: uma sessão nova começa vazia, sem vestígio das anteriores. Contraparte de [stateful](./Stateful.md).
 
-The model itself is permanently stateless: its [parameters](./Parameters.md) are frozen after [training](./Training.md), and nothing you do at [inference](./Inference.md) changes them. The model doesn't learn from your corrections, doesn't remember being told the same thing yesterday, and isn't getting to know you — however much the conversation feels otherwise. The feeling of continuity within a session is manufactured by the [harness](./Harness.md), which keeps the transcript and re-sends it with every request. The model isn't remembering the conversation; it's re-reading it.
+O próprio modelo é permanentemente stateless: seus [parâmetros](./Par%C3%A2metros.md) ficam congelados depois do [treinamento](./Treinamento.md), e nada que você faça durante a [inferência](./Infer%C3%AAncia.md) os altera. O modelo não aprende com suas correções, não se lembra de ter ouvido a mesma coisa ontem e não passa a conhecer você aos poucos, por mais que a conversa dê essa impressão. A sensação de continuidade dentro de uma sessão é produzida pelo [harness](./Harness.md), que guarda a transcrição e a reenvia a cada requisição. O modelo não se lembra da conversa; ele a relê.
 
-The practical consequence: if you want something remembered across sessions, you have to write it down somewhere the agent will read it back. That's what [AGENTS.md](./AGENTS.md.md) files, [memory systems](./Memory%20system.md), and [handoff artifacts](./Handoff%20artifact.md) are — files that get loaded into the [context](./Context.md) of future sessions, standing in for the memory the model doesn't have. When the agent keeps making a mistake you've corrected before, the question isn't why it didn't learn — it can't — but where that correction should be written down so every future session reads it.
+Na prática: se você quer que algo seja lembrado entre sessões, precisa escrever isso em algum lugar que o agente vá ler de volta. É isso que são os [arquivos AGENTS.md](./AGENTS.md.md), os [sistemas de memória](./Sistema%20de%20mem%C3%B3ria.md) e os [artefatos de handoff](./Artefato%20de%20handoff.md) — arquivos que são carregados no [contexto](./Contexto.md) das sessões futuras, no lugar da memória que o modelo não tem. Quando o agente insiste num erro que você já corrigiu, a pergunta não é por que ele não aprendeu — ele não pode — e sim onde essa correção deve ser escrita para que toda sessão futura a leia.
 
-_Usage:_
+_Uso:_
 
-"Why does it forget the convention every time I [clear](./Clearing.md)?"
+"Por que ele esquece a convenção toda vez que eu [limpo o contexto](./Limpeza%20de%20contexto.md)?"
 
-"The model's stateless — the new session starts empty. If you want it carried, write it to AGENTS.md or a memory file the harness loads at session start."
+"O modelo é stateless — a sessão nova começa vazia. Se você quer que isso passe de uma sessão pra outra, escreve no AGENTS.md ou num arquivo de memória que o harness carrega no início da sessão."

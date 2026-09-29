@@ -1,15 +1,15 @@
-# Triage Labels
+# Labels de triagem
 
-The skills speak in terms of five canonical triage roles. This file maps those roles to the actual label strings used in this repo's issue tracker.
+As skills falam em termos de cinco papéis canônicos de triagem. Este arquivo mapeia esses papéis para as strings de label realmente usadas no issue tracker deste repositório.
 
-| Label in mattpocock/skills | Label in our tracker | Meaning                                  |
-| -------------------------- | -------------------- | ---------------------------------------- |
-| `needs-triage`             | `needs-triage`       | Maintainer needs to evaluate this issue  |
-| `needs-info`               | `needs-info`         | Waiting on reporter for more information |
-| `ready-for-agent`          | `ready-for-agent`    | Fully specified, ready for an AFK agent  |
-| `ready-for-human`          | `ready-for-human`    | Requires human implementation            |
-| `wontfix`                  | `wontfix`            | Will not be actioned                     |
+| Label em mattpocock/skills | Label no nosso tracker | Significado                                        |
+| -------------------------- | ---------------------- | -------------------------------------------------- |
+| `needs-triage`             | `needs-triage`         | O mantenedor precisa avaliar esta issue            |
+| `needs-info`               | `needs-info`           | Aguardando mais informações de quem reportou       |
+| `ready-for-agent`          | `ready-for-agent`      | Totalmente especificada, pronta para um agente AFK |
+| `ready-for-human`          | `ready-for-human`      | Exige implementação humana                         |
+| `wontfix`                  | `wontfix`              | Não será tratada                                   |
 
-When a skill mentions a role (e.g. "apply the AFK-ready triage label"), use the corresponding label string from this table.
+Quando uma skill mencionar um papel (por exemplo, "aplique a label de triagem pronta-para-AFK"), use a string de label correspondente desta tabela.
 
-Edit the right-hand column to match whatever vocabulary you actually use.
+Edite a coluna da direita para refletir o vocabulário que você realmente usa.

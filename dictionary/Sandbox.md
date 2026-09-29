@@ -1,26 +1,28 @@
 ---
-description: An isolated environment the agent runs inside — container, VM, or restricted shell. Limits the blast radius of agent actions.
+description: Ambiente isolado em que o agente roda — contêiner, VM ou shell restrito. Limita o raio de impacto das ações do agente.
 aliases:
   - Sandboxing
   - Sandbox / Sandboxing
+  - Isolamento em sandbox
+  - Uso de sandbox
 ---
 
-An isolated [environment](./Environment.md) the [agent](./Agent.md) runs inside — a container, VM, ephemeral [filesystem](./Filesystem.md), or restricted-permission shell. Limits the blast radius of agent actions: even if the agent runs destructive commands or fetches something malicious, the damage is contained. The safety substrate that makes [AFK](./AFK.md) practical.
+Um sandbox (ambiente isolado) é um [ambiente](./Ambiente.md) fechado em que o [agente](./Agente.md) roda — um contêiner, uma VM, um [sistema de arquivos](./Sistema%20de%20arquivos.md) efêmero ou um shell com permissões restritas. Ele limita o raio de impacto das ações do agente: mesmo que o agente rode comandos destrutivos ou baixe algo malicioso, o dano fica contido. É a base de segurança que torna viável o trabalho [AFK](./AFK.md) (longe do teclado).
 
-The sandbox and the [permission mode](./Permission%20mode.md) solve the same problem from opposite ends. Permissions ask before an action runs; a sandbox limits what the action can reach if it does run. Permissions need you running [in the loop](./Human-in-the-loop.md) — every prompt is an interruption — and a session that asks constantly is barely autonomous. A sandbox spends infrastructure instead of attention: the stronger the isolation, the fewer questions need asking.
+O sandbox e o [modo de permissão](./Modo%20de%20permiss%C3%A3o.md) resolvem o mesmo problema por lados opostos. As permissões perguntam antes de uma ação rodar; o sandbox limita até onde a ação chega se ela rodar. As permissões exigem que você esteja [no loop](./Humano%20no%20loop.md) — cada pedido é uma interrupção — e uma sessão que pergunta o tempo todo quase não é autônoma. O sandbox gasta infraestrutura em vez de atenção: quanto mais forte o isolamento, menos perguntas precisam ser feitas.
 
-Isolation comes in grades:
+O isolamento vem em níveis:
 
-| Grade            | What it is                                                 | What it contains                           |
-| ---------------- | ---------------------------------------------------------- | ------------------------------------------ |
-| Restricted shell | OS-level confinement around each command                   | Writes outside the project, network access |
-| Container        | Fresh filesystem, no credentials mounted, discarded after  | Anything the agent does to its own machine |
-| VM / cloud       | A separate machine entirely, often provided by the harness | Everything, including kernel-level escapes |
+| Nível          | O que é                                                               | O que contém                                    |
+| -------------- | --------------------------------------------------------------------- | ----------------------------------------------- |
+| Shell restrito | Confinamento no nível do SO em torno de cada comando                  | Gravações fora do projeto, acesso à rede        |
+| Contêiner      | Sistema de arquivos novo, sem credenciais montadas, descartado depois | Tudo o que o agente fizer com a própria máquina |
+| VM / nuvem     | Uma máquina separada, muitas vezes fornecida pelo harness             | Tudo, inclusive fugas no nível do kernel        |
 
-What no sandbox contains: actions that leave it legitimately. An agent with your git credentials can push; one with network access can call production APIs. Decide what crosses the boundary before deciding how thick to make it.
+O que nenhum sandbox contém: ações que saem dele de forma legítima. Um agente com suas credenciais do git consegue fazer push; um com acesso à rede consegue chamar APIs de produção. Decida o que atravessa a fronteira antes de decidir quão grossa ela deve ser.
 
-_Usage:_
+_Uso:_
 
-"I want to let it run [bypass-permissions](./Agent%20mode.md) overnight but I'm not ready for that."
+"Quero deixar rodando a noite toda em [bypass-permissions](./Modo%20de%20agente.md), mas não me sinto pronto pra isso."
 
-"Put it in a sandbox — fresh container, no credentials mounted, no network out. Worst case it nukes its own filesystem and you discard the container."
+"Bota ele num sandbox — contêiner novo, sem credenciais montadas, sem rede de saída. No pior caso ele destrói o próprio sistema de arquivos e você descarta o contêiner."

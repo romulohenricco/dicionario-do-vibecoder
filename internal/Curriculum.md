@@ -1,91 +1,91 @@
-## Section 1 — The Model
+## Seção 1 — O Modelo
 
-- AI
-- Model
-- Parameters
-- Training
-- Inference
-- Effort
+- IA
+- Modelo
+- Parâmetros
+- Treinamento
+- Inferência
+- Esforço de raciocínio
 - Token
-- Next-token prediction
-- Non-determinism
-- Model provider
+- Previsão do próximo token
+- Não determinismo
+- Provedor de modelo
 - Harness
-- Model provider request
-- Input tokens
-- Output tokens
-- Prefix cache
-- Cache tokens
+- Requisição ao provedor de modelo
+- Tokens de entrada
+- Tokens de saída
+- Cache de prefixo
+- Tokens de cache
 
-## Section 2 — Sessions, Context Windows & Turns
+## Seção 2 — Sessões, Janelas de Contexto e Turnos
 
 - Stateless
-- Context
-- Context window
+- Contexto
+- Janela de contexto
 - Stateful
-- Agent
-- System prompt
-- Session
-- Turn
+- Agente
+- Prompt de sistema
+- Sessão
+- Turno
 
-## Section 3 — Tools & Environment
+## Seção 3 — Ferramentas e Ambiente
 
-- Environment
-- Filesystem
-- Tool
-- Tool call
-- Tool result
+- Ambiente
+- Sistema de arquivos
+- Ferramenta
+- Chamada de ferramenta
+- Resultado de ferramenta
 - MCP
-- Permission request
-- Permission mode
-- Agent mode
+- Pedido de permissão
+- Modo de permissão
+- Modo de agente
 - Sandbox
 
-## Section 4 — Failure Modes
+## Seção 4 — Modos de Falha
 
-- Sycophancy
-- Hallucination
-- Parametric knowledge
-- Knowledge cutoff
-- Contextual knowledge
-- Attention relationship
-- Attention budget
-- Attention degradation
-- Smart zone
+- Bajulação
+- Alucinação
+- Conhecimento paramétrico
+- Data de corte do conhecimento
+- Conhecimento contextual
+- Relação de atenção
+- Orçamento de atenção
+- Degradação de atenção
+- Zona inteligente
 
-## Section 5 — Handoffs
+## Seção 5 — Handoffs
 
-- Clearing
+- Limpeza de contexto
 - Handoff
-- Primary source
-- Secondary source
-- Handoff artifact
-- Spec
+- Fonte primária
+- Fonte secundária
+- Artefato de handoff
+- Especificação
 - Ticket
-- Compaction
-- Autocompact
+- Compactação
+- Autocompactação
 
-## Section 6 — Memory and Steering
+## Seção 6 — Memória e Direcionamento
 
-- Memory system
+- Sistema de memória
 - AGENTS.md
-- Progressive disclosure
-- Context pointer
+- Divulgação progressiva
+- Ponteiro de contexto
 - Skill
-- Subagent
+- Subagente
 
-## Section 7 — Patterns of Work
+## Seção 7 — Padrões de Trabalho
 
-- Human-in-the-loop
+- Humano no loop
 - AFK
-- Automated check
-- Automated review
-- Human review
+- Verificação automatizada
+- Revisão automatizada
+- Revisão humana
 - Vibe coding
-- Design concept
-- Grilling
-- Prototyping
+- Conceito de design
+- Sabatina
+- Prototipagem
 - DX
 - AX
-- Software factory
-- Dark factory
+- Fábrica de software
+- Fábrica escura

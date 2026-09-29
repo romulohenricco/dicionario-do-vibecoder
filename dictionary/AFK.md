@@ -1,22 +1,23 @@
 ---
-description: A working pattern where the user kicks off a session and leaves the agent to run unattended (away from keyboard).
+description: Padrão de trabalho em que o usuário inicia uma sessão e deixa o agente rodando sem supervisão (longe do teclado).
 aliases:
+  - longe do teclado
+  - AFK (longe do teclado)
   - away from keyboard
-  - AFK (away from keyboard)
 ---
 
-Away from keyboard. A working pattern where the user kicks off a [session](./Session.md) and leaves the [agent](./Agent.md) to run unattended. The throughput multiplier of [AI](./AI.md) coding — many AFK sessions can run in parallel while you sleep, eat, or work on something else. Usually requires a permissive [permission mode](./Permission%20mode.md) plus [sandboxing](./Sandbox.md) to be safe.
+AFK (do inglês away from keyboard, longe do teclado). Um padrão de trabalho em que o usuário inicia uma [sessão](./Sess%C3%A3o.md) e deixa o [agente](./Agente.md) rodando sem supervisão. É o multiplicador de throughput da programação com [IA](./IA.md) — várias sessões AFK podem rodar em paralelo enquanto você dorme, come ou trabalha em outra coisa. Em geral exige um [modo de permissão](./Modo%20de%20permiss%C3%A3o.md) permissivo, combinado com o uso de [sandbox](./Sandbox.md), para ser seguro.
 
-When you're not there, the agent handles ambiguity differently. While you're watching, an ambiguous decision surfaces as a question and you answer it; once you've walked away, the agent picks a default and keeps going, and every later decision builds on that guess. The characteristic failure is coming back to hours of finished, confident work built on a wrong call made in the first ten minutes. The work isn't sloppy — it's coherent, just coherent about the wrong thing.
+Quando você não está presente, o agente lida com a ambiguidade de outro jeito. Enquanto você está olhando, uma decisão ambígua aparece como pergunta e você responde; depois que você saiu, o agente escolhe uma opção padrão e segue em frente, e cada decisão seguinte se apoia nesse palpite. A falha característica é voltar e encontrar horas de trabalho pronto e confiante, construído sobre uma escolha errada feita nos primeiros dez minutos. O trabalho não é descuidado — é coerente, só que coerente em torno da coisa errada.
 
-Since you can't give input during the run, give it before and after instead. Before: resolve the ambiguity up front — a [grilling](./Grilling.md) session, a written [spec](./Spec.md) — so there are fewer gaps for the agent to fill alone. During: [automated checks](./Automated%20check.md) and [automated review](./Automated%20review.md) stand in for the attention you're not giving, failing fast on what can be caught mechanically. After: the run ends in something reviewable — a PR, not changes already merged. AFK doesn't remove [human review](./Human%20review.md); it defers all of it to the end, which is why what arrives at the end has to be worth reviewing. This is also why [AX](./AX.md) matters most in AFK runs — with no one watching, the environment is the only support the agent gets.
+Como você não pode responder durante a execução, dê as respostas antes e depois. Antes: resolva a ambiguidade de antemão — uma [sabatina](./Sabatina.md), uma [especificação](./Especifica%C3%A7%C3%A3o.md) escrita — para que o agente tenha menos lacunas a preencher sozinho. Durante: [verificações automatizadas](./Verifica%C3%A7%C3%A3o%20automatizada.md) e [revisão automatizada](./Revis%C3%A3o%20automatizada.md) fazem o papel da atenção que você não está dando, falhando cedo em tudo o que pode ser pego mecanicamente. Depois: a execução termina em algo revisável — um PR, não mudanças já mescladas. AFK não elimina a [revisão humana](./Revis%C3%A3o%20humana.md); ele adia toda ela para o fim, e é por isso que o que chega no fim precisa valer a pena ser revisado. É também por isso que a [AX](./AX.md) pesa mais nas execuções AFK — sem ninguém olhando, o ambiente é o único apoio que o agente recebe.
 
-_Avoid:_ "background agent" — centers the machine ("running in the background") rather than the human pattern ("user has walked away"). AFK names the fact that matters: the user isn't watching.
+_Evite:_ "agente em segundo plano" — centra na máquina ("rodando em segundo plano") em vez de no padrão humano ("o usuário se afastou"). AFK nomeia o fato que importa: o usuário não está acompanhando.
 
-_Usage:_
+_Uso:_
 
-"I'm running this AFK — three sandboxed agents on the refactor, reviewing the PRs in the morning."
+"Estou rodando isso AFK — três agentes em sandbox na refatoração, e eu reviso os PRs de manhã."
 
-"[Bypass permissions](./Agent%20mode.md)?"
+"[Bypass permissions](./Modo%20de%20agente.md)?"
 
-"Yeah, read-only [filesystem](./Filesystem.md), no network."
+"Isso, com [sistema de arquivos](./Sistema%20de%20arquivos.md) somente leitura e sem rede."

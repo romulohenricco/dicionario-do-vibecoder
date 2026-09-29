@@ -1,25 +1,26 @@
 ---
-description: "Agent experience: how well the environment is set up for an agent to do good work — checks, architecture, and free context."
+description: "Experiência do agente: quão bem o ambiente está preparado para um agente trabalhar bem — verificações, arquitetura e contexto livre."
 aliases:
+  - Experiência do agente
   - Agent experience
 ---
 
-Agent experience — how well the [environment](./Environment.md) is set up for an [agent](./Agent.md) to do good work in a codebase. The agent-facing counterpart to [DX](./DX.md). When the same agent performs well in one repo and badly in another — same [model](./Model.md), same [harness](./Harness.md) — the difference is usually AX. The instinct is to blame the model or rewrite the prompt; the fix is more often in the repo.
+AX (do inglês agent experience, experiência do agente) — quão bem o [ambiente](./Ambiente.md) está preparado para um [agente](./Agente.md) trabalhar bem numa base de código. A contraparte da [DX](./DX.md) (experiência do desenvolvedor) voltada ao agente. Quando o mesmo agente se sai bem em um repositório e mal em outro — mesmo [modelo](./Modelo.md), mesmo [harness](./Harness.md) — a diferença costuma ser a AX. O instinto é culpar o modelo ou reescrever o prompt; a correção costuma estar no repositório.
 
-Good AX has three main dimensions:
+Uma boa AX tem três dimensões principais:
 
-| Dimension        | What good AX looks like                                                                                                                                                                                                                              |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Automated checks | Fast, deterministic [automated checks](./Automated%20check.md) — types, tests, lints — that the agent can self-correct from without a human                                                                                                          |
-| Architecture     | A codebase the agent can navigate without reading everything: predictable structure, a lot of behaviour behind small interfaces, names that say what things do                                                                                       |
-| Free context     | [AGENTS.md](./AGENTS.md.md), [skills](./Skill.md), and [tools](./Tool.md) kept lean, so most of the [context window](./Context%20window.md) is available for the task and the agent stays in the [smart zone](./Smart%20zone.md) instead of drowning |
+| Dimensão                   | Como é uma boa AX                                                                                                                                                                                                                                                                              |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Verificações automatizadas | [Verificações automatizadas](./Verifica%C3%A7%C3%A3o%20automatizada.md) rápidas e determinísticas — tipos, testes, lints — a partir das quais o agente se autocorrige sem um humano                                                                                                            |
+| Arquitetura                | Uma base de código que o agente consegue navegar sem ler tudo: estrutura previsível, muito comportamento atrás de interfaces pequenas, nomes que dizem o que as coisas fazem                                                                                                                   |
+| Contexto livre             | [AGENTS.md](./AGENTS.md.md), [skills](./Skill.md) e [ferramentas](./Ferramenta.md) enxutos, para que a maior parte da [janela de contexto](./Janela%20de%20contexto.md) fique disponível para a tarefa e o agente permaneça na [zona inteligente](./Zona%20inteligente.md) em vez de se afogar |
 
-AX and DX overlap — good checks and clean architecture help both audiences — but they diverge. Humans tolerate tribal knowledge, slow CI, and "ask Sarah about the billing module"; agents can't. Agents don't benefit from IDE tooltips or pretty dashboards; they need failures as text in a [tool result](./Tool%20result.md). A codebase can have good DX and poor AX.
+AX e DX se sobrepõem — boas verificações e uma arquitetura limpa ajudam os dois públicos — mas também divergem. Humanos toleram conhecimento tribal, CI lento e "pergunte à Sarah sobre o módulo de cobrança"; agentes não conseguem. Agentes não se beneficiam de dicas flutuantes da IDE nem de painéis bonitos; precisam das falhas como texto em um [resultado de ferramenta](./Resultado%20de%20ferramenta.md). Uma base de código pode ter boa DX e AX ruim.
 
-_Avoid:_ treating AX as a synonym for DX — the audiences need different investments.
+_Evite:_ tratar AX como sinônimo de DX — os dois públicos exigem investimentos diferentes.
 
-_Usage:_
+_Uso:_
 
-"The agent writes great code in the API repo and garbage in the frontend."
+"O agente escreve código ótimo no repo da API e lixo no frontend."
 
-"The API repo has strict types and a fast test suite; the frontend has neither and forty always-loaded skills. That's an AX gap, not a model problem."
+"O repo da API tem tipos estritos e um conjunto de testes rápido; o frontend não tem nenhum dos dois e mantém quarenta skills sempre carregadas. Isso é uma lacuna de AX, não um problema do modelo."

@@ -1,32 +1,22 @@
-<p>
-  <a href="https://www.aihero.dev/ai-coding-dictionary">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://res.cloudinary.com/total-typescript/image/upload/v1777878285/dictionary-dark_2x.png">
-      <source media="(prefers-color-scheme: light)" srcset="https://res.cloudinary.com/total-typescript/image/upload/v1777878285/dictionary-light_2x.png">
-      <img alt="AI Coding Dictionary" src="https://res.cloudinary.com/total-typescript/image/upload/v1777878285/dictionary-light_2x.png" width="369">
-    </picture>
-  </a>
-</p>
+# Dicionário do Vibecoder
 
-# AI Coding Dictionary
+**Programar com IA pode parecer coisa só para especialistas**. Jargão sem explicação. Falhas misteriosas. Contas que não parecem bater com o trabalho feito.
 
-**AI coding can feel like it's just for experts**. Unexplained jargon. Mysterious failures. Bills that don't seem to match the work.
+Não é, na verdade. Boa parte da confusão é fabricada: **existe toda uma economia financiada por capital de risco que se beneficia de manter o assunto difícil de entender**.
 
-It isn't, really. A lot of the confusion is manufactured: **there's a whole VC-funded economy that benefits from keeping it hard to understand**.
+Os termos básicos se aprendem em uma tarde. Depois de tê-los, o conjunto todo deixa de parecer adivinhação.
 
-The basic terms of engagement are learnable in an afternoon. Once you have them, the whole thing stops feeling like guesswork.
+Por que o contexto se degrada? Por que a conta está tão alta? Por que o mesmo prompt se comporta de forma diferente de um dia para o outro?
 
-Why does context degrade? Why is the bill so high? Why does the same prompt behave differently from one day to the next?
+Cada uma dessas perguntas tem uma resposta simples, quando alguém te dá as palavras certas para usar.
 
-Each has a clean answer, once someone tells you the words to use.
+É para isso que serve este dicionário. **O vocabulário de programação com IA, traduzido em linguagem simples**.
 
-That's what this dictionary is for. **The vocabulary of AI coding, translated into plain English**.
-
-**Want more than the vocabulary?** Join 62,000+ developers at **[aihero.dev/newsletter](https://www.aihero.dev/s/dictionary-newsletter)** for my latest skills, thinking on AI engineering, and the resources that'll keep you ahead of the curve.
+> Tradução não oficial para português brasileiro do [Dictionary of AI Coding](https://github.com/mattpocock/dictionary-of-ai-coding), de [Matt Pocock](https://www.aihero.dev/ai-coding-dictionary). Os textos e as ideias são do autor original; nomes próprios e identificadores técnicos foram mantidos em inglês. Quer mais que o vocabulário? Veja a [newsletter do autor](https://www.aihero.dev/s/dictionary-newsletter).
 
 ---
 
-## Table of contents
+## Índice
 
 <!-- TOC -->
 

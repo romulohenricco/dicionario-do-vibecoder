@@ -1,19 +1,20 @@
 ---
-description: "Developer experience: how easy a codebase and its toolchain make it for humans to do good work — docs, feedback speed, errors."
+description: "Experiência do desenvolvedor: quanto a base de código e as ferramentas facilitam o trabalho humano — docs, rapidez do feedback, erros."
 aliases:
+  - Experiência do desenvolvedor
   - Developer experience
 ---
 
-Developer experience — how easy a codebase and its toolchain make it for humans to do good work. Good DX is fast feedback, clear error messages, documentation that answers the question you actually have, and setup that works on the first try. The term long predates AI coding; it's in this dictionary mainly as the contrast for [AX](./AX.md).
+DX (do inglês developer experience, experiência do desenvolvedor) — o quanto uma base de código e suas ferramentas facilitam o bom trabalho das pessoas. Boa DX é feedback rápido, mensagens de erro claras, documentação que responde à dúvida que você realmente tem e uma configuração que funciona de primeira. O termo é bem anterior à programação com IA; está neste dicionário principalmente como contraste para [AX](./AX.md).
 
-DX is the interaction between the human and the codebase — nothing more. The main difference between the two audiences is that humans are [stateful](./Stateful.md) and agents are [stateless](./Stateless.md). A human learns the codebase once and carries that knowledge into every day after, which is why poor DX is survivable: they route around slow CI by batching their pushes, around missing docs by asking in Slack once, around confusing structure by remembering where things live. The workarounds accumulate, and a team ends up productive in a codebase that fights them.
+A DX é a interação entre o humano e a base de código, nada além disso. A principal diferença entre os dois públicos é que os humanos são [stateful](./Stateful.md) e os agentes são [stateless](./Stateless.md). Um humano aprende a base de código uma vez e leva esse conhecimento para todos os dias seguintes, e por isso uma DX ruim é tolerável: a pessoa contorna o CI lento agrupando vários pushes, contorna a documentação que falta perguntando uma vez no Slack, contorna a estrutura confusa lembrando onde cada coisa fica. Os contornos se acumulam, e a equipe acaba produtiva numa base de código que trabalha contra ela.
 
-[Agents](./Agent.md) face the same codebase with none of that accumulation. Stateless across [sessions](./Session.md), an agent re-learns the codebase from scratch every time — it benefits from the fast test suite and the clear error messages, but anything it figured out yesterday is gone unless it was written into the [environment](./Environment.md), which the agent only perceives through [tool results](./Tool%20result.md). That's the gap AX names: the parts of DX that survive when the developer is an agent, plus concerns humans don't have, like keeping the [context window](./Context%20window.md) free.
+Os [agentes](./Agente.md) enfrentam a mesma base de código sem nada desse acúmulo. Stateless entre [sessões](./Sess%C3%A3o.md), o agente reaprende a base de código do zero a cada vez. Ele se beneficia do conjunto de testes rápido e das mensagens de erro claras, mas tudo o que descobriu ontem se perde, a menos que tenha sido escrito no [ambiente](./Ambiente.md), que o agente só percebe por meio de [resultados de ferramenta](./Resultado%20de%20ferramenta.md). Essa é a lacuna que a AX nomeia: as partes da DX que sobrevivem quando quem desenvolve é um agente, além de preocupações que os humanos não têm, como manter a [janela de contexto](./Janela%20de%20contexto.md) livre.
 
-The overlap means DX investment often improves AX for free — strict types, fast tests, and predictable structure help both. The divergence means it doesn't always: a beautiful onboarding doc helps a human for a week and an agent not at all unless it's reachable from [AGENTS.md](./AGENTS.md.md).
+A sobreposição significa que investir em DX muitas vezes melhora a AX de graça — tipos estritos, testes rápidos e estrutura previsível ajudam os dois. A divergência significa que nem sempre é assim: um bom documento de onboarding ajuda um humano por uma semana e não ajuda em nada um agente, a menos que dê para chegar a ele a partir do [AGENTS.md](./AGENTS.md.md).
 
-_Usage:_
+_Uso:_
 
-"Our DX is fine — new hires are productive in a week."
+"Nossa DX está boa — quem entra na empresa fica produtivo em uma semana."
 
-"Productive because someone sits with them for that week. The agent doesn't get that week; check the AX separately."
+"Fica produtivo porque alguém senta do lado dele nessa semana. O agente não ganha essa semana; avalie a AX separadamente."

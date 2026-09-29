@@ -1,1454 +1,1558 @@
 <!--
-  GENERATED FILE — DO NOT EDIT.
-  Source: dictionary/*.md, internal/Curriculum.md, internal/README.template.md
-  Regenerate: npm run generate
+  ARQUIVO GERADO — NÃO EDITE.
+  Fonte: dictionary/*.md, internal/Curriculum.md, internal/README.template.md
+  Para regenerar: npm run generate
 -->
 
-<p>
-  <a href="https://www.aihero.dev/ai-coding-dictionary">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://res.cloudinary.com/total-typescript/image/upload/v1777878285/dictionary-dark_2x.png">
-      <source media="(prefers-color-scheme: light)" srcset="https://res.cloudinary.com/total-typescript/image/upload/v1777878285/dictionary-light_2x.png">
-      <img alt="AI Coding Dictionary" src="https://res.cloudinary.com/total-typescript/image/upload/v1777878285/dictionary-light_2x.png" width="369">
-    </picture>
-  </a>
-</p>
+# Dicionário do Vibecoder
 
-# AI Coding Dictionary
+**Programar com IA pode parecer coisa só para especialistas**. Jargão sem explicação. Falhas misteriosas. Contas que não parecem bater com o trabalho feito.
 
-**AI coding can feel like it's just for experts**. Unexplained jargon. Mysterious failures. Bills that don't seem to match the work.
+Não é, na verdade. Boa parte da confusão é fabricada: **existe toda uma economia financiada por capital de risco que se beneficia de manter o assunto difícil de entender**.
 
-It isn't, really. A lot of the confusion is manufactured: **there's a whole VC-funded economy that benefits from keeping it hard to understand**.
+Os termos básicos se aprendem em uma tarde. Depois de tê-los, o conjunto todo deixa de parecer adivinhação.
 
-The basic terms of engagement are learnable in an afternoon. Once you have them, the whole thing stops feeling like guesswork.
+Por que o contexto se degrada? Por que a conta está tão alta? Por que o mesmo prompt se comporta de forma diferente de um dia para o outro?
 
-Why does context degrade? Why is the bill so high? Why does the same prompt behave differently from one day to the next?
+Cada uma dessas perguntas tem uma resposta simples, quando alguém te dá as palavras certas para usar.
 
-Each has a clean answer, once someone tells you the words to use.
+É para isso que serve este dicionário. **O vocabulário de programação com IA, traduzido em linguagem simples**.
 
-That's what this dictionary is for. **The vocabulary of AI coding, translated into plain English**.
-
-**Want more than the vocabulary?** Join 62,000+ developers at **[aihero.dev/newsletter](https://www.aihero.dev/s/dictionary-newsletter)** for my latest skills, thinking on AI engineering, and the resources that'll keep you ahead of the curve.
+> Tradução não oficial para português brasileiro do [Dictionary of AI Coding](https://github.com/mattpocock/dictionary-of-ai-coding), de [Matt Pocock](https://www.aihero.dev/ai-coding-dictionary). Os textos e as ideias são do autor original; nomes próprios e identificadores técnicos foram mantidos em inglês. Quer mais que o vocabulário? Veja a [newsletter do autor](https://www.aihero.dev/s/dictionary-newsletter).
 
 ---
 
-## Table of contents
+## Índice
 
 <details>
-<summary>Section 1 — The Model</summary>
+<summary>Seção 1 — O Modelo</summary>
 
-- [AI](#ai)
-- [Model](#model)
-- [Parameters](#parameters)
-- [Training](#training)
-- [Inference](#inference)
-- [Effort](#effort)
+- [IA](#ia)
+- [Modelo](#modelo)
+- [Parâmetros](#parâmetros)
+- [Treinamento](#treinamento)
+- [Inferência](#inferência)
+- [Esforço de raciocínio](#esforço-de-raciocínio)
 - [Token](#token)
-- [Next-token prediction](#next-token-prediction)
-- [Non-determinism](#non-determinism)
-- [Model provider](#model-provider)
+- [Previsão do próximo token](#previsão-do-próximo-token)
+- [Não determinismo](#não-determinismo)
+- [Provedor de modelo](#provedor-de-modelo)
 - [Harness](#harness)
-- [Model provider request](#model-provider-request)
-- [Input tokens](#input-tokens)
-- [Output tokens](#output-tokens)
-- [Prefix cache](#prefix-cache)
-- [Cache tokens](#cache-tokens)
+- [Requisição ao provedor de modelo](#requisição-ao-provedor-de-modelo)
+- [Tokens de entrada](#tokens-de-entrada)
+- [Tokens de saída](#tokens-de-saída)
+- [Cache de prefixo](#cache-de-prefixo)
+- [Tokens de cache](#tokens-de-cache)
 
 </details>
 
 <details>
-<summary>Section 2 — Sessions, Context Windows & Turns</summary>
+<summary>Seção 2 — Sessões, Janelas de Contexto e Turnos</summary>
 
 - [Stateless](#stateless)
-- [Context](#context)
-- [Context window](#context-window)
+- [Contexto](#contexto)
+- [Janela de contexto](#janela-de-contexto)
 - [Stateful](#stateful)
-- [Agent](#agent)
-- [System prompt](#system-prompt)
-- [Session](#session)
-- [Turn](#turn)
+- [Agente](#agente)
+- [Prompt de sistema](#prompt-de-sistema)
+- [Sessão](#sessão)
+- [Turno](#turno)
 
 </details>
 
 <details>
-<summary>Section 3 — Tools & Environment</summary>
+<summary>Seção 3 — Ferramentas e Ambiente</summary>
 
-- [Environment](#environment)
-- [Filesystem](#filesystem)
-- [Tool](#tool)
-- [Tool call](#tool-call)
-- [Tool result](#tool-result)
+- [Ambiente](#ambiente)
+- [Sistema de arquivos](#sistema-de-arquivos)
+- [Ferramenta](#ferramenta)
+- [Chamada de ferramenta](#chamada-de-ferramenta)
+- [Resultado de ferramenta](#resultado-de-ferramenta)
 - [MCP](#mcp)
-- [Permission request](#permission-request)
-- [Permission mode](#permission-mode)
-- [Agent mode](#agent-mode)
+- [Pedido de permissão](#pedido-de-permissão)
+- [Modo de permissão](#modo-de-permissão)
+- [Modo de agente](#modo-de-agente)
 - [Sandbox](#sandbox)
 
 </details>
 
 <details>
-<summary>Section 4 — Failure Modes</summary>
+<summary>Seção 4 — Modos de Falha</summary>
 
-- [Sycophancy](#sycophancy)
-- [Hallucination](#hallucination)
-- [Parametric knowledge](#parametric-knowledge)
-- [Knowledge cutoff](#knowledge-cutoff)
-- [Contextual knowledge](#contextual-knowledge)
-- [Attention relationship](#attention-relationship)
-- [Attention budget](#attention-budget)
-- [Attention degradation](#attention-degradation)
-- [Smart zone](#smart-zone)
+- [Bajulação](#bajulação)
+- [Alucinação](#alucinação)
+- [Conhecimento paramétrico](#conhecimento-paramétrico)
+- [Data de corte do conhecimento](#data-de-corte-do-conhecimento)
+- [Conhecimento contextual](#conhecimento-contextual)
+- [Relação de atenção](#relação-de-atenção)
+- [Orçamento de atenção](#orçamento-de-atenção)
+- [Degradação de atenção](#degradação-de-atenção)
+- [Zona inteligente](#zona-inteligente)
 
 </details>
 
 <details>
-<summary>Section 5 — Handoffs</summary>
+<summary>Seção 5 — Handoffs</summary>
 
-- [Clearing](#clearing)
+- [Limpeza de contexto](#limpeza-de-contexto)
 - [Handoff](#handoff)
-- [Primary source](#primary-source)
-- [Secondary source](#secondary-source)
-- [Handoff artifact](#handoff-artifact)
-- [Spec](#spec)
+- [Fonte primária](#fonte-primária)
+- [Fonte secundária](#fonte-secundária)
+- [Artefato de handoff](#artefato-de-handoff)
+- [Especificação](#especificação)
 - [Ticket](#ticket)
-- [Compaction](#compaction)
-- [Autocompact](#autocompact)
+- [Compactação](#compactação)
+- [Autocompactação](#autocompactação)
 
 </details>
 
 <details>
-<summary>Section 6 — Memory and Steering</summary>
+<summary>Seção 6 — Memória e Direcionamento</summary>
 
-- [Memory system](#memory-system)
+- [Sistema de memória](#sistema-de-memória)
 - [AGENTS.md](#agentsmd)
-- [Progressive disclosure](#progressive-disclosure)
-- [Context pointer](#context-pointer)
+- [Divulgação progressiva](#divulgação-progressiva)
+- [Ponteiro de contexto](#ponteiro-de-contexto)
 - [Skill](#skill)
-- [Subagent](#subagent)
+- [Subagente](#subagente)
 
 </details>
 
 <details>
-<summary>Section 7 — Patterns of Work</summary>
+<summary>Seção 7 — Padrões de Trabalho</summary>
 
-- [Human-in-the-loop](#human-in-the-loop)
+- [Humano no loop](#humano-no-loop)
 - [AFK](#afk)
-- [Automated check](#automated-check)
-- [Automated review](#automated-review)
-- [Human review](#human-review)
+- [Verificação automatizada](#verificação-automatizada)
+- [Revisão automatizada](#revisão-automatizada)
+- [Revisão humana](#revisão-humana)
 - [Vibe coding](#vibe-coding)
-- [Design concept](#design-concept)
-- [Grilling](#grilling)
-- [Prototyping](#prototyping)
+- [Conceito de design](#conceito-de-design)
+- [Sabatina](#sabatina)
+- [Prototipagem](#prototipagem)
 - [DX](#dx)
 - [AX](#ax)
-- [Software factory](#software-factory)
-- [Dark factory](#dark-factory)
+- [Fábrica de software](#fábrica-de-software)
+- [Fábrica escura](#fábrica-escura)
 
 </details>
 
-## Section 1 — The Model
+## Seção 1 — O Modelo
 
-### AI
+### IA
 
-A moving label, not a technology. "AI" doesn't name a fixed thing the way [model](#model) or [token](#token) does — it points at whatever computers can newly, impressively do. Right now it points at large language models. It has pointed at very different things before:
+_Em inglês: AI_
 
-| Era       | What "AI" meant                                                                                       |
-| --------- | ----------------------------------------------------------------------------------------------------- |
-| 1950s     | Symbolic reasoning — theorem provers, checkers programs.                                              |
-| 1960s–70s | Rule-based symbolic programs — ELIZA, SHRDLU.                                                         |
-| 1980s     | Expert systems — thousands of hand-written if-then rules encoding human expertise.                    |
-| 1990s     | Game-tree search — Deep Blue beating Kasparov (1997). Researchers avoided the word "AI" entirely      |
-| 2000s     | Statistical machine learning — spam filters, recommenders. Still sold as "machine learning", not "AI" |
-| 2010s     | Deep learning — image recognition (AlexNet, 2012), AlphaGo (2016).                                    |
-| 2020s     | Large language models — ChatGPT (2022) made "AI" mean chatbots                                        |
+Um rótulo em movimento, não uma tecnologia. "IA" (inteligência artificial) não nomeia uma coisa fixa, como [modelo](#modelo) ou [token](#token): aponta para o que os computadores passaram a fazer há pouco, de forma impressionante. Hoje aponta para os grandes modelos de linguagem (LLMs). Antes, apontou para coisas muito diferentes:
 
-The pointer moves by a known mechanism, sometimes called the AI effect: once a technique works reliably, it gets renamed — it's "just" search, "just" statistics — and "AI" slides forward to the next unsolved thing. The observation is old. Bertram Raphael put it this way in 1971: "AI is a collective name for problems which we do not yet know how to solve properly by computer." Larry Tesler's version, from around 1979: "Intelligence is whatever machines haven't done yet."
+| Era          | O que "IA" significava                                                                                                |
+| ------------ | --------------------------------------------------------------------------------------------------------------------- |
+| Anos 1950    | Raciocínio simbólico — provadores de teoremas, programas de damas.                                                    |
+| Anos 1960–70 | Programas simbólicos baseados em regras — ELIZA, SHRDLU.                                                              |
+| Anos 1980    | Sistemas especialistas — milhares de regras "se-então" escritas à mão, que codificavam a expertise humana.            |
+| Anos 1990    | Busca em árvore de jogo — Deep Blue vencendo Kasparov (1997). Os pesquisadores evitavam a palavra "IA".               |
+| Anos 2000    | Machine learning estatístico — filtros de spam, recomendadores. Ainda vendido como "machine learning", não como "IA". |
+| Anos 2010    | Deep learning — reconhecimento de imagens (AlexNet, 2012), AlphaGo (2016).                                            |
+| Anos 2020    | Grandes modelos de linguagem — o ChatGPT (2022) fez "IA" passar a significar chatbots.                                |
 
-This is why conversations about AI so often talk past each other. A claim like "AI can't reason" or "AI is overhyped" carries a hidden timestamp — it may be about expert systems, about 2010s image classifiers, or about last month's LLM, and each reference supports a different conclusion. When a discussion about AI stalls, the fix is usually to swap the word for whichever precise term is actually meant: the model, the [harness](#harness), the [agent](#agent), the [context](#context) it was given.
+O ponteiro se move por um mecanismo conhecido, às vezes chamado de efeito IA: quando uma técnica passa a funcionar de forma confiável, ela ganha outro nome — vira "só" busca, "só" estatística — e "IA" avança para o próximo problema sem solução. A observação é antiga. Bertram Raphael a formulou assim em 1971: "IA é um nome coletivo para problemas que ainda não sabemos resolver direito por computador." A versão de Larry Tesler, de cerca de 1979: "Inteligência é tudo aquilo que as máquinas ainda não fizeram."
 
-_Avoid:_ "AI" in any technical claim — name the part you mean instead. "AI coding" as a label for the practice is fine; "the AI is hallucinating" is not.
+Por isso as conversas sobre IA tantas vezes falam de coisas diferentes sem que os envolvidos percebam. Uma afirmação como "a IA não sabe raciocinar" ou "IA é superestimada" carrega uma data escondida: pode ser sobre sistemas especialistas, sobre classificadores de imagem dos anos 2010 ou sobre o LLM do mês passado, e cada referência sustenta uma conclusão diferente. Quando uma discussão sobre IA emperra, a saída costuma ser trocar a palavra pelo termo preciso que se quer dizer: o modelo, o [harness](#harness), o [agente](#agente), o [contexto](#contexto) que ele recebeu.
 
-_Usage:_
+_Evite:_ "IA" em qualquer afirmação técnica — nomeie a parte a que você se refere. "Programação com IA" como rótulo da prática é aceitável; "a IA está alucinando" não é.
 
-"The CTO wants to know whether AI could handle the triage queue."
+_Uso:_
 
-"Translate that before scoping it — she means an LLM in a harness with access to the ticket system. 'AI' on its own isn't a spec."
+"A CTO quer saber se uma IA daria conta da fila de triagem."
 
-### Model
+"Traduza isso antes de definir o escopo — ela quer dizer um LLM num harness com acesso ao sistema de tickets. 'IA' sozinha não é spec."
 
-The [parameters](#parameters). [Stateless](#stateless) — does [next-token prediction](#next-token-prediction) and nothing else. "Claude Opus 4.x" and "GPT-5.x" are models. On its own a model can't do anything agentic; it has to be [harnessed](#harness).
+### Modelo
 
-Models can't read files, run commands, browse the web, or remember yesterday — it takes [tokens](#token) in and predicts tokens out, once per [model provider request](#model-provider-request). Everything that feels like an [agent](#agent) working — choosing [tools](#tool), reading results, looping until the task is done — is the harness orchestrating many of those predictions in a row.
+_Em inglês: Model_
 
-[Model providers](#model-provider) ship models in tiers: a large one that's smartest but slow and expensive, and smaller ones that are faster and cheaper but less capable. Picking a tier is a real decision — heavyweight for planning and hard debugging, lightweight for mechanical changes — and harnesses let you switch mid-[session](#session).
+Os [parâmetros](#parâmetros). [Stateless](#stateless) (sem estado) — faz [previsão do próximo token](#previsão-do-próximo-token) e mais nada. "Claude Opus 4.x" e "GPT-5.x" são modelos. Sozinho, um modelo não consegue fazer nada agêntico; ele precisa ser [envolvido por um harness](#harness).
 
-Being strict about the word also sharpens diagnosis. "The model is bad at this" is a specific claim — the same model in a different harness, or with a different [context](#context), often behaves completely differently. Before blaming the model, check what it was given: most disappointing output traces back to context or harness, not parameters.
+Modelos não conseguem ler arquivos, executar comandos, navegar na web nem lembrar de ontem — recebem [tokens](#token) e preveem tokens, uma vez a cada [requisição ao provedor de modelo](#requisição-ao-provedor-de-modelo). Tudo o que parece um [agente](#agente) trabalhando — escolher [ferramentas](#ferramenta), ler resultados, repetir até a tarefa terminar — é o harness orquestrando várias dessas previsões em sequência.
 
-_Usage:_
+[Provedores de modelo](#provedor-de-modelo) lançam modelos em faixas: um grande, o mais inteligente, porém lento e caro, e outros menores, mais rápidos e baratos, mas menos capazes. Escolher a faixa é uma decisão de verdade — o modelo pesado para planejamento e depuração difícil, o leve para mudanças mecânicas — e os harnesses permitem trocar no meio da [sessão](#sessão).
 
-"Should we switch the model from Sonnet to Opus for the planning step?"
+Usar a palavra com rigor também ajuda no diagnóstico. "O modelo é ruim nisso" é uma afirmação específica — o mesmo modelo, em outro harness ou com outro [contexto](#contexto), muitas vezes se comporta de forma bem diferente. Antes de culpar o modelo, confira o que ele recebeu: a maior parte das saídas decepcionantes vem do contexto ou do harness, não dos parâmetros.
 
-"Try it — but the harness is doing most of the lifting on this task. The model swap won't help if the [system prompt](#system-prompt) and tools are wrong."
+_Uso:_
 
-### Parameters
+"Vamos trocar o modelo na etapa de planejamento, do Sonnet para o Opus?"
 
-The numbers inside a [model](#model) — often billions of them — tuned during [training](#training). Everything the model "knows" lives in them. Training sets them; [inference](#inference) uses them unchanged. Also called _weights_.
+"Tenta, mas o harness está fazendo a maior parte do trabalho nessa tarefa. Trocar de modelo não vai adiantar se o [prompt de sistema](#prompt-de-sistema) e as ferramentas estiverem errados."
 
-Mechanically, the parameters are what turn input into output. [Next-token prediction](#next-token-prediction) is a giant calculation: the [tokens](#token) in the [context window](#context-window) go in, get multiplied through the parameters, and a prediction for the next token comes out. There is no database of facts inside the model, no code lookup table — just these numbers, arranged so that the calculation tends to produce useful output. Facts the model can recite from training, like a standard library API, are [parametric knowledge](#parametric-knowledge): stored in the parameters, not retrieved from anywhere.
+### Parâmetros
 
-The detail worth internalising is that parameters are frozen after training. Nothing you do in a [session](#session) changes them — no correction you make, no codebase you show it, no mistake it learns from. Every session runs on the same numbers. This is why the model is [stateless](#stateless), why its built-in knowledge stops at the [knowledge cutoff](#knowledge-cutoff), and why anything project-specific has to arrive via [context](#context) instead. The only way parameters change is more training — which produces, in effect, a different model.
+_Em inglês: Parameters_
 
-_Usage:_
+Os números dentro de um [modelo](#modelo) — muitas vezes bilhões deles — ajustados durante o [treinamento](#treinamento). Tudo o que o modelo "sabe" está neles. O treinamento define esses números; a [inferência](#inferência) os usa sem alterá-los. Também chamados de _pesos_.
 
-"Can we fine-tune it on our codebase?"
+Mecanicamente, os parâmetros são o que transforma entrada em saída. A [previsão do próximo token](#previsão-do-próximo-token) é um cálculo gigante: os [tokens](#token) da [janela de contexto](#janela-de-contexto) entram, são multiplicados pelos parâmetros e sai uma previsão para o próximo token. Não existe um banco de dados de fatos dentro do modelo, nem uma tabela de consulta de código, apenas esses números, organizados de modo que o cálculo tenda a produzir uma saída útil. Os fatos que o modelo consegue recitar a partir do treinamento, como a API de uma biblioteca padrão, são [conhecimento paramétrico](#conhecimento-paramétrico): ficam guardados nos parâmetros e não são buscados em lugar nenhum.
 
-"That'd update the parameters — different model afterwards. For one project it's almost always cheaper to load the codebase as context than to retrain."
+O detalhe a fixar é que os parâmetros ficam congelados depois do treinamento. Nada do que você faz em uma [sessão](#sessão) os altera: nenhuma correção sua, nenhuma base de código que você mostre, nenhum erro com o qual ele aprenda. Toda sessão roda sobre os mesmos números. É por isso que o modelo é [stateless](#stateless), que o conhecimento embutido dele para na [data de corte do conhecimento](#data-de-corte-do-conhecimento) e que tudo o que é específico do projeto precisa chegar pelo [contexto](#contexto). Os parâmetros só mudam com mais treinamento, o que produz, na prática, outro modelo.
 
-### Training
+_Uso:_
 
-The process that sets a [model](#model)'s [parameters](#parameters), by exposing it to vast amounts of text and adjusting parameters to improve [next-token prediction](#next-token-prediction). A one-time, expensive process done by the [model provider](#model-provider). Encompasses both pre-training (the bulk run) and post-training (later refinements like instruction-following and safety); the distinction doesn't matter at this glossary's level.
+"Dá pra fazer fine-tuning dele na nossa base de código?"
 
-The mechanism is repetition at scale: show the model a stretch of text, have it predict the next [token](#token), nudge the parameters toward whatever the actual next token was, and repeat across trillions of tokens. Nothing is stored as facts or rules — everything the model "knows" is a side effect of getting better at prediction, compressed into the parameters as [parametric knowledge](#parametric-knowledge).
+"Isso atualizaria os parâmetros, e aí seria outro modelo. Para um projeto só, quase sempre sai mais barato carregar a base de código como contexto do que retreinar."
 
-Two consequences matter day to day. Training ends at a point in time, so the model has a [knowledge cutoff](#knowledge-cutoff) — it hasn't seen the library version you upgraded to last month. And training is not something you can do: when the model doesn't know your codebase, your conventions, or your internal APIs, the fix is never "teach the model" — it's putting that material into [context](#context), the one input you control.
+### Treinamento
 
-_Usage:_
+_Em inglês: Training_
 
-"Can we get it to know our internal API?"
+O processo que define os [parâmetros](#parâmetros) de um [modelo](#modelo), expondo-o a grandes quantidades de texto e ajustando os parâmetros para melhorar a [previsão do próximo token](#previsão-do-próximo-token). Um processo pontual e caro, feito pelo [provedor de modelo](#provedor-de-modelo). Abrange tanto o pré-treinamento (a rodada principal) quanto o pós-treinamento (refinamentos posteriores, como o ajuste para seguir instruções e para segurança); a distinção não importa no nível deste glossário.
 
-"Not via training — that's a months-long process by the model provider. Load the API docs into context instead, that's the lever you actually have."
+O mecanismo é repetição em escala: mostrar ao modelo um trecho de texto, pedir que ele preveja o próximo [token](#token), ajustar os parâmetros um pouco na direção do token que realmente veio a seguir e repetir isso ao longo de trilhões de tokens. Nada é armazenado como fato ou regra — tudo o que o modelo "sabe" é um efeito colateral de ficar melhor na previsão, comprimido nos parâmetros como [conhecimento paramétrico](#conhecimento-paramétrico).
 
-### Inference
+Duas consequências importam no dia a dia. O treinamento termina em um ponto no tempo, então o modelo tem uma [data de corte do conhecimento](#data-de-corte-do-conhecimento) — ele não viu a versão da biblioteca para a qual você atualizou no mês passado. E você não tem como treinar o modelo: quando o modelo não conhece sua base de código, suas convenções ou suas APIs internas, a solução nunca é "ensinar o modelo" — é colocar esse material no [contexto](#contexto), a única entrada que você controla.
 
-Running a trained [model](#model) to generate output — what happens on every [model provider request](#model-provider-request). [Parameters](#parameters) stay fixed; the model just does [next-token prediction](#next-token-prediction) over the [context](#context) it's given. Cheap relative to [training](#training), but billed per [token](#token) and the dominant cost of using a model.
+_Uso:_
 
-A model's life splits into two phases:
+"Dá pra fazer ele conhecer a nossa API interna?"
 
-| Phase     | When it happens                  | What it does                                                    | Parameters    |
-| --------- | -------------------------------- | --------------------------------------------------------------- | ------------- |
-| Training  | Once, before release             | Produces the parameters from a training corpus                  | Being written |
-| Inference | Every time anyone uses the model | Runs the frozen parameters over your context to generate tokens | Read-only     |
+"Por treinamento não — isso é um processo de meses do provedor de modelo. Carrega a documentação da API no contexto, essa é a alavanca que você realmente tem."
 
-Nothing you do at inference time writes back to the parameters — that's the reason a correction you make today doesn't stick tomorrow. The model that makes the same mistake next [session](#session), after you carefully explained the fix, hasn't ignored you; it's incapable of learning from the exchange. The model is [stateless](#stateless) — continuity has to come from outside it — from the [context window](#context-window) or a [memory system](#memory-system).
+### Inferência
 
-This mechanism also explains how you're billed. Every request runs the model over the full context, so cost scales with [input tokens](#input-tokens) and [output tokens](#output-tokens), and an agent making dozens of [tool](#tool) calls pays for inference on each round trip. This is why context size is a cost question as well as a quality one.
+_Em inglês: Inference_
 
-_Usage:_
+Executar um [modelo](#modelo) treinado para gerar saída — o que acontece em toda [requisição ao provedor de modelo](#requisição-ao-provedor-de-modelo). Os [parâmetros](#parâmetros) ficam fixos; o modelo apenas faz a [previsão do próximo token](#previsão-do-próximo-token) sobre o [contexto](#contexto) que recebe. A inferência é barata em comparação com o [treinamento](#treinamento), mas é cobrada por [token](#token) e é o custo dominante de usar um modelo.
 
-"Why does the bill scale with usage instead of being a flat license?"
+A vida de um modelo se divide em duas fases:
 
-"You're paying for inference — every model provider request runs the model on the provider's hardware. Training already happened, but inference costs accrue per request, and a single [turn](#turn) can expand into many requests when tools are called."
+| Fase        | Quando acontece                  | O que faz                                                               | Parâmetros      |
+| ----------- | -------------------------------- | ----------------------------------------------------------------------- | --------------- |
+| Treinamento | Uma vez, antes do lançamento     | Produz os parâmetros a partir de um corpus de treinamento               | Sendo escritos  |
+| Inferência  | Toda vez que alguém usa o modelo | Executa os parâmetros congelados sobre o seu contexto para gerar tokens | Somente leitura |
 
-### Effort
+Nada do que você faz durante a inferência altera os parâmetros, e é por isso que uma correção feita hoje não persiste amanhã. O modelo que repete o mesmo erro na próxima [sessão](#sessão), depois de você explicar a correção com cuidado, não ignorou o que você disse; ele é incapaz de aprender com a conversa. O modelo é [stateless](#stateless) (sem estado): a continuidade precisa vir de fora dele, da [janela de contexto](#janela-de-contexto) ou de um [sistema de memória](#sistema-de-memória).
 
-Effort is a dial for how much reasoning a [model](#model) does before it answers. Set per [model provider request](#model-provider-request), it controls the length of the thinking the model works through before it starts writing the response you see. That thinking is generated at [inference](#inference) time like everything else; the [harness](#harness) often hides it, but it's real work the model is doing.
+Esse mecanismo também explica como você é cobrado. Cada requisição executa o modelo sobre o contexto inteiro, então o custo cresce com os [tokens de entrada](#tokens-de-entrada) e os [tokens de saída](#tokens-de-saída), e um agente que faz dezenas de chamadas de [ferramenta](#ferramenta) paga pela inferência a cada ida e volta. Por isso o tamanho do contexto é tanto uma questão de custo quanto de qualidade.
 
-Higher effort costs more and runs slower. The reasoning is emitted as [tokens](#token), billed as [output tokens](#output-tokens) even when you never see them, and produced one token at a time — so turning effort up lengthens the wait before the answer arrives and adds to the bill. The trade is more deliberation against speed and cost.
+_Uso:_
 
-Most harnesses expose effort as a small ladder:
+"Por que a fatura cresce com o uso, em vez de ser uma licença fixa?"
 
-| Level  | What it's for                                                          |
-| ------ | ---------------------------------------------------------------------- |
-| Low    | Mechanical edits, lookups, well-specified changes with one clear path. |
-| Medium | Everyday coding — the usual default.                                   |
-| High   | Tricky bugs, design decisions, multi-step plans.                       |
-| Max    | The hardest problems, where a wrong answer is expensive to unwind.     |
+"Você paga pela inferência — cada requisição ao provedor de modelo executa o modelo no hardware do provedor. O treinamento já aconteceu, mas os custos de inferência se acumulam a cada requisição, e um único [turno](#turno) pode virar várias requisições quando há chamadas de ferramenta."
 
-The symptom of getting it wrong cuts both ways. Set effort too low on a hard problem and you get a confident, shallow answer that skipped the reasoning the problem needed — it reads fine and is wrong in a way that costs you later. Set it to max for a one-line rename and you sit through a long think that produces nothing the lowest setting wouldn't have.
+### Esforço de raciocínio
 
-Match effort to the task, not the [session](#session). Turn it up for the part that's genuinely hard to reason about, and back down for the rote work around it.
+_Em inglês: Effort_
 
-_Usage:_
+O esforço é um seletor de quanto raciocínio um [modelo](#modelo) faz antes de responder. Definido em cada [requisição ao provedor de modelo](#requisição-ao-provedor-de-modelo), ele controla o tamanho do raciocínio que o modelo percorre antes de começar a escrever a resposta que você vê. Esse raciocínio é gerado durante a [inferência](#inferência), como todo o resto; o [harness](#harness) costuma escondê-lo, mas é trabalho real do modelo.
 
-"It keeps botching this concurrency fix — I've re-explained it three times."
+Mais esforço custa mais e demora mais. O raciocínio é emitido como [tokens](#token), cobrado como [tokens de saída](#tokens-de-saída) mesmo que você nunca os veja, e produzido um token por vez. Por isso, aumentar o esforço alonga a espera pela resposta e aumenta a fatura. O que se troca é mais deliberação por menos velocidade e mais custo.
 
-"Bump the effort up. That's a reasoning-heavy bug, and on the default setting it's not thinking long enough before it commits to an approach."
+A maioria dos harnesses expõe o esforço como uma escala curta de níveis:
+
+| Nível  | Para que serve                                                                 |
+| ------ | ------------------------------------------------------------------------------ |
+| Baixo  | Edições mecânicas, consultas, mudanças bem especificadas com um caminho claro. |
+| Médio  | Programação do dia a dia; costuma ser o padrão.                                |
+| Alto   | Bugs complicados, decisões de design, planos de vários passos.                 |
+| Máximo | Os problemas mais difíceis, em que uma resposta errada é cara de desfazer.     |
+
+Errar a regulagem causa problemas nos dois sentidos. Com esforço baixo demais num problema difícil, você recebe uma resposta confiante e rasa, que pulou o raciocínio de que o problema precisava. Ela parece boa e está errada de um jeito que vai custar caro depois. Com esforço máximo para renomear uma única linha, você espera um raciocínio longo que não entrega nada que o nível mais baixo não entregaria.
+
+Ajuste o esforço à tarefa, não à [sessão](#sessão). Aumente nas partes realmente difíceis de raciocinar e volte a baixar no trabalho braçal ao redor.
+
+_Uso:_
+
+"Ele continua errando essa correção de concorrência, e já expliquei três vezes."
+
+"Sobe o esforço. Esse bug exige muito raciocínio, e no padrão ele não pensa o bastante antes de se fixar numa abordagem."
 
 ### Token
 
-The atomic unit a [model](#model) reads and writes. Roughly word-sized but not exactly — common words are one token, rare or long ones split into several. [Context window](#context-window) size, cost, and latency are all counted in tokens.
+Token é a unidade atômica que um [modelo](#modelo) lê e escreve. Tem tamanho próximo ao de uma palavra, mas não exatamente: palavras comuns equivalem a um token, e palavras raras ou longas se dividem em vários. O tamanho da [janela de contexto](#janela-de-contexto), o custo e a latência são todos contados em tokens.
 
-Text becomes tokens via a tokenizer: a fixed vocabulary of tens of thousands of fragments, learned before [training](#training), that splits any input into a sequence of vocabulary entries. The model never sees characters or words — every piece of text is converted to tokens on the way in, and [next-token prediction](#next-token-prediction) produces output one token at a time on the way out.
+O texto vira tokens por meio de um tokenizador: um vocabulário fixo de dezenas de milhares de fragmentos, aprendido antes do [treinamento](#treinamento), que divide qualquer entrada em uma sequência de itens desse vocabulário. O modelo nunca vê caracteres nem palavras. Todo texto é convertido em tokens na entrada, e a [previsão do próximo token](#previsão-do-próximo-token) produz a saída um token por vez.
 
-As a rule of thumb, a token is about three-quarters of an English word, so a thousand tokens is roughly 750 words. Code is less predictable: common keywords and idioms tokenize compactly, while generated identifiers, hashes, base64 blobs, and minified output split into many tokens per "word". The pattern: text that appeared often in the tokenizer's source material gets short, efficient encodings; text that didn't gets chopped into many small pieces. A hash like `a3f9c2e1` never appeared anywhere, so it splits into many tokens, while `function` is one. This is why a small-looking file full of unusual strings can occupy a surprising share of the context window.
+Como regra prática, um token equivale a cerca de três quartos de uma palavra em inglês, então mil tokens são aproximadamente 750 palavras. Código é menos previsível: palavras-chave e construções comuns são tokenizadas de forma compacta, enquanto identificadores gerados, hashes, blocos em base64 e saída minificada se dividem em muitos tokens por "palavra". O padrão é este: texto que apareceu com frequência no material que originou o tokenizador recebe codificações curtas e eficientes, e texto que não apareceu é dividido em muitos pedaços pequenos. Um hash como `a3f9c2e1` nunca apareceu em lugar nenhum, então se divide em vários tokens, enquanto `function` é um só. Por isso um arquivo de aparência pequena, cheio de strings incomuns, pode ocupar uma parte da janela de contexto maior do que se espera.
 
-Tokens are the unit everything else is measured in. Cost is per token — providers bill [input tokens](#input-tokens) and [output tokens](#output-tokens) separately. Speed is tokens per second, since output is generated one token at a time. And the context window is a fixed number of tokens, so the token count of your files decides how much fits.
+Tudo o mais é medido em tokens. O custo é por token, e os provedores cobram [tokens de entrada](#tokens-de-entrada) e [tokens de saída](#tokens-de-saída) separadamente. A velocidade é medida em tokens por segundo, já que a saída é gerada um token por vez. E a janela de contexto é um número fixo de tokens, então a contagem de tokens dos seus arquivos decide quanto cabe.
 
-_Avoid:_ "word" — token boundaries don't match word boundaries, and tokens-per-second / tokens-per-dollar are the units that actually matter.
+_Evite:_ "palavra". As fronteiras dos tokens não coincidem com as das palavras, e as unidades que de fato importam são tokens por segundo e tokens por dólar.
 
-_Usage:_
+_Uso:_
 
-"How big is this prompt going to be?"
+"Qual vai ser o tamanho desse prompt?"
 
-"Run it through the tokenizer — the schema's compact but the JSON keys are weird, so they'll split into more tokens than you think."
+"Passa pelo tokenizador. O schema é compacto, mas as chaves do JSON são estranhas, então vão virar mais tokens do que você imagina."
 
-### Next-token prediction
+### Previsão do próximo token
 
-What the [model](#model) actually does. Given a [context](#context), it samples one next [token](#token), appends it, and runs again. Every output — a sentence, a [tool call](#tool-call), a thousand-line file — is built one token at a time. The model has no other mode of operation.
+_Em inglês: Next-token prediction_
 
-Each step works the same way: the tokens in the [context window](#context-window) are run through the [parameters](#parameters), which produce a probability for every token in the vocabulary — this one is very likely next, that one less so. One token is sampled from those probabilities, appended, and the loop runs again with the slightly longer context. That sampling step is why the same prompt produces different output on different runs: [non-determinism](#non-determinism) is built into the mechanism, not a bug layered on top.
+O que o [modelo](#modelo) de fato faz. Dado um [contexto](#contexto), ele amostra o próximo [token](#token), anexa e roda de novo. Toda saída — uma frase, uma [chamada de ferramenta](#chamada-de-ferramenta), um arquivo de mil linhas — é construída um token por vez. O modelo não tem outro modo de operação.
 
-Holding onto this mechanism explains behaviour that otherwise looks strange. The model never checks whether a token is _true_ before emitting it — only whether it's _likely_ — which is the root of [hallucination](#hallucination). It commits to each token as it goes, so a confident-sounding opening sentence can steer the rest of the answer wrong. And because [output tokens](#output-tokens) are produced strictly one at a time, generation speed puts a floor on how fast any [agent](#agent) can work.
+Cada etapa funciona do mesmo jeito: os tokens da [janela de contexto](#janela-de-contexto) passam pelos [parâmetros](#parâmetros), que produzem uma probabilidade para cada token do vocabulário — este tem alta probabilidade de vir a seguir, aquele tem menos. Um token é amostrado dessas probabilidades, anexado, e o loop roda de novo com o contexto um pouco maior. Essa etapa de amostragem é o motivo de o mesmo prompt gerar saídas diferentes em execuções diferentes: o [não determinismo](#não-determinismo) é parte do mecanismo, não um bug acrescentado por cima.
 
-_Usage:_
+Ter esse mecanismo em mente ajuda a entender comportamentos que, de outro modo, parecem estranhos. O modelo nunca verifica se um token é _verdadeiro_ antes de emiti-lo — apenas se é _provável_ — e essa é a origem da [alucinação](#alucinação). Ele assume cada token à medida que avança, então uma primeira frase de tom confiante pode desviar o resto da resposta. E, como os [tokens de saída](#tokens-de-saída) são produzidos estritamente um de cada vez, a velocidade de geração limita a rapidez com que qualquer [agente](#agente) consegue trabalhar.
 
-"How does the agent 'decide' to call a tool?"
+_Uso:_
 
-"It doesn't — it's next-token prediction all the way down. The tool call is just a structured string the [harness](#harness) parses out of the output stream."
+"Como o agente 'decide' chamar uma ferramenta?"
 
-### Non-determinism
+"Não decide — é previsão do próximo token do começo ao fim. A chamada de ferramenta é só uma string estruturada que o [harness](#harness) extrai do fluxo de saída."
 
-The same input can produce different output. Run a [model](#model) twice with identical [context](#context) and you may get two different answers — sometimes a word, sometimes a completely different approach. Nothing in your code has to change for this to happen.
+### Não determinismo
 
-It's a property of how models generate text, and how [model providers](#model-provider) serve [requests](#model-provider-request). During [inference](#inference), the model produces a probability distribution over possible next [tokens](#token) and one is sampled from it — usually with some randomness on purpose, since always picking the most likely token produces repetitive, lower-quality text. One differently-sampled token early in a response changes every token after it, which is how a single different word becomes a completely different approach. Provider-side serving adds more variation on top: requests are batched together on shared hardware, and tiny floating-point differences between batches can tip a close call between two tokens. There's no setting you can flip to make it all go away.
+_Em inglês: Non-determinism_
 
-Expect a spread of results from an [agent](#agent) on the same task. Most responses fall within a reasonable bell curve of quality — that's why the non-determinism is tolerable at all — but the tails are real: some days the model will feel sharp; some days it'll feel like it's lost the plot. Same task, different rolls of the dice. This has two practical consequences. Retrying is a legitimate strategy: a failed attempt is one draw from the distribution, and a fresh attempt at the same task may simply land better. And verification matters more than it would with deterministic tools — you can't test an agent's behaviour once and rely on it repeating, so [automated checks](#automated-check) have to catch the bad draws.
+A mesma entrada pode produzir uma saída diferente. Rode um [modelo](#modelo) duas vezes com o mesmo [contexto](#contexto) e você pode receber duas respostas distintas — às vezes uma palavra, às vezes uma abordagem completamente diferente. Nada no seu código precisa mudar para isso acontecer.
 
-Be careful not to over-narrativize this. Humans are pattern-matching machines, and a string of bad runs can feel like proof that "the model got worse this week." Usually it's just the distribution.
+É uma propriedade de como os modelos geram texto e de como os [provedores de modelo](#provedor-de-modelo) atendem [requisições](#requisição-ao-provedor-de-modelo). Durante a [inferência](#inferência), o modelo produz uma distribuição de probabilidade sobre os possíveis próximos [tokens](#token) e um deles é sorteado — em geral com alguma aleatoriedade proposital, já que escolher sempre o token mais provável gera texto repetitivo e de qualidade inferior. Um token sorteado de forma diferente no início da resposta altera todos os tokens seguintes, e é assim que uma única palavra diferente vira uma abordagem completamente diferente. No lado do provedor, o atendimento soma mais variação: as requisições são agrupadas em lotes em hardware compartilhado, e diferenças minúsculas de ponto flutuante entre lotes podem decidir uma disputa apertada entre dois tokens. Não existe configuração que faça tudo isso desaparecer.
 
-_Usage:_
+Espere uma dispersão de resultados de um [agente](#agente) na mesma tarefa. A maioria das respostas cai dentro de uma curva de sino razoável de qualidade — é por isso que o não determinismo é tolerável — mas as caudas existem: em alguns dias o modelo parece afiado; em outros parece que perdeu o fio da meada. Mesma tarefa, lances de dado diferentes. Isso tem duas consequências práticas. Tentar de novo é uma estratégia legítima: uma tentativa que falhou é um sorteio da distribuição, e uma nova tentativa na mesma tarefa pode simplesmente sair melhor. E a verificação importa mais do que com ferramentas determinísticas — você não pode testar o comportamento de um agente uma vez e contar que ele se repita, então as [verificações automatizadas](#verificação-automatizada) precisam capturar os sorteios ruins.
 
-"Claude has been awful today. Did they ship a worse version?"
+Evite criar narrativas demais para explicar o que acontece. Pessoas são máquinas de reconhecer padrões, e uma sequência de execuções ruins pode parecer prova de que "o modelo piorou esta semana". Em geral é só a distribuição.
 
-"Probably not — model output is non-deterministic. You're going to have good days and bad days on the same task. Try again tomorrow before you go looking for a cause."
+_Uso:_
 
-### Model provider
+"O Claude está péssimo hoje. Será que lançaram uma versão pior?"
 
-Whatever serves a [model](#model) for [inference](#inference). Usually a remote service (Anthropic, OpenAI, Google), but can also be local — Ollama, LM Studio, llama.cpp running on your own machine. The [harness](#harness) doesn't run the model itself; it asks a provider to.
+"Provavelmente não — a saída do modelo é não determinística. Você vai ter dias bons e dias ruins na mesma tarefa. Tente de novo amanhã antes de sair procurando uma causa."
 
-The provider owns the machinery: the [parameters](#parameters) live on its hardware, and every [model provider request](#model-provider-request) is the harness sending [tokens](#token) over the network and getting predictions back. That makes the provider the source of a whole category of problems that get misattributed to the model or the harness — rate limits, degraded capacity, and outages all live here. When the [agent](#agent) stalls mid-[session](#session) or errors on every [turn](#turn), the provider's status page is worth checking before anything else.
+### Provedor de modelo
 
-The provider also sets the commercial terms: per-token pricing for [input](#input-tokens) and [output tokens](#output-tokens), [prefix cache](#prefix-cache) discounts, and which models are available at all. Note that the provider and the model's maker can be different companies — Bedrock, Vertex, and OpenRouter serve other people's models.
+_Em inglês: Model provider_
 
-Local providers trade capability for control: the models that fit on your own hardware are far smaller than the frontier ones, but nothing leaves the machine and there's no bill per token.
+Quem serve um [modelo](#modelo) para [inferência](#inferência). Em geral é um serviço remoto (Anthropic, OpenAI, Google), mas pode ser local — Ollama, LM Studio, llama.cpp rodando na sua própria máquina. O [harness](#harness) não roda o modelo por conta própria; ele pede a um provedor que faça isso.
 
-_Usage:_
+O provedor é dono da infraestrutura: os [parâmetros](#parâmetros) ficam no hardware dele, e cada [requisição ao provedor de modelo](#requisição-ao-provedor-de-modelo) é o harness enviando [tokens](#token) pela rede e recebendo previsões de volta. Por isso o provedor é a origem de uma categoria inteira de problemas atribuídos por engano ao modelo ou ao harness: rate limits (limites de uso), capacidade degradada e quedas do serviço acontecem aqui. Quando o [agente](#agente) trava no meio da [sessão](#sessão) ou dá erro em todo [turno](#turno), vale olhar a página de status do provedor antes de qualquer outra coisa.
 
-"Can we run this offline for the air-gapped client?"
+O provedor também define as condições comerciais: o preço por token dos [tokens de entrada](#tokens-de-entrada) e dos [tokens de saída](#tokens-de-saída), os descontos de [cache de prefixo](#cache-de-prefixo) e quais modelos estão disponíveis. Note que o provedor e o fabricante do modelo podem ser empresas diferentes — Bedrock, Vertex e OpenRouter servem modelos de terceiros.
 
-"Swap the model provider to a local one — Ollama or llama.cpp on their box. The harness doesn't care, it just hits a different endpoint."
+Provedores locais trocam capacidade por controle: os modelos que cabem no hardware do próprio usuário são bem menores que os modelos de ponta, mas nada sai da máquina e não há cobrança por token.
+
+_Uso:_
+
+"Dá pra rodar isso offline para o cliente que trabalha isolado da rede (air-gapped)?"
+
+"Troca o provedor de modelo por um local — Ollama ou llama.cpp na máquina deles. Pro harness tanto faz, ele só bate em outro endpoint."
 
 ### Harness
 
-Everything around the [model](#model) that turns it into an [agent](#agent): [tools](#tool), [system prompt](#system-prompt), [context-window management](#context-window), permissions, hooks. **Claude.ai** and **Claude Code** run on the same model but behave differently because their harnesses differ.
+Harness é tudo o que fica ao redor do [modelo](#modelo) e o transforma em [agente](#agente): [ferramentas](#ferramenta), [prompt de sistema](#prompt-de-sistema), [gerenciamento da janela de contexto](#janela-de-contexto), permissões, hooks. O **Claude.ai** e o **Claude Code** rodam no mesmo modelo, mas se comportam de forma diferente porque seus harnesses são diferentes.
 
-The model itself only does one thing: take text in, produce text out. It can't read a file, run a command, or remember the last [turn](#turn). The harness supplies all of that. It assembles the [context](#context) for each [model provider request](#model-provider-request), executes the [tool calls](#tool-call) the model asks for, feeds the [tool results](#tool-result) back in, stores the [session](#session) history, asks you for permission before risky actions, and decides when to [compact](#compaction). The agent loop — model proposes, harness executes, repeat — is run by the harness.
+O modelo, sozinho, faz uma única coisa: recebe texto e devolve texto. Ele não consegue ler um arquivo, executar um comando nem lembrar do último [turno](#turno). O harness fornece tudo isso. Ele monta o [contexto](#contexto) de cada [requisição ao provedor de modelo](#requisição-ao-provedor-de-modelo), executa as [chamadas de ferramenta](#chamada-de-ferramenta) que o modelo pede, devolve os [resultados de ferramenta](#resultado-de-ferramenta), guarda o histórico da [sessão](#sessão), pede sua permissão antes de ações arriscadas e decide quando [compactar](#compactação). O loop do agente — o modelo propõe, o harness executa, repete — é conduzido pelo harness.
 
-This matters for diagnosis. When behaviour differs between two products, or between yesterday and today, the model is often not the variable — the harness is. A different system prompt, a different set of tools, a changed permission default, or a new context-management strategy all change behaviour without any change to the model. It also means the harness is where most of your configuration lives: [AGENTS.md](#agentsmd) files, permission settings, and hooks are all instructions to the harness, not the model.
+Isso importa no diagnóstico. Quando o comportamento muda entre dois produtos, ou entre ontem e hoje, muitas vezes o modelo não é a variável — o harness é. Um prompt de sistema diferente, um conjunto diferente de ferramentas, um padrão de permissões alterado ou uma nova estratégia de gerenciamento de contexto mudam o comportamento sem nenhuma mudança no modelo. Isso também significa que o harness é onde mora a maior parte da sua configuração: arquivos [AGENTS.md](#agentsmd), configurações de permissão e hooks são todos instruções para o harness, não para o modelo.
 
-Examples: Claude Code, Cursor, Codex CLI — and Claude.ai, which is a chat harness rather than a coding one.
+Exemplos: Claude Code, Cursor, Codex CLI — e o Claude.ai, que é um harness de chat, não de programação.
 
-_Usage:_
+_Uso:_
 
-"Same model, why is Claude Code editing files and Claude.ai just answering questions?"
+"Mesmo modelo, por que o Claude Code edita arquivos e o Claude.ai só responde perguntas?"
 
-"Different harnesses — Claude Code has [filesystem](#filesystem) tools, a different system prompt, and a permission layer. The model isn't the variable here."
+"Harnesses diferentes — o Claude Code tem ferramentas de [sistema de arquivos](#sistema-de-arquivos), um prompt de sistema diferente e uma camada de permissões. O modelo não é a variável aqui."
 
-### Model provider request
+### Requisição ao provedor de modelo
 
-One round-trip from the [harness](#harness) to the [model provider](#model-provider). The harness sends the current [context](#context); the provider returns one response (a [tool call](#tool-call) or a final answer). A single user message can spawn many model provider requests if the [agent](#agent) calls [tools](#tool) — each [tool result](#tool-result) triggers another request.
+_Em inglês: Model provider request_
 
-Each request carries everything: the [system prompt](#system-prompt), the full conversation so far, every tool result. The [model](#model) is [stateless](#stateless), so the provider keeps nothing between requests — request forty re-sends what request thirty-nine sent, plus one more tool result. The [prefix cache](#prefix-cache) exists to make this repetition affordable.
+Uma ida e volta do [harness](#harness) ao [provedor de modelo](#provedor-de-modelo). O harness envia o [contexto](#contexto) atual; o provedor devolve uma resposta (uma [chamada de ferramenta](#chamada-de-ferramenta) ou uma resposta final). Uma única mensagem do usuário pode gerar muitas requisições ao provedor de modelo se o [agente](#agente) chamar [ferramentas](#ferramenta) — cada [resultado de ferramenta](#resultado-de-ferramenta) dispara outra requisição.
 
-The request is also the unit of billing. [Input tokens](#input-tokens), [output tokens](#output-tokens), and cache discounts are all counted per request, which is why an innocuous-looking question can cost a surprising amount: the cost isn't proportional to your message, it's proportional to the number of requests times the size of the context each one carries.
+Cada requisição carrega tudo: o [prompt de sistema](#prompt-de-sistema), a conversa inteira até ali, todos os resultados de ferramenta. O [modelo](#modelo) é [stateless](#stateless), então o provedor não guarda nada entre requisições — a requisição quarenta reenvia o que a trinta e nove enviou, mais um resultado de ferramenta. O [cache de prefixo](#cache-de-prefixo) existe para que essa repetição tenha um custo viável.
 
-It's worth keeping the request distinct from the [turn](#turn). A turn is one exchange with you, and a single turn — "fix the failing test" — plays out as a chain of requests:
+A requisição também é a unidade de cobrança. [Tokens de entrada](#tokens-de-entrada), [tokens de saída](#tokens-de-saída) e descontos de cache são todos contados por requisição, e é por isso que uma pergunta aparentemente inocente pode custar uma quantia surpreendente: o custo não é proporcional à sua mensagem, e sim ao número de requisições vezes o tamanho do contexto que cada uma carrega.
 
-| Request | Model returns                     | Harness then                          |
-| ------- | --------------------------------- | ------------------------------------- |
-| 1       | Tool call: run the tests          | Runs them, appends the failure output |
-| 2       | Tool call: read the test file     | Appends the file contents             |
-| 3       | Tool call: read the source file   | Appends the file contents             |
-| 4       | Tool call: edit the source file   | Applies the edit, appends the result  |
-| 5       | Tool call: run the tests again    | Runs them, appends the pass output    |
-| 6       | Final answer: "fixed, tests pass" | Shows it to you                       |
+Vale distinguir a requisição do [turno](#turno). Um turno é uma troca com você, e um único turno — "conserta o teste que está falhando" — se desenrola como uma cadeia de requisições:
 
-Six requests for one turn — each one re-sending the whole context. When you wonder where the [tokens](#token) went, count the requests, not the turns.
+| Requisição | O modelo devolve                               | Em seguida, o harness                                 |
+| ---------- | ---------------------------------------------- | ----------------------------------------------------- |
+| 1          | Chamada de ferramenta: rodar os testes         | Roda os testes e anexa a saída da falha               |
+| 2          | Chamada de ferramenta: ler o arquivo de teste  | Anexa o conteúdo do arquivo                           |
+| 3          | Chamada de ferramenta: ler o arquivo-fonte     | Anexa o conteúdo do arquivo                           |
+| 4          | Chamada de ferramenta: editar o arquivo-fonte  | Aplica a edição e anexa o resultado                   |
+| 5          | Chamada de ferramenta: rodar os testes de novo | Roda os testes e anexa a saída com os testes passando |
+| 6          | Resposta final: "corrigido, testes passando"   | Mostra a resposta a você                              |
 
-_Usage:_
+Seis requisições para um turno — cada uma reenviando o contexto inteiro. Quando você se perguntar para onde foram os [tokens](#token), conte as requisições, não os turnos.
 
-"One question burned forty thousand tokens?"
+_Uso:_
 
-"Look at the tool calls — twelve grep, eight read, four edits. Each tool result spawns another model provider request, and the whole [session](#session) prefix re-sends every time."
+"Uma pergunta queimou quarenta mil tokens?"
 
-### Input tokens
+"Olha as chamadas de ferramenta — doze greps, oito reads, quatro edits. Cada resultado de ferramenta gera outra requisição ao provedor de modelo, e o prefixo da [sessão](#sessão) inteira é reenviado toda vez."
 
-[Tokens](#token) the [harness](#harness) sends on each [model provider request](#model-provider-request) — the [system prompt](#system-prompt), the conversation history, [tool results](#tool-result), everything the [model](#model) reads before it writes. Billed at a lower rate than [output tokens](#output-tokens), because they are less expensive to process than output tokens.
+### Tokens de entrada
 
-When doing [AI](#ai) coding, input tokens make up most of your bill. The model is [stateless](#stateless), so each [turn](#turn) re-sends the entire [session](#session) as input: your first message, every response, every tool result since. The input for turn fifty contains the previous forty-nine turns. A single model provider request might produce a few hundred output tokens but re-send a hundred thousand input tokens of accumulated history.
+_Em inglês: Input tokens_
 
-The [prefix cache](#prefix-cache) reduces the cost: history that exactly matches a previous request is billed as cheap [cache tokens](#cache-tokens) rather than full-price input. When input costs still hurt, the fix is to shrink what gets re-sent — [clearing](#clearing) or [compacting](#compaction) between tasks.
+[Tokens](#token) que o [harness](#harness) envia em cada [requisição ao provedor de modelo](#requisição-ao-provedor-de-modelo) — o [prompt de sistema](#prompt-de-sistema), o histórico da conversa, os [resultados de ferramenta](#resultado-de-ferramenta), tudo o que o [modelo](#modelo) lê antes de escrever. São cobrados a uma tarifa menor que os [tokens de saída](#tokens-de-saída), porque são mais baratos de processar.
 
-_Usage:_
+Na programação com [IA](#ia), os tokens de entrada respondem pela maior parte da sua fatura. O modelo é [stateless](#stateless) (sem estado), então cada [turno](#turno) reenvia a [sessão](#sessão) inteira como entrada: a primeira mensagem, cada resposta, cada resultado de ferramenta desde então. A entrada do turno cinquenta contém os quarenta e nove turnos anteriores. Uma única requisição ao provedor de modelo pode gerar algumas centenas de tokens de saída, mas reenviar cem mil tokens de entrada de histórico acumulado.
 
-"Bill's high but the [agent](#agent)'s barely writing anything."
+O [cache de prefixo](#cache-de-prefixo) reduz o custo: o histórico que coincide exatamente com uma requisição anterior é cobrado como [tokens de cache](#tokens-de-cache), mais baratos, e não como entrada a preço cheio. Quando o custo de entrada ainda pesa, a solução é diminuir o que é reenviado — [limpando o contexto](#limpeza-de-contexto) ou [compactando](#compactação) entre tarefas.
 
-"It's the input tokens — every turn re-sends the whole session. Without the prefix cache you re-pay for the history each request."
+_Uso:_
 
-### Output tokens
+"A fatura tá alta, mas o [agente](#agente) mal escreve nada."
 
-[Tokens](#token) the [model](#model) generates back. Billed at a higher rate than [input tokens](#input-tokens) — commonly around five times the rate — since they cost more compute to produce.
+"São os tokens de entrada — cada turno reenvia a sessão inteira. Sem o cache de prefixo, você paga de novo pelo histórico a cada requisição."
 
-Everything the model writes counts: the prose you read, the code it emits, [tool calls](#tool-call), and any extended thinking the model does before answering. That last one surprises people — reasoning tokens are billed as output even when the [harness](#harness) often doesn't show them to you, and turning up [effort](#effort) spends more of them.
+### Tokens de saída
 
-Output tokens also set the pace of a [session](#session). The model reads input quickly but generates output one token at a time, so when a [turn](#turn) feels slow, it's almost always the output being written, not the input being read. A long wait usually means a long answer is coming.
+_Em inglês: Output tokens_
 
-_Usage:_
+Os [tokens](#token) que o [modelo](#modelo) gera de volta. São cobrados a uma tarifa maior que a dos [tokens de entrada](#tokens-de-entrada), geralmente cerca de cinco vezes a tarifa de entrada, porque custam mais processamento para produzir.
 
-"The refactor session is burning through credit even though the inputs are small."
+Tudo o que o modelo escreve conta: o texto que você lê, o código que ele emite, as [chamadas de ferramenta](#chamada-de-ferramenta) e qualquer raciocínio estendido que ele faz antes de responder. Esse último ponto surpreende muita gente: os tokens de raciocínio são cobrados como saída mesmo que o [harness](#harness) muitas vezes não os mostre a você, e aumentar o [esforço](#esforço-de-raciocínio) gasta mais deles.
 
-"Agent's rewriting whole files instead of patching. Output tokens cost roughly five times the input rate — get it emitting edits and the bill drops."
+Os tokens de saída também definem o ritmo de uma [sessão](#sessão). O modelo lê a entrada rapidamente, mas gera a saída um token por vez. Por isso, quando um [turno](#turno) parece lento, quase sempre o que demora é a escrita da saída, e não a leitura da entrada. Uma espera longa costuma indicar que vem uma resposta longa.
 
-### Prefix cache
+_Uso:_
 
-The [provider](#model-provider)-side store that lets consecutive [model provider requests](#model-provider-request) skip re-processing a shared prefix. When the start of a request matches the start of a recent one — same [system prompt](#system-prompt), same history up to some point — the provider reuses its prior work and bills those [tokens](#token) as [cache tokens](#cache-tokens) at a much lower rate.
+"A sessão de refatoração está torrando crédito, mesmo com entradas pequenas."
 
-The cache pays off because sessions grow append-only. Every request re-sends the whole history as [input tokens](#input-tokens) (see that entry for why), and in a normal [session](#session) the history only changes at the end — each request is the previous one plus a few new messages. The provider processes the long shared beginning once, stores the result, and picks up from where the prefix ends. Without the cache, a 50-[turn](#turn) session would pay to re-process turn one fifty times.
+"O agente está reescrevendo arquivos inteiros em vez de aplicar patches. Tokens de saída custam cerca de cinco vezes a tarifa de entrada. Faz ele emitir só as edições e a fatura cai."
 
-Caches also expire. How long an entry stays warm varies per model provider — typically minutes, not hours. Leave a session idle past the window and the next request rebuilds the prefix at full price once before caching resumes. This is mostly a [harness](#harness) builder's concern; as a user, the visible effect is that requests after a long pause cost more than the ones before it.
+### Cache de prefixo
 
-_Usage:_
+_Em inglês: Prefix cache_
 
-"Why did the bill spike halfway through the session?"
+O armazenamento no lado do [provedor](#provedor-de-modelo) que permite que [requisições consecutivas ao provedor de modelo](#requisição-ao-provedor-de-modelo) pulem o reprocessamento de um prefixo compartilhado. Quando o início de uma requisição coincide com o início de uma requisição recente (mesmo [prompt de sistema](#prompt-de-sistema), mesmo histórico até certo ponto), o provedor reaproveita o trabalho anterior e cobra esses [tokens](#token) como [tokens de cache](#tokens-de-cache), a uma tarifa bem menor.
 
-"Harness started injecting the current time into the system prompt every turn. Prefix cache breaks at the first changed token, so every request after that billed at full rate."
+O cache compensa porque as sessões crescem apenas no final (append-only). Toda requisição reenvia o histórico inteiro como [tokens de entrada](#tokens-de-entrada) (veja esse verbete para entender o porquê) e, numa [sessão](#sessão) normal, o histórico só muda no final: cada requisição é a anterior mais algumas mensagens novas. O provedor processa uma vez o longo trecho inicial compartilhado, guarda o resultado e continua de onde o prefixo termina. Sem o cache, uma sessão de 50 [turnos](#turno) pagaria 50 vezes para reprocessar o primeiro turno.
 
-### Cache tokens
+Os caches também expiram. O tempo que uma entrada continua "quente" varia conforme o provedor de modelo, em geral minutos, não horas. Se você deixa a sessão parada além dessa janela, a próxima requisição reconstrói o prefixo uma vez, pela tarifa cheia, e só depois disso o cache volta a funcionar. Isso interessa sobretudo a quem constrói um [harness](#harness). Para quem usa, o efeito visível é que as requisições depois de uma pausa longa custam mais do que as anteriores.
 
-[Input tokens](#input-tokens) the [provider](#model-provider) has cached from a previous [model provider request](#model-provider-request) so it doesn't have to re-process them. When consecutive requests share a prefix, the provider reuses the work via its [prefix cache](#prefix-cache) and bills the cached portion at a much lower rate. The lever that makes long [sessions](#session) affordable — without it, every [turn](#turn) re-pays for the whole history.
+_Uso:_
 
-The reason this matters is how sessions are billed. The [model](#model) is [stateless](#stateless), so every request resends the entire conversation — [system prompt](#system-prompt), every message, every [tool result](#tool-result) — as input tokens. By turn fifty, each request carries fifty turns of history, and you'd pay full rate on all of it, every time. The cache changes the maths: tokens the provider has already processed in an identical prefix are billed as cache tokens, often at a tenth of the input rate or less. On a long session, most of what you send is cache tokens, and the bill stays sane.
+"Por que a fatura disparou no meio da sessão?"
 
-An example shows when tokens are cached and when they're not. Each letter stands for a block of conversation content; each request sends the conversation so far:
+"O harness começou a injetar a hora atual no prompt de sistema a cada turno. O cache de prefixo quebra no primeiro token que muda, então toda requisição depois disso foi cobrada pela tarifa cheia."
 
-| Request sends | Cached  | Billed at full rate | Why                                               |
-| ------------- | ------- | ------------------- | ------------------------------------------------- |
-| `AB`          | nothing | `AB`                | First request — nothing to match against          |
-| `ABC`         | `AB`    | `C`                 | `AB` is an exact prefix of the previous request   |
-| `ABCD`        | `ABC`   | `D`                 | Prefix still intact                               |
-| `AXCD`        | `A`     | `XCD`               | An edit changed `B` to `X`; the match fails there |
+### Tokens de cache
 
-The cache is fragile in a specific way: it matches exact prefixes. If anything changes earlier in the conversation — the [harness](#harness) reorders content, a timestamp updates, a file's representation shifts — the cache misses from that point onward and everything after it is billed at full input rate. Caches also expire after a few minutes of inactivity, so a session resumed after a long pause re-pays its history once. When a session's cost jumps without an obvious cause, compare cache tokens to input tokens in the usage report — a broken cache shows up there first.
+_Em inglês: Cache tokens_
 
-_Usage:_
+[Tokens de entrada](#tokens-de-entrada) que o [provedor](#provedor-de-modelo) guardou em cache de uma [requisição ao provedor de modelo](#requisição-ao-provedor-de-modelo) anterior, para não precisar processá-los de novo. Quando requisições consecutivas compartilham um prefixo, o provedor reaproveita o trabalho por meio do [cache de prefixo](#cache-de-prefixo) e cobra a parte em cache a uma tarifa bem menor. É o que torna [sessões](#sessão) longas viáveis — sem ele, cada [turno](#turno) paga de novo pelo histórico inteiro.
 
-"Cost on long sessions is brutal — eight bucks for a refactor."
+Isso importa por causa da forma como as sessões são cobradas. O [modelo](#modelo) é [stateless](#stateless), então cada requisição reenvia a conversa inteira — [prompt de sistema](#prompt-de-sistema), todas as mensagens, todos os [resultados de ferramenta](#resultado-de-ferramenta) — como tokens de entrada. No turno 50, cada requisição carrega 50 turnos de histórico, e você pagaria a tarifa cheia por tudo isso, toda vez. O cache muda essa conta: os tokens que o provedor já processou num prefixo idêntico são cobrados como tokens de cache, muitas vezes a um décimo da tarifa de entrada ou menos. Numa sessão longa, a maior parte do que você envia são tokens de cache, e a fatura se mantém razoável.
 
-"Check the cache tokens. If the harness is reordering the system prompt or files between turns, the prefix breaks and you re-pay full input rate every request."
+Um exemplo mostra quando os tokens entram no cache e quando não entram. Cada letra representa um bloco de conteúdo da conversa; cada requisição envia a conversa até aquele ponto:
 
-## Section 2 — Sessions, Context Windows & Turns
+| A requisição envia | Em cache | Cobrado à tarifa cheia | Motivo                                                    |
+| ------------------ | -------- | ---------------------- | --------------------------------------------------------- |
+| `AB`               | nada     | `AB`                   | Primeira requisição — não há nada para comparar           |
+| `ABC`              | `AB`     | `C`                    | `AB` é um prefixo exato da requisição anterior            |
+| `ABCD`             | `ABC`    | `D`                    | O prefixo continua intacto                                |
+| `AXCD`             | `A`      | `XCD`                  | Uma edição trocou `B` por `X`; a correspondência falha aí |
+
+O cache é frágil de um jeito específico: ele só reconhece prefixos exatos. Se qualquer coisa mudar antes no histórico da conversa — o [harness](#harness) reordena o conteúdo, um timestamp é atualizado, a representação de um arquivo muda —, há falha de cache daquele ponto em diante e tudo o que vem depois é cobrado à tarifa cheia de entrada. Os caches também expiram depois de alguns minutos de inatividade, então uma sessão retomada após uma pausa longa paga o histórico de novo uma vez. Quando o custo de uma sessão dispara sem motivo aparente, compare os tokens de cache com os tokens de entrada no relatório de uso: um cache quebrado aparece ali primeiro.
+
+_Uso:_
+
+"O custo em sessão longa é absurdo — gastei US$ 8 numa refatoração."
+
+"Olha os tokens de cache. Se o harness está reordenando o prompt de sistema ou os arquivos entre um turno e outro, o prefixo quebra e você paga a tarifa cheia de entrada em toda requisição."
+
+## Seção 2 — Sessões, Janelas de Contexto e Turnos
 
 ### Stateless
 
-Carries no information forward. The [model](#model) is stateless across [model provider requests](#model-provider-request) — each request resends the full [context window](#context-window), because the model has no way to see anything else. An [agent](#agent) is stateless across [sessions](#session) by default: a new session starts empty, with no trace of prior ones. Counterpart to [stateful](#stateful).
+Stateless (sem estado): não carrega informação adiante. O [modelo](#modelo) é stateless entre [requisições ao provedor de modelo](#requisição-ao-provedor-de-modelo) — cada requisição reenvia toda a [janela de contexto](#janela-de-contexto), porque o modelo não tem como ver mais nada. Um [agente](#agente) é stateless entre [sessões](#sessão) por padrão: uma sessão nova começa vazia, sem vestígio das anteriores. Contraparte de [stateful](#stateful).
 
-The model itself is permanently stateless: its [parameters](#parameters) are frozen after [training](#training), and nothing you do at [inference](#inference) changes them. The model doesn't learn from your corrections, doesn't remember being told the same thing yesterday, and isn't getting to know you — however much the conversation feels otherwise. The feeling of continuity within a session is manufactured by the [harness](#harness), which keeps the transcript and re-sends it with every request. The model isn't remembering the conversation; it's re-reading it.
+O próprio modelo é permanentemente stateless: seus [parâmetros](#parâmetros) ficam congelados depois do [treinamento](#treinamento), e nada que você faça durante a [inferência](#inferência) os altera. O modelo não aprende com suas correções, não se lembra de ter ouvido a mesma coisa ontem e não passa a conhecer você aos poucos, por mais que a conversa dê essa impressão. A sensação de continuidade dentro de uma sessão é produzida pelo [harness](#harness), que guarda a transcrição e a reenvia a cada requisição. O modelo não se lembra da conversa; ele a relê.
 
-The practical consequence: if you want something remembered across sessions, you have to write it down somewhere the agent will read it back. That's what [AGENTS.md](#agentsmd) files, [memory systems](#memory-system), and [handoff artifacts](#handoff-artifact) are — files that get loaded into the [context](#context) of future sessions, standing in for the memory the model doesn't have. When the agent keeps making a mistake you've corrected before, the question isn't why it didn't learn — it can't — but where that correction should be written down so every future session reads it.
+Na prática: se você quer que algo seja lembrado entre sessões, precisa escrever isso em algum lugar que o agente vá ler de volta. É isso que são os [arquivos AGENTS.md](#agentsmd), os [sistemas de memória](#sistema-de-memória) e os [artefatos de handoff](#artefato-de-handoff) — arquivos que são carregados no [contexto](#contexto) das sessões futuras, no lugar da memória que o modelo não tem. Quando o agente insiste num erro que você já corrigiu, a pergunta não é por que ele não aprendeu — ele não pode — e sim onde essa correção deve ser escrita para que toda sessão futura a leia.
 
-_Usage:_
+_Uso:_
 
-"Why does it forget the convention every time I [clear](#clearing)?"
+"Por que ele esquece a convenção toda vez que eu [limpo o contexto](#limpeza-de-contexto)?"
 
-"The model's stateless — the new session starts empty. If you want it carried, write it to AGENTS.md or a memory file the harness loads at session start."
+"O modelo é stateless — a sessão nova começa vazia. Se você quer que isso passe de uma sessão pra outra, escreve no AGENTS.md ou num arquivo de memória que o harness carrega no início da sessão."
 
-### Context
+### Contexto
 
-The relevant information the [agent](#agent) has access to right now. The abstract noun — not the raw input the model sees (that's the [context window](#context-window)), not the running history (that's the [session](#session)), but _what the agent knows that's pertinent to the task_. "Loading something into context" means making it part of this set; "context engineering" is the discipline of curating it.
+_Em inglês: Context_
 
-The three terms separate cleanly:
+As informações relevantes que o [agente](#agente) tem à disposição agora. É o substantivo abstrato — não a entrada bruta que o modelo enxerga (essa é a [janela de contexto](#janela-de-contexto)), nem o histórico acumulado (esse é a [sessão](#sessão)), mas _o que o agente sabe que é pertinente à tarefa_. "Carregar algo no contexto" significa passar a incluir esse algo no conjunto; "engenharia de contexto" é a disciplina de fazer a curadoria dele.
 
-| Term           | What it names                                                       |
-| -------------- | ------------------------------------------------------------------- |
-| Context        | The task-relevant information the agent currently has               |
-| Context window | The literal [token](#token) sequence the model sees per request |
-| Session        | The running conversation the [harness](#harness) stores         |
+Os três termos são distintos:
 
-The separation matters because context is a measure of quality, not quantity. A context window can be nearly full and the context still poor — thousands of tokens of stale tool output, none of it about the task at hand. It can also be nearly empty and the context excellent: the one type definition the task turns on.
+| Termo              | O que nomeia                                                                  |
+| ------------------ | ----------------------------------------------------------------------------- |
+| Contexto           | As informações relevantes para a tarefa que o agente tem no momento           |
+| Janela de contexto | A sequência literal de [tokens](#token) que o modelo vê a cada requisição |
+| Sessão             | A conversa em andamento que o [harness](#harness) armazena                |
 
-Most day-to-day failures trace back to context. When the agent invents an API, contradicts a decision, or guesses at a schema, the first question is what was in context when it did — usually the relevant fact was never loaded, or was buried under [attention degradation](#attention-degradation). The fix is curation: load what the task needs, keep out what it doesn't.
+A separação importa porque contexto é uma medida de qualidade, não de quantidade. Uma janela de contexto pode estar quase cheia e o contexto continuar ruim — milhares de tokens de saídas desatualizadas de ferramentas, nenhum deles sobre a tarefa em questão. Ela também pode estar quase vazia e o contexto ser bom: a única definição de tipo em que a tarefa se apoia.
 
-_Usage:_
+A maioria das falhas do dia a dia tem origem no contexto. Quando o agente inventa uma API, contradiz uma decisão ou chuta um schema, a primeira pergunta é o que estava no contexto naquela hora — em geral o fato relevante nunca foi carregado, ou ficou soterrado pela [degradação de atenção](#degradação-de-atenção). A correção é a curadoria: carregue o que a tarefa precisa e deixe de fora o que ela não precisa.
 
-"It keeps inventing fields that aren't in the type."
+_Uso:_
 
-"The type file isn't in context — it's reading the call sites and guessing. Read the definition in first."
+"Ele fica inventando campos que não existem no tipo."
 
-### Context window
+"O arquivo do tipo não está no contexto — ele está lendo os pontos de chamada e chutando. Manda ele ler a definição primeiro."
 
-Everything the [model](#model) sees on each [model provider request](#model-provider-request). Finite, model-specific, and the _only_ surface through which the model perceives anything.
+### Janela de contexto
 
-It's a single sequence of [tokens](#token): the [system prompt](#system-prompt), the conversation so far, every [tool result](#tool-result) the [harness](#harness) has fed back in. If something is in that sequence, the model can use it; if it isn't, the model doesn't know it exists — not your codebase, not the file you edited yesterday, not the instruction you gave three sessions ago. Anything outside the window has to be brought in, usually via a [tool call](#tool-call), before it can affect anything.
+_Em inglês: Context window_
 
-Finite means it fills up. Every turn appends more — your messages, the model's responses, tool results — and a long [session](#session) will eventually hit the limit, forcing [compaction](#compaction) or [clearing](#clearing). It also means everything in the window competes: each token you load is one less available for the rest, and content you didn't need still occupies the model's [attention](#attention-budget). The practical stance is to treat the window as a budget — load what the task needs, leave the rest out.
+Tudo o que o [modelo](#modelo) vê em cada [requisição ao provedor de modelo](#requisição-ao-provedor-de-modelo). Finita, específica de cada modelo e a _única_ superfície pela qual o modelo percebe qualquer coisa.
 
-_Avoid:_ "memory" — the context window is working state and doesn't persist across sessions. [Memory](#memory-system) is a separate concept layered on top.
+É uma única sequência de [tokens](#token): o [prompt de sistema](#prompt-de-sistema), a conversa até aqui e cada [resultado de ferramenta](#resultado-de-ferramenta) que o [harness](#harness) devolveu ao modelo. Se algo está nessa sequência, o modelo pode usar; se não está, ele não sabe que existe — nem a sua base de código, nem o arquivo que você editou ontem, nem a instrução que você deu três sessões atrás. Tudo o que está fora da janela precisa ser trazido para dentro, normalmente por uma [chamada de ferramenta](#chamada-de-ferramenta), antes de poder influenciar qualquer coisa.
 
-_Usage:_
+Finita quer dizer que ela enche. Cada turno acrescenta mais conteúdo — suas mensagens, as respostas do modelo, os resultados de ferramenta — e uma [sessão](#sessão) longa acaba chegando ao limite, o que força uma [compactação](#compactação) ou uma [limpeza de contexto](#limpeza-de-contexto). Também quer dizer que tudo dentro da janela compete: cada token que você carrega é um a menos para o resto, e o conteúdo desnecessário continua ocupando o [orçamento de atenção](#orçamento-de-atenção) do modelo. Na prática, trate a janela como um orçamento: carregue o que a tarefa exige e deixe o resto de fora.
 
-"Can I just paste the whole monorepo into the prompt?"
+_Evite:_ "memória" — a janela de contexto é estado de trabalho e não persiste entre sessões. [Memória](#sistema-de-memória) é um conceito separado, montado por cima dela.
 
-"The context window's 200k tokens — that's maybe a fifth of the repo. Pick the files the task touches, leave the rest behind a tool call."
+_Uso:_
+
+"Posso colar o monorepo inteiro no prompt?"
+
+"A janela de contexto tem 200 mil tokens — isso dá uns 20% do repo. Escolha os arquivos que a tarefa toca e deixe o resto por trás de uma chamada de ferramenta."
 
 ### Stateful
 
-Carries information forward. A [session](#session) is stateful across [turns](#turn) — [context](#context) accumulates as the session runs, which is why long sessions drift into the [dumb zone](#smart-zone). An [agent](#agent) can be made stateful across **sessions** by adding a [memory system](#memory-system) that persists information into the [environment](#environment) and reloads it at the start of future sessions. The [model](#model) is never stateful; any apparent continuity is the [harness](#harness) re-feeding context. Counterpart to [stateless](#stateless).
+Stateful (com estado): carrega informação adiante. Uma [sessão](#sessão) é stateful entre [turnos](#turno) — o [contexto](#contexto) se acumula conforme a sessão roda, e é por isso que sessões longas acabam caindo na [zona burra](#zona-inteligente). Um [agente](#agente) pode ser stateful entre **sessões** quando ganha um [sistema de memória](#sistema-de-memória) que grava informação no [ambiente](#ambiente) e a recarrega no início das sessões futuras. O [modelo](#modelo) nunca é stateful; qualquer continuidade aparente é o [harness](#harness) realimentando o contexto. Contraparte de [stateless](#stateless).
 
-Where state lives at each layer:
+Onde o estado fica em cada camada:
 
-| Layer       | Stateful?       | How                                                                                                                    |
-| ----------- | --------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| Model       | Never           | [Parameters](#parameters) are frozen; it sees only what's in each request                                          |
-| Session     | Across turns    | The harness appends every message and [tool result](#tool-result) to the context                                 |
-| Harness     | Across sessions | Memory files, [AGENTS.md](#agentsmd), [handoff artifacts](#handoff-artifact) — written down, reloaded later |
-| Environment | Always          | Files persist whether or not any session is running                                                                    |
+| Camada   | Stateful?     | Como                                                                                                                                    |
+| -------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Modelo   | Nunca         | Os [parâmetros](#parâmetros) são congelados; ele só vê o que vem em cada requisição                                            |
+| Sessão   | Entre turnos  | O harness acrescenta cada mensagem e cada [resultado de ferramenta](#resultado-de-ferramenta) ao contexto                       |
+| Harness  | Entre sessões | Arquivos de memória, [AGENTS.md](#agentsmd), [artefatos de handoff](#artefato-de-handoff) — gravados e recarregados depois |
+| Ambiente | Sempre        | Os arquivos persistem com ou sem sessão rodando                                                                                         |
 
-Each layer's statefulness is built by re-reading something stored a layer below: the session feels continuous because the harness re-sends the message history to the stateless model, and the agent remembers across sessions because the harness re-loads files from the environment. No state is ever stored in the model itself.
+O estado de cada camada é construído relendo algo guardado uma camada abaixo: a sessão parece contínua porque o harness reenvia o histórico de mensagens ao modelo stateless, e o agente lembra entre sessões porque o harness recarrega arquivos do ambiente. Nenhum estado é guardado no próprio modelo.
 
-State isn't always wanted. Everything carried forward influences what comes next, so a wrong assumption made early in a session is carried forward too. [Clearing](#clearing) is the deliberate act of throwing session state away and starting from what's written down.
+Nem sempre se quer estado. Tudo o que é carregado adiante influencia o que vem depois, então uma suposição errada feita no começo da sessão também é carregada adiante. A [limpeza de contexto](#limpeza-de-contexto) é o ato deliberado de descartar o estado da sessão e recomeçar a partir do que está escrito.
 
-_Usage:_
+_Uso:_
 
-"It remembered my preferences from yesterday — does that mean the model learned them?"
+"Ele lembrou das minhas preferências de ontem. Isso quer dizer que o modelo aprendeu?"
 
-"No, the agent's stateful because the harness wrote them to a memory file and reloaded them at session start. The model itself saw nothing of yesterday."
+"Não, o agente é stateful porque o harness gravou isso num arquivo de memória e recarregou no início da sessão. O modelo em si não viu nada de ontem."
 
-### Agent
+### Agente
 
-A [model](#model) [harnessed](#harness) with [tools](#tool), a [system prompt](#system-prompt), and a [context window](#context-window), that takes [turns](#turn) with a user. _Claude Code is an agent. Cursor is an agent. Claude.ai is an agent._ An agent is what you actually talk to — it's the model in motion, configured for a purpose.
+_Em inglês: Agent_
 
-Unlike most terms in this dictionary, "agent" doesn't name a mechanical part. The model is a file of [parameters](#parameters); the harness is software you can point at. The agent is neither — it's the unit you're speaking to. People anthropomorphize [AI](#ai) constantly, and the agent is the anthropomorphized unit: the thing you delegate to, the thing that reads your message and answers, the "it" in "it broke the build again". When you say the agent did something, you mean the model-plus-harness did it, but you're addressing the combination as a single actor.
+Um [modelo](#modelo) [envolvido por um harness](#harness) com [ferramentas](#ferramenta), um [prompt de sistema](#prompt-de-sistema) e uma [janela de contexto](#janela-de-contexto), que se reveza com um usuário em [turnos](#turno). _O Claude Code é um agente. O Cursor é um agente. O Claude.ai é um agente._ O agente é aquilo com que você de fato conversa — é o modelo em movimento, configurado para um propósito.
 
-The idea is older than this wave of AI. Software agents — programs you delegate a goal to, which act on your behalf — have been a concept for as long as AI has.
+Ao contrário da maioria dos termos deste dicionário, "agente" não nomeia uma peça mecânica. O modelo é um arquivo de [parâmetros](#parâmetros); o harness é um software que dá para apontar. O agente não é nenhum dos dois — é a unidade com quem você está falando. As pessoas antropomorfizam a [IA](#ia) o tempo todo, e o agente é a unidade antropomorfizada: aquilo a que você delega tarefas, aquilo que lê sua mensagem e responde, o "ele" em "ele quebrou o build de novo". Quando você diz que o agente fez algo, quer dizer que o modelo junto com o harness fez, mas você se dirige à combinação como um único ator.
 
-_Avoid:_ "the AI", "the bot" (too vague — they hide whether you mean the parameters or the harnessed thing).
+A ideia é mais antiga que esta onda de IA. Agentes de software — programas aos quais você delega um objetivo e que agem em seu nome — existem como conceito desde que existe IA.
 
-_Usage:_
+_Evite:_ "a IA", "o bot" (vagos demais — não deixam claro se você fala dos parâmetros ou da coisa envolvida por um harness).
 
-"Which agent are you using for the migration?"
+_Uso:_
 
-"Claude Code locally, Cursor for the UI work — same model underneath, different harnesses."
+"Qual agente você está usando na migração?"
 
-### System prompt
+"Claude Code local, Cursor pro trabalho de UI — mesmo modelo por baixo, harnesses diferentes."
 
-The instructions the [harness](#harness) prepends to every [model provider request](#model-provider-request) — the [agent](#agent)'s standing brief: who it is, how to behave, which [tools](#tool) it can call, what conventions to follow. Usually stable across a [session](#session).
+### Prompt de sistema
 
-The system prompt is written by the harness vendor, not by you, and in coding harnesses it's big — often tens of thousands of [tokens](#token) of behavioural rules, tool descriptions, and edge-case handling, all paid as [input tokens](#input-tokens) on every [turn](#turn). Your own standing instructions ride along with it: files like [AGENTS.md](#agentsmd) are loaded next to the system prompt at the start of the session, so the [model](#model) reads the vendor's brief and yours together before it ever sees your message.
+_Em inglês: System prompt_
 
-Because it's identical on every request, it forms the start of the [prefix cache](#prefix-cache) — which is part of why harnesses keep it fixed for a whole session rather than editing it as they go.
+As instruções que o [harness](#harness) insere antes de cada [requisição ao provedor de modelo](#requisição-ao-provedor-de-modelo) — o briefing fixo do [agente](#agente): quem ele é, como deve se comportar, quais [ferramentas](#ferramenta) pode chamar, quais convenções seguir. Costuma ser estável ao longo de uma [sessão](#sessão).
 
-Models are trained to prioritise the system prompt over user messages. So when an agent insists on a convention you never asked for, or formats output in a way you can't shake, it's usually obeying its system prompt — and your message is losing the argument. Some harnesses are customisable: they give you full access to the system prompt, so you can read what the agent is actually being told and change it.
+O prompt de sistema é escrito pelo fornecedor do harness, não por você. Em harnesses de programação ele é extenso: muitas vezes são dezenas de milhares de [tokens](#token) de regras de comportamento, descrições de ferramentas e tratamento de casos de borda, tudo pago como [tokens de entrada](#tokens-de-entrada) a cada [turno](#turno). Suas próprias instruções permanentes vão junto: arquivos como [AGENTS.md](#agentsmd) são carregados ao lado do prompt de sistema no início da sessão, então o [modelo](#modelo) lê o briefing do fornecedor e o seu ao mesmo tempo, antes mesmo de ver a sua mensagem.
 
-_Usage:_
+Como é idêntico em toda requisição, ele forma o início do [cache de prefixo](#cache-de-prefixo). É em parte por isso que os harnesses o mantêm fixo durante a sessão, em vez de editá-lo conforme ela avança.
 
-"Two harnesses, same model, totally different behavior on the same prompt."
+Os modelos são treinados para dar prioridade ao prompt de sistema sobre as mensagens do usuário. Por isso, quando um agente insiste numa convenção que você nunca pediu, ou formata a saída de um jeito que você não consegue mudar, em geral ele está obedecendo ao prompt de sistema, e a sua mensagem perde a disputa. Alguns harnesses são personalizáveis: dão acesso completo ao prompt de sistema, então você pode ler o que o agente recebe como instrução e alterar isso.
 
-"Different system prompts. One's tuned for terse code edits, the other for explaining — that's where the divergence lives, before your message even arrives."
+_Uso:_
 
-### Session
+"Dois harnesses, mesmo modelo, comportamento completamente diferente pro mesmo prompt."
 
-One bounded run of interaction with an [agent](#agent). Starts empty, accumulates messages, [tool results](#tool-result), and files read, and ends when [cleared](#clearing), closed, or [compacted](#compaction) into a fresh session. The session is what _fills_ the [context window](#context-window): if the context window is the box, the session is the stuff slowly filling it up. Work too large for a single context window must be split across sessions.
+"Prompts de sistema diferentes. Um é ajustado pra edições de código enxutas, o outro pra explicar — a divergência nasce aí, antes de a sua mensagem chegar."
 
-The session's message history is the agent's working memory. The [model](#model) is [stateless](#stateless), so everything it appears to remember — what you asked for, what the tests said, what it decided three turns ago — is in the message history, re-sent with every [model provider request](#model-provider-request). Whatever isn't in the session doesn't exist for the agent.
+### Sessão
 
-That memory ends with the session. A new session starts from nothing: the agent that knew your codebase well at the end of yesterday's session knows none of it this morning. What survives is the [filesystem](#filesystem) — files written during one session can be read by the next, which is what [handoffs](#handoff), [memory systems](#memory-system), and [AGENTS.md](#agentsmd) rely on.
+_Em inglês: Session_
 
-You choose where a session ends. Everything in a session influences every later [turn](#turn), so unrelated tasks done in one session leave residue that colours the next answer. One task per session keeps the context relevant; finishing a task is a natural point to clear.
+Uma execução delimitada de interação com um [agente](#agente). Começa vazia, acumula mensagens, [resultados de ferramenta](#resultado-de-ferramenta) e arquivos lidos, e termina quando é [limpa](#limpeza-de-contexto), fechada ou [compactada](#compactação) numa sessão nova. A sessão é o que _preenche_ a [janela de contexto](#janela-de-contexto): se a janela de contexto é a caixa, a sessão é o material que vai enchendo a caixa aos poucos. Um trabalho grande demais para uma única janela de contexto precisa ser dividido em várias sessões.
 
-_Usage:_
+O histórico de mensagens da sessão é a memória de trabalho do agente. O [modelo](#modelo) é [stateless](#stateless) (sem estado), então tudo o que ele parece lembrar — o que você pediu, o que os testes mostraram, o que ele decidiu três turnos atrás — está no histórico de mensagens, reenviado a cada [requisição ao provedor de modelo](#requisição-ao-provedor-de-modelo). O que não está na sessão não existe para o agente.
 
-"How long can one session run before it falls apart?"
+Essa memória acaba junto com a sessão. Uma sessão nova começa do zero: o agente que conhecia bem a sua base de código no fim da sessão de ontem não sabe nada disso hoje de manhã. O que sobrevive é o [sistema de arquivos](#sistema-de-arquivos) — arquivos escritos durante uma sessão podem ser lidos pela seguinte, e é nisso que se apoiam os [handoffs](#handoff), os [sistemas de memória](#sistema-de-memória) e o [AGENTS.md](#agentsmd).
 
-"Depends on the work — a focused refactor stays sharp longer than open-ended research. Once the session bloats, hand off or compact, don't push through."
+Quem escolhe onde a sessão termina é você. Tudo o que está numa sessão influencia todos os [turnos](#turno) seguintes, então tarefas sem relação feitas na mesma sessão deixam resíduo que influencia a resposta seguinte. Uma tarefa por sessão mantém o contexto relevante; terminar uma tarefa é um ponto natural para limpar.
 
-### Turn
+_Uso:_
 
-One user message plus everything the [agent](#agent) does in response, up until it yields back to the user. Contains one or more [model provider requests](#model-provider-request) — many, if the agent calls [tools](#tool). A clarifying question closes the turn; your reply opens the next one. The hierarchy is [session](#session) **> Turn > Model provider request**.
+"Quanto tempo uma sessão aguenta antes de degringolar?"
 
-What makes the turn worth naming is that its length is the agent's decision, not yours. You hand over one message; the agent decides how many tool calls to chain before yielding. A turn can be a one-sentence answer or twenty minutes of reading, editing, and running tests. That's the same property from two angles: long turns are what make [AFK](#afk) work possible, and long turns are also where things go wrong unsupervised — by the time the agent yields, it may have drifted a long way from what you meant.
+"Depende do trabalho — uma refatoração focada se mantém boa por mais tempo do que uma pesquisa em aberto. Quando a sessão incha, faz handoff ou compacta, não fica insistindo."
 
-The turn is also the natural unit for steering. Everything inside a turn happens without you; the gaps between turns are where you redirect. Most [harnesses](#harness) soften this: you can interrupt mid-turn to stop the agent and redirect it, or type a message while it works, which gets read once the turn completes. If you find yourself repeatedly unhappy with where turns end up, the fix is usually to ask for smaller ones — a plan first, one step at a time — trading autonomy for more frequent gaps to steer in.
+### Turno
 
-_Usage:_
+_Em inglês: Turn_
 
-"One turn took two minutes?"
+Uma mensagem do usuário mais tudo o que o [agente](#agente) faz em resposta, até devolver a vez ao usuário. Contém uma ou mais [requisições ao provedor de modelo](#requisição-ao-provedor-de-modelo) — muitas, se o agente chamar [ferramentas](#ferramenta). Uma pergunta de esclarecimento encerra o turno; a sua resposta abre o próximo. A hierarquia é [sessão](#sessão) **> Turno > Requisição ao provedor de modelo**.
 
-"It made fourteen [tool calls](#tool-call) inside that turn — each one is a separate model provider request. Latency stacks up before the agent finally yields back to you."
+O que faz o turno merecer um nome é que a duração é decisão do agente, não sua. Você entrega uma mensagem; o agente decide quantas chamadas de ferramenta encadear antes de devolver a vez. Um turno pode ser uma resposta de uma frase ou vinte minutos de leitura, edição e execução de testes. É a mesma propriedade vista de dois ângulos: turnos longos são o que torna possível o trabalho [AFK](#afk), e turnos longos também são onde as coisas dão errado sem supervisão — quando o agente devolve a vez, ele pode ter se desviado bastante do que você queria.
 
-## Section 3 — Tools & Environment
+O turno também é a unidade natural de direcionamento. Tudo o que acontece dentro de um turno acontece sem você; os intervalos entre turnos são onde você redireciona. A maioria dos [harnesses](#harness) suaviza isso: você pode interromper no meio do turno para parar o agente e redirecioná-lo, ou digitar uma mensagem enquanto ele trabalha, que será lida quando o turno terminar. Se você fica repetidamente insatisfeito com o ponto em que os turnos terminam, a correção costuma ser pedir turnos menores — primeiro um plano, depois um passo de cada vez — trocando autonomia por intervalos mais frequentes para direcionar.
 
-### Environment
+_Uso:_
 
-The world the [agent](#agent) acts on — anything outside the [harness](#harness) that the agent perceives through [tool results](#tool-result) and changes through [tool calls](#tool-call). The harness _runs_ the agent; the environment is what the agent _works in_. A file like [`AGENTS.md`](#agentsmd) lives in the environment; the harness is what loads it into the [context window](#context-window). A [filesystem](#filesystem) is the most common kind of environment, but not the only one (a database, a remote API, a browser session can all be environments).
+"Um turno levou dois minutos?"
 
-The agent only sees the environment when it looks. Everything it knows about the environment arrived through a tool result, so its picture is a collection of snapshots, each accurate at the moment it was taken. If a file changes after the agent read it — you edit it by hand, a build step regenerates it — the agent keeps reasoning from the stale copy until something prompts a re-read. An agent confidently describing a file that no longer looks like that is usually this: the environment moved, the snapshot didn't.
+"Ele fez catorze [chamadas de ferramenta](#chamada-de-ferramenta) dentro desse turno — cada uma é uma requisição separada ao provedor de modelo. A latência vai se acumulando até o agente finalmente devolver a vez pra você."
 
-The environment is also the layer that persists — the only one that is always [stateful](#stateful). A [session](#session)'s context is gone when the session ends, but files written to the environment remain for the next session to read — which is what [memory systems](#memory-system), [handoff artifacts](#handoff-artifact), and `AGENTS.md` rely on. Anything an agent should still know tomorrow has to end up in the environment.
+## Seção 3 — Ferramentas e Ambiente
 
-You decide how big the environment is. A [sandbox](#sandbox) shrinks it, limiting what the agent can reach; adding a [tool](#tool) extends it, bringing a database or an API into reach. What's inside the boundary is what the agent can perceive and change; everything outside it doesn't exist for the agent. How well the environment is set up to support the agent's work is the codebase's [AX](#ax).
+### Ambiente
 
-_Avoid:_ using "environment" for the runtime or the harness itself — the harness is the wrapper, the environment is the workspace.
+_Em inglês: Environment_
 
-_Usage:_
+O mundo em que o [agente](#agente) atua — tudo o que fica fora do [harness](#harness) e que o agente percebe por [resultados de ferramenta](#resultado-de-ferramenta) e altera por [chamadas de ferramenta](#chamada-de-ferramenta). O harness _executa_ o agente; o ambiente é o lugar em que o agente _trabalha_. Um arquivo como o [`AGENTS.md`](#agentsmd) fica no ambiente; o harness é quem o carrega na [janela de contexto](#janela-de-contexto). Um [sistema de arquivos](#sistema-de-arquivos) é o tipo mais comum de ambiente, mas não o único (um banco de dados, uma API remota e uma sessão de navegador também podem ser ambientes).
 
-"The agent can't see the staging DB schema."
+O agente só vê o ambiente quando olha para ele. Tudo o que ele sabe sobre o ambiente chegou por um resultado de ferramenta, então a imagem que ele tem é um conjunto de instantâneos, cada um correto no momento em que foi tirado. Se um arquivo muda depois que o agente o leu — você o edita à mão, uma etapa de build o regenera —, o agente continua raciocinando a partir da cópia desatualizada até que algo o leve a reler. Um agente que descreve com segurança um arquivo que já não está daquele jeito costuma estar nessa situação: o ambiente mudou, o instantâneo não.
 
-"Wire it into the environment — give it a `psql` tool scoped to read-only on staging. The harness is fine, it just has nothing to act on."
+O ambiente também é a camada que persiste — a única que é sempre [stateful](#stateful) (com estado). O contexto de uma [sessão](#sessão) some quando a sessão termina, mas os arquivos gravados no ambiente permanecem para a próxima sessão ler — e é nisso que se apoiam os [sistemas de memória](#sistema-de-memória), os [artefatos de handoff](#artefato-de-handoff) e o `AGENTS.md`. Tudo o que um agente ainda precisa saber amanhã tem de acabar no ambiente.
 
-### Filesystem
+Quem decide o tamanho do ambiente é você. Um [sandbox](#sandbox) o reduz, limitando o que o agente consegue alcançar; adicionar uma [ferramenta](#ferramenta) o amplia, trazendo um banco de dados ou uma API para o alcance do agente. O que está dentro da fronteira é o que o agente pode perceber e alterar; tudo o que está fora dela não existe para o agente. O quanto o ambiente está preparado para apoiar o trabalho do agente é a [AX](#ax) da base de código.
 
-A tree of files and directories the [agent](#agent) reads from, writes to, and executes within — the default kind of [environment](#environment) for a coding agent. [AGENTS.md](#agentsmd), [skills](#skill), source code, build scripts, and [tool](#tool) configs all live in a filesystem. When a [harness](#harness) "starts in your project," it's pointing the agent at a filesystem.
+_Evite:_ usar "ambiente" para o runtime ou para o próprio harness — o harness é o invólucro, o ambiente é o espaço de trabalho.
 
-The agent touches it only through [tool calls](#tool-call) — reading a file, writing one, running a shell command. Nothing on disk is in the [context window](#context-window) until a tool call loads it, which is what lets the agent work in a repository far larger than the window: the filesystem holds everything, the context holds only what the current task has read. Some harnesses do load the current directory's filenames into the context window by default — not the contents, just the tree — which act as [context pointers](#context-pointer): the agent sees what exists and reads the files it needs.
+_Uso:_
 
-And it's shared with you. The files the agent edits are the same ones you open in your editor and diff in git — the filesystem is the common workspace where you review what the agent did.
+"O agente não consegue ver o schema do banco de staging."
 
-_Usage:_
+"Coloca isso no ambiente — dá pra ele uma ferramenta `psql` com acesso somente leitura ao staging. O harness tá certo, ele só não tem nada sobre o que agir."
 
-"Why isn't it picking up my AGENTS.md?"
+### Sistema de arquivos
 
-"It's running against a different filesystem — the [sandbox](#sandbox) mounted the parent dir, not the project root. Repoint the harness."
+_Em inglês: Filesystem_
 
-### Tool
+Uma árvore de arquivos e diretórios em que o [agente](#agente) lê, escreve e executa — o tipo padrão de [ambiente](#ambiente) de um agente de programação. [AGENTS.md](#agentsmd), [skills](#skill), código-fonte, scripts de build e configurações de [ferramentas](#ferramenta) ficam todos em um sistema de arquivos. Quando um [harness](#harness) "começa no seu projeto", ele está apontando o agente para um sistema de arquivos.
 
-A function the [harness](#harness) exposes for the [agent](#agent) to call — Read, Write, Bash, Search. Tools are how an agent perceives and acts on the [environment](#environment): it can't see the environment except through [tool results](#tool-result), and can't change it except through [tool calls](#tool-call). Each tool call costs an extra [model provider request](#model-provider-request), since the result has to go back to the model before it can decide what to do next.
+O agente só toca nele por meio de [chamadas de ferramenta](#chamada-de-ferramenta) — ler um arquivo, escrever um arquivo, rodar um comando de shell. Nada no disco está na [janela de contexto](#janela-de-contexto) até que uma chamada de ferramenta o carregue. É isso que permite ao agente trabalhar num repositório muito maior que a janela: o sistema de arquivos guarda tudo, e o contexto guarda só o que a tarefa atual leu. Alguns harnesses carregam por padrão os nomes de arquivo do diretório atual na janela de contexto — não o conteúdo, só a árvore —, e esses nomes funcionam como [ponteiros de contexto](#ponteiro-de-contexto): o agente vê o que existe e lê os arquivos de que precisa.
 
-Tools most coding agents ship with:
+Você e o agente compartilham o mesmo sistema de arquivos. Os arquivos que o agente edita são os mesmos que você abre no editor e confere com diff no git; é o espaço de trabalho comum em que você revisa o que o agente fez.
 
-| Tool   | What it does                                                 |
-| ------ | ------------------------------------------------------------ |
-| Read   | Returns a file's contents as a tool result                   |
-| Write  | Creates or edits a file in the [filesystem](#filesystem) |
-| Bash   | Runs a shell command and returns its output                  |
-| Search | Finds files or text matching a pattern across the codebase   |
+_Uso:_
 
-A tool is defined by three things: a name, a description of what it does, and a schema for its parameters. The harness sends these definitions to the [model](#model) with every request, and the model chooses a tool the same way it produces everything else — by writing [tokens](#token), in this case a structured call with arguments. The model never executes anything itself; the harness reads the call, runs the function, and sends back the result.
+"Por que ele não está pegando meu AGENTS.md?"
 
-The tool list sets what the agent can do. A capable model with a narrow tool set is a narrow agent: it will route everything through whatever it has, which is why agents lean so heavily on Bash — a shell is one tool that reaches most of the system. To give an agent a capability cleanly, add a tool for it; [MCP](#mcp) is the standard for plugging in tools from outside the harness.
+"Ele está rodando em outro sistema de arquivos — o [sandbox](#sandbox) montou o diretório pai, não a raiz do projeto. Aponta o harness de novo."
 
-Tool definitions occupy [context](#context) on every request, so a large tool set has a standing cost before any tool is called — and many similarly-described tools make the model worse at picking the right one.
+### Ferramenta
 
-_Usage:_
+_Em inglês: Tool_
 
-"Can the agent query staging directly?"
+Uma função que o [harness](#harness) expõe para o [agente](#agente) chamar — Read, Write, Bash, Search. As ferramentas são a forma como o agente percebe e age no [ambiente](#ambiente): ele só enxerga o ambiente por meio de [resultados de ferramenta](#resultado-de-ferramenta) e só o altera por meio de [chamadas de ferramenta](#chamada-de-ferramenta). Cada chamada de ferramenta custa uma [requisição ao provedor de modelo](#requisição-ao-provedor-de-modelo) a mais, já que o resultado precisa voltar ao modelo antes que ele decida o que fazer em seguida.
 
-"Add a `psql` tool to the harness, scoped read-only on staging. Without a tool for it, the agent's blind to anything outside the filesystem."
+Ferramentas que a maioria dos agentes de programação traz:
 
-### Tool call
+| Ferramenta | O que faz                                                                       |
+| ---------- | ------------------------------------------------------------------------------- |
+| Read       | Devolve o conteúdo de um arquivo como resultado de ferramenta                   |
+| Write      | Cria ou edita um arquivo no [sistema de arquivos](#sistema-de-arquivos) |
+| Bash       | Executa um comando de shell e devolve a saída                                   |
+| Search     | Encontra arquivos ou trechos de texto que casam com um padrão na base de código |
 
-The [model](#model)'s output naming a [tool](#tool) and its arguments — just structured text. It doesn't do anything on its own; the [harness](#harness) has to read it and execute. Produced by the model in one [model provider request](#model-provider-request).
+Uma ferramenta é definida por três coisas: um nome, uma descrição do que ela faz e um schema dos parâmetros. O harness envia essas definições ao [modelo](#modelo) a cada requisição, e o modelo escolhe uma ferramenta do mesmo jeito que produz todo o resto — escrevendo [tokens](#token), neste caso uma chamada estruturada com argumentos. O modelo nunca executa nada por conta própria; o harness lê a chamada, roda a função e devolve o resultado.
 
-The lifecycle of a tool call:
+A lista de ferramentas define o que o agente consegue fazer. Um modelo capaz com poucas ferramentas é um agente limitado: ele faz tudo passar pelo que tiver, e por isso os agentes dependem tanto do Bash — o shell é uma única ferramenta que alcança quase todo o sistema. Para dar uma capacidade nova ao agente de forma limpa, adicione uma ferramenta para ela; o [MCP](#mcp) é o padrão para conectar ferramentas de fora do harness.
 
-| Step | Who     | What happens                                                                            |
-| ---- | ------- | --------------------------------------------------------------------------------------- |
-| 1    | Model   | Learns which tools exist from descriptions in the [system prompt](#system-prompt) |
-| 2    | Model   | Emits a call — tool name plus arguments, usually JSON — and stops                       |
-| 3    | Harness | Parses the call and checks it against the [permission mode](#permission-mode)     |
-| 4    | Harness | Executes it if allowed                                                                  |
-| 5    | Harness | Sends the outcome back as a [tool result](#tool-result) in the next request       |
+As definições de ferramenta ocupam o [contexto](#contexto) a cada requisição, então um conjunto grande de ferramentas tem um custo fixo antes mesmo de qualquer chamada — e muitas ferramentas com descrições parecidas fazem o modelo errar mais na hora de escolher entre elas.
 
-One [turn](#turn) of [agent](#agent) work is usually many of these round trips chained together.
+_Uso:_
 
-Because the call is generated by [next-token prediction](#next-token-prediction) like everything else, it can be wrong the way any model output can be wrong: a path that doesn't exist, a flag the command doesn't have, arguments that are plausible rather than correct. The harness executes what was written, not what was meant — a mistyped path doesn't error gracefully, it edits the wrong file.
+"O agente consegue consultar o staging direto?"
 
-_Usage:_
+"Adiciona uma ferramenta `psql` no harness, somente leitura no staging. Sem uma ferramenta pra isso, o agente fica cego pra tudo que estiver fora do sistema de arquivos."
 
-"It said it ran the tests but the file timestamps haven't changed."
+### Chamada de ferramenta
 
-"Look at the transcript — did it actually emit a tool call, or just describe running them? The model produces the call, but if the harness didn't execute it, nothing happened."
+_Em inglês: Tool call_
 
-### Tool result
+A saída do [modelo](#modelo) que nomeia uma [ferramenta](#ferramenta) e seus argumentos — só texto estruturado. Ela não faz nada por conta própria; o [harness](#harness) precisa lê-la e executá-la. É produzida pelo modelo em uma única [requisição ao provedor de modelo](#requisição-ao-provedor-de-modelo).
 
-What the [harness](#harness) sends back after executing a [tool call](#tool-call) — the file contents, the command output, the error. The [agent](#agent)'s only view of the [environment](#environment). Travels back to the [model](#model) in the _next_ [model provider request](#model-provider-request), where the model decides what to do with it. Tool call and tool result are two ends of the same exchange, both inside one [turn](#turn).
+O ciclo de vida de uma chamada de ferramenta:
 
-The lifecycle of a tool result:
+| Etapa | Quem    | O que acontece                                                                                               |
+| ----- | ------- | ------------------------------------------------------------------------------------------------------------ |
+| 1     | Modelo  | Descobre quais ferramentas existem pelas descrições no [prompt de sistema](#prompt-de-sistema)       |
+| 2     | Modelo  | Emite uma chamada — nome da ferramenta mais argumentos, geralmente em JSON — e para                          |
+| 3     | Harness | Faz o parse da chamada e a confere com o [modo de permissão](#modo-de-permissão)                |
+| 4     | Harness | Executa, se ela for permitida                                                                                |
+| 5     | Harness | Devolve o desfecho como um [resultado de ferramenta](#resultado-de-ferramenta) na próxima requisição |
 
-| Step | Who     | What happens                                                               |
-| ---- | ------- | -------------------------------------------------------------------------- |
-| 1    | Harness | Executes the tool call — runs the command, reads the file                  |
-| 2    | Harness | Captures the outcome: output, contents, or error                           |
-| 3    | Harness | Appends it to the [context](#context) as a message                     |
-| 4    | Harness | Sends the whole context to the provider in the next model provider request |
-| 5    | Model   | Reads the result and decides: another tool call, or a final answer         |
+Um [turno](#turno) de trabalho do [agente](#agente) costuma ser composto de várias dessas idas e voltas encadeadas.
 
-The result stays in the context for the rest of the [session](#session). Tool results are usually the bulk of a coding session's context: every file read, every test run, every search lands in full and keeps occupying [tokens](#token) long after it stopped being useful. A few large results — a verbose test log, a generated file read whole — can push a session toward the edge of the [context window](#context-window) faster than the conversation itself does.
+Como a chamada é gerada por [previsão do próximo token](#previsão-do-próximo-token), como todo o resto, ela pode estar errada como qualquer outra saída de modelo: um path que não existe, uma flag que o comando não tem, argumentos plausíveis em vez de corretos. O harness executa o que foi escrito, não o que se quis dizer — um path digitado errado não gera um erro amigável, ele edita o arquivo errado.
 
-Because the result is all the model sees, the model has no way to check the environment behind it. If the output was truncated, the command silently failed, or the harness returned an error instead of the contents, the model reasons from what it was given. When the agent's picture of your system seems wrong, the tool results are where to look: somewhere in the transcript is a result that says something different from what you know to be true.
+_Uso:_
 
-_Usage:_
+"Ele disse que rodou os testes, mas os timestamps dos arquivos não mudaram."
 
-"It's reasoning about the file like it's empty."
+"Dá uma olhada na transcrição — ele emitiu mesmo uma chamada de ferramenta ou só descreveu que rodou? O modelo produz a chamada, mas se o harness não executou, nada aconteceu."
 
-"The tool result came back as a permission denial, not the contents. The model only saw the error string — it has no other way to see the file."
+### Resultado de ferramenta
+
+_Em inglês: Tool result_
+
+O que o [harness](#harness) devolve depois de executar uma [chamada de ferramenta](#chamada-de-ferramenta) — o conteúdo do arquivo, a saída do comando, o erro. A única visão que o [agente](#agente) tem do [ambiente](#ambiente). Volta para o [modelo](#modelo) na _próxima_ [requisição ao provedor de modelo](#requisição-ao-provedor-de-modelo), e é ali que o modelo decide o que fazer com ele. A chamada de ferramenta e o resultado de ferramenta são as duas pontas da mesma troca, ambas dentro de um [turno](#turno).
+
+O ciclo de vida de um resultado de ferramenta:
+
+| Etapa | Quem    | O que acontece                                                             |
+| ----- | ------- | -------------------------------------------------------------------------- |
+| 1     | Harness | Executa a chamada de ferramenta — roda o comando, lê o arquivo             |
+| 2     | Harness | Captura o desfecho: saída, conteúdo ou erro                                |
+| 3     | Harness | Anexa o resultado ao [contexto](#contexto) como uma mensagem           |
+| 4     | Harness | Envia o contexto inteiro na próxima requisição ao provedor de modelo       |
+| 5     | Modelo  | Lê o resultado e decide: outra chamada de ferramenta ou uma resposta final |
+
+O resultado permanece no contexto pelo resto da [sessão](#sessão). Os resultados de ferramenta costumam ser a maior parte do contexto de uma sessão de programação: cada arquivo lido, cada execução de testes e cada busca entra por inteiro e continua ocupando [tokens](#token) muito depois de ter deixado de ser útil. Alguns resultados grandes — um log de testes extenso, um arquivo gerado lido por completo — podem empurrar a sessão para o limite da [janela de contexto](#janela-de-contexto) mais rápido do que a própria conversa.
+
+Como o resultado é tudo o que o modelo enxerga, ele não tem como conferir o ambiente por trás dele. Se a saída foi truncada, se o comando falhou em silêncio ou se o harness devolveu um erro em vez do conteúdo, o modelo raciocina com o que recebeu. Quando a imagem que o agente tem do seu sistema parece errada, é nos resultados de ferramenta que você deve procurar: em algum ponto da transcrição há um resultado que diz algo diferente do que você sabe ser verdade.
+
+_Uso:_
+
+"Ele está raciocinando sobre o arquivo como se estivesse vazio."
+
+"O resultado de ferramenta veio como uma negação de permissão, e não como o conteúdo. O modelo só viu a string de erro — ele não tem nenhum outro jeito de ver o arquivo."
 
 ### MCP
 
-**Model Context Protocol.** A protocol for plugging external tool servers into a [harness](#harness) — how an [agent](#agent) gets [tools](#tool) beyond what the harness ships with. The agent never "calls MCP"; it calls a tool, and the harness happens to have gotten that tool from an MCP server. Also exposes resources (read-only data) and prompts (reusable templates), but tool provision is the primary use.
+**Model Context Protocol (protocolo de contexto de modelo).** Um protocolo para conectar servidores de ferramentas externos a um [harness](#harness) — é como um [agente](#agente) ganha [ferramentas](#ferramenta) além das que o harness traz de fábrica. O agente nunca "chama o MCP"; ele chama uma ferramenta, e o harness acabou obtendo essa ferramenta de um servidor MCP. O protocolo também expõe recursos (dados somente leitura) e prompts (modelos reutilizáveis), mas o uso principal é fornecer ferramentas.
 
-The protocol solves an integration problem. Without a standard, every harness would need its own Linear integration, its own Slack integration, its own database integration — written and maintained separately for each. With MCP, the integration is written once as a server, and any MCP-compatible harness can use it. The harness connects to the server, the server advertises what tools it offers, and those tools become available to the agent alongside the built-in ones.
+O protocolo resolve um problema de integração. Sem um padrão, cada harness precisaria de uma integração própria com o Linear, outra com o Slack, outra com o banco de dados — escritas e mantidas separadamente para cada um. Com o MCP, a integração é escrita uma vez, como um servidor, e qualquer harness compatível com MCP consegue usá-la. O harness se conecta ao servidor, o servidor anuncia quais ferramentas oferece, e essas ferramentas ficam disponíveis para o agente junto com as embutidas.
 
-The cost is paid in [context](#context). Every tool a server advertises arrives as a definition — name, description, parameter schema — and the [model](#model) can only call tools it knows about. The naive approach loads every definition into the [context window](#context-window) up front: install a few generous servers and a [session](#session) starts with thousands of [tokens](#token) of tool schemas before you've typed anything, spending [attention budget](#attention-budget) on tools the task will never use.
+O custo é pago em [contexto](#contexto). Cada ferramenta que um servidor anuncia chega como uma definição — nome, descrição, schema de parâmetros — e o [modelo](#modelo) só consegue chamar ferramentas que conhece. A abordagem ingênua carrega todas as definições na [janela de contexto](#janela-de-contexto) logo de início: instale alguns servidores com muitas ferramentas e uma [sessão](#sessão) começa com milhares de [tokens](#token) de schemas de ferramentas antes de você digitar qualquer coisa, gastando [orçamento de atenção](#orçamento-de-atenção) com ferramentas que a tarefa nunca vai usar.
 
-Many harnesses now mitigate this with tool search: instead of the full definitions, the context holds a [context pointer](#context-pointer) to the available tools — the agent searches for a tool by name or purpose and loads its definition only when it needs it. If your harness doesn't do this, the up-front cost still applies, and it's worth enabling only the servers a project actually needs.
+Muitos harnesses hoje reduzem esse custo com busca de ferramentas: em vez das definições completas, o contexto guarda um [ponteiro de contexto](#ponteiro-de-contexto) para as ferramentas disponíveis — o agente procura uma ferramenta pelo nome ou pela finalidade e só carrega a definição quando precisa dela. Se o seu harness não faz isso, o custo inicial continua valendo, e vale a pena ativar só os servidores que o projeto realmente usa.
 
-_Usage:_
+_Uso:_
 
-"The agent needs to read tickets from Linear."
+"O agente precisa ler os tickets do Linear."
 
-"Configure the harness to use the Linear MCP server — it exposes the Linear API as tools the agent can call. Saves you writing custom tool wrappers."
+"Configura o harness pra usar o servidor MCP do Linear — ele expõe a API do Linear como ferramentas que o agente pode chamar. Poupa você de escrever wrappers de ferramenta na mão."
 
-### Permission request
+### Pedido de permissão
 
-What the [harness](#harness) shows the user before executing a [tool call](#tool-call) that isn't pre-approved. The [model](#model) produces a tool call; instead of running it immediately, the harness pauses and asks. Approve and it runs; deny and the harness reports the denial back to the model as a [tool result](#tool-result). The mechanism by which a harness puts a human in the [loop](#human-in-the-loop) for risky or sensitive actions.
+_Em inglês: Permission request_
 
-The lifecycle of a permission request:
+O que o [harness](#harness) mostra ao usuário antes de executar uma [chamada de ferramenta](#chamada-de-ferramenta) que não está pré-aprovada. O [modelo](#modelo) produz uma chamada de ferramenta; em vez de executá-la de imediato, o harness pausa e pergunta. Se você aprova, ela roda; se nega, o harness informa a negação ao modelo como um [resultado de ferramenta](#resultado-de-ferramenta). É o mecanismo pelo qual um harness coloca um humano no [loop](#humano-no-loop) para ações arriscadas ou sensíveis.
 
-| Step | Who     | What happens                                                                            |
-| ---- | ------- | --------------------------------------------------------------------------------------- |
-| 1    | Model   | Produces a tool call                                                                    |
-| 2    | Harness | Checks it against the [permission mode](#permission-mode) and any saved approvals |
-| 3    | Harness | Pre-approved: executes immediately. Otherwise: pauses and shows the request             |
-| 4    | User    | Approves once, approves for the rest of the [session](#session), or denies          |
-| 5    | Harness | Executes the call, or sends the denial back as a tool result                            |
+O ciclo de vida de um pedido de permissão:
 
-Denying a request steers the agent. The model reads the denial like any other tool result and reacts to it — it tries a different approach, or asks what you'd prefer. Most harnesses let you attach a message to the denial, which turns the request into a steering point: "not like that, use the migration script instead" lands exactly when the model is deciding what to do next.
+| Etapa | Quem    | O que acontece                                                                                         |
+| ----- | ------- | ------------------------------------------------------------------------------------------------------ |
+| 1     | Modelo  | Produz uma chamada de ferramenta                                                                       |
+| 2     | Harness | Confere a chamada contra o [modo de permissão](#modo-de-permissão) e as aprovações salvas |
+| 3     | Harness | Pré-aprovada: executa de imediato. Caso contrário: pausa e mostra o pedido                             |
+| 4     | Usuário | Aprova uma vez, aprova pelo resto da [sessão](#sessão) ou nega                                |
+| 5     | Harness | Executa a chamada ou devolve a negação como um resultado de ferramenta                                 |
 
-The cost is that every request is a synchronous wait on you. The [agent](#agent) sits blocked until you answer, which is fine while you're watching and a problem when you're not — an agent that triggers requests constantly can't be left to work [AFK](#afk). The permission mode is the dial: which calls run freely, which ask first, ideally with a [sandbox](#sandbox) making it safe to widen the free set.
+Negar um pedido direciona o agente. O modelo lê a negação como qualquer outro resultado de ferramenta e reage a ela — tenta outra abordagem ou pergunta o que você prefere. A maioria dos harnesses deixa você anexar uma mensagem à negação, o que transforma o pedido num ponto de direcionamento: "assim não, use o script de migração" chega exatamente quando o modelo está decidindo o que fazer em seguida.
 
-_Usage:_
+O custo é que cada pedido é uma espera síncrona por você. O [agente](#agente) fica bloqueado até você responder, o que é aceitável enquanto você está acompanhando e vira problema quando não está — um agente que dispara pedidos o tempo todo não pode ser deixado trabalhando [AFK](#afk). O modo de permissão é o ajuste: define quais chamadas rodam livremente e quais perguntam antes, de preferência com um [sandbox](#sandbox) que torne seguro ampliar o conjunto de chamadas que rodam livremente.
 
-"It's been blocked on a permission request for ten minutes — I was in a meeting."
+_Uso:_
 
-"That's the cost of human-in-the-loop. Pre-approve the safe [tools](#tool) so the request only fires on the actually-risky calls."
+"Ficou travado num pedido de permissão por dez minutos — eu estava numa reunião."
 
-### Permission mode
+"Esse é o custo de ter humano no loop. Pré-aprova as [ferramentas](#ferramenta) seguras, para que o pedido só apareça nas chamadas realmente arriscadas."
 
-The permission-gating slice of an [agent mode](#agent-mode) — which [tool calls](#tool-call) trigger a [permission request](#permission-request) and which run automatically. The original purpose of mode systems before [harnesses](#harness) started bundling behavioral instructions on top.
+### Modo de permissão
 
-Harnesses ship a ladder of these modes:
+_Em inglês: Permission mode_
 
-| Mode               | Reads | Writes & shell         | Typical use                                     |
-| ------------------ | ----- | ---------------------- | ----------------------------------------------- |
-| Read-only / plan   | Auto  | Blocked                | Research, planning, reviewing                   |
-| Default            | Auto  | Ask                    | Day-to-day supervised work                      |
-| Auto-edit          | Auto  | Edits auto, shell asks | Trusted repos, mechanical changes               |
-| "Yolo" / full-auto | Auto  | Auto                   | [Sandboxes](#sandbox), [AFK](#afk) runs |
+A parte do [modo de agente](#modo-de-agente) que define a barreira de permissões — quais [chamadas de ferramenta](#chamada-de-ferramenta) geram um [pedido de permissão](#pedido-de-permissão) e quais rodam automaticamente. É a finalidade original dos sistemas de modos, antes de os [harnesses](#harness) começarem a empacotar instruções de comportamento por cima.
 
-Choosing a rung is a trade between safety and interruption, and both failure modes are felt. Too tight, and you become the bottleneck: the [agent](#agent) stops every few seconds for harmless reads, you click approve on autopilot, and the approvals stop meaning anything — rubber-stamping is the worst of both worlds, all the interruption with none of the protection. Too loose, and the agent edits files and runs commands you'd have wanted to see first.
+Os harnesses trazem uma escada desses modos:
 
-The loose end is most defensible inside a sandbox, where the blast radius of a bad [tool](#tool) call is contained. Outside one, most people settle on auto-approving reads and keeping a [human in the loop](#human-in-the-loop) for anything irreversible.
+| Modo                        | Leituras    | Escritas e shell                    | Uso típico                                           |
+| --------------------------- | ----------- | ----------------------------------- | ---------------------------------------------------- |
+| Somente leitura / plan mode | Automáticas | Bloqueadas                          | Pesquisa, planejamento, revisão                      |
+| Default                     | Automáticas | Pergunta                            | Trabalho diário supervisionado                       |
+| Auto-edit                   | Automáticas | Edições automáticas, shell pergunta | Repositórios confiáveis, mudanças mecânicas          |
+| "YOLO mode" / full-auto     | Automáticas | Automáticas                         | [Sandboxes](#sandbox), execuções [AFK](#afk) |
 
-_Usage:_
+Escolher um degrau é uma troca entre segurança e interrupção, e os dois modos de falha aparecem no uso. Se o modo é restritivo demais, você vira o gargalo: o [agente](#agente) para a cada poucos segundos por causa de leituras inofensivas, você aprova no piloto automático e as aprovações perdem o sentido. Aprovar sem olhar é o pior dos dois mundos, com toda a interrupção e nenhuma proteção. Se o modo é permissivo demais, o agente edita arquivos e roda comandos que você gostaria de ter visto antes.
 
-"It paused on every grep — totally killed the AFK run."
+O extremo permissivo é mais defensável dentro de um sandbox, onde o raio de impacto de uma chamada ruim a uma [ferramenta](#ferramenta) fica contido. Fora dele, a maioria das pessoas aprova as leituras automaticamente e mantém um [humano no loop](#humano-no-loop) para tudo que for irreversível.
 
-"Loosen the permission mode for read-only tools, keep prompting on writes and shell. Most permission requests on a research [session](#session) are noise."
+_Uso:_
 
-### Agent mode
+"Ele parou em cada grep e estragou a execução AFK."
 
-A preset that shapes how the [agent](#agent) operates at runtime — bundles a [permission mode](#permission-mode) with behavioral instructions injected into the [system prompt](#system-prompt). Examples: a default that prompts on risky calls, a **plan mode** that blocks edits and steers the agent toward research, an **accept-edits** mode that auto-approves edits, a **bypass permissions** mode (colloquially **YOLO mode**) that auto-approves everything. Can flip [mid-session](#session).
+"Afrouxa o modo de permissão das ferramentas somente leitura e continua pedindo confirmação nas escritas e no shell. A maioria dos pedidos de permissão numa [sessão](#sessão) de pesquisa é ruído."
 
-The bundling is what distinguishes a mode from a bare permission setting. A permission mode is only a gate: it decides which [tool calls](#tool-call) go through. A gate alone produces an agent that wants to edit but can't — it proposes the write, gets blocked, and tries another way. The injected instructions remove the want: plan mode doesn't just block edits, it tells the agent it's in a planning phase, so it reads, asks, and proposes instead of straining against the gate. Gate and steer point the same direction.
+### Modo de agente
 
-In practice, you change mode as your trust changes over the course of a task. The same task can pass through several modes: plan mode while the approach is still being shaped, the prompting default for the first delicate edits, accept-edits once the agent has shown it understands the change, bypass for an [AFK](#afk) run inside a [sandbox](#sandbox). Changing mode costs you nothing: the conversation continues exactly where it was, with new permissions and new instructions. If you find yourself approving every prompt without reading it, the mode is set tighter than your actual trust; if you keep rejecting edits, it's set looser.
+_Em inglês: Agent mode_
 
-_Vendor terms:_ Claude Code calls these "permission modes," Codex calls them "approval modes" — both predate behavioral bundling.
+Uma predefinição que molda como o [agente](#agente) opera em tempo de execução — combina um [modo de permissão](#modo-de-permissão) com instruções de comportamento injetadas no [prompt de sistema](#prompt-de-sistema). Exemplos: um modo padrão (default) que pede confirmação em chamadas de risco, um **plan mode** que bloqueia edições e direciona o agente para a pesquisa, um modo **accept-edits** que aprova edições automaticamente, um modo **bypass permissions** (na gíria, **YOLO mode**) que aprova tudo automaticamente. Pode mudar no meio da [sessão](#sessão).
 
-_Usage:_
+A combinação é o que distingue um modo de uma simples configuração de permissão. Um modo de permissão é só uma barreira: decide quais [chamadas de ferramenta](#chamada-de-ferramenta) passam. Uma barreira sozinha produz um agente que quer editar, mas não pode — ele propõe a escrita, é bloqueado e tenta outro caminho. As instruções injetadas tiram essa vontade: o plan mode não só bloqueia edições, como avisa o agente de que ele está numa fase de planejamento, e por isso o agente lê, pergunta e propõe em vez de forçar a barreira. Barreira e direcionamento apontam para o mesmo lado.
 
-"It keeps editing files when I just want a plan."
+Na prática, você muda de modo conforme a sua confiança varia ao longo de uma tarefa. A mesma tarefa pode passar por vários modos: plan mode enquanto a abordagem ainda está sendo definida, o padrão com confirmação para as primeiras edições delicadas, accept-edits quando o agente já mostrou que entendeu a mudança, bypass para uma execução [AFK](#afk) dentro de um [sandbox](#sandbox). Trocar de modo não custa nada: a conversa continua exatamente de onde estava, com novas permissões e novas instruções. Se você se pega aprovando todo pedido sem ler, o modo está mais restritivo do que a sua confiança real; se você vive rejeitando edições, está mais frouxo.
 
-"Switch to plan mode — it'll block writes and stay in research."
+_Termos de fornecedores:_ o Claude Code chama isso de "permission modes" (modos de permissão), o Codex chama de "approval modes" (modos de aprovação) — ambos anteriores a esse agrupamento com instruções de comportamento.
 
-"What about for the AFK run later?"
+_Uso:_
 
-"Bypass mode, but only inside the sandbox."
+"Ele não para de editar arquivo, e eu só queria um plano."
+
+"Muda pro plan mode — ele bloqueia as escritas e fica só na pesquisa."
+
+"E pra rodada AFK de mais tarde?"
+
+"Modo bypass, mas só dentro do sandbox."
 
 ### Sandbox
 
-An isolated [environment](#environment) the [agent](#agent) runs inside — a container, VM, ephemeral [filesystem](#filesystem), or restricted-permission shell. Limits the blast radius of agent actions: even if the agent runs destructive commands or fetches something malicious, the damage is contained. The safety substrate that makes [AFK](#afk) practical.
+Um sandbox (ambiente isolado) é um [ambiente](#ambiente) fechado em que o [agente](#agente) roda — um contêiner, uma VM, um [sistema de arquivos](#sistema-de-arquivos) efêmero ou um shell com permissões restritas. Ele limita o raio de impacto das ações do agente: mesmo que o agente rode comandos destrutivos ou baixe algo malicioso, o dano fica contido. É a base de segurança que torna viável o trabalho [AFK](#afk) (longe do teclado).
 
-The sandbox and the [permission mode](#permission-mode) solve the same problem from opposite ends. Permissions ask before an action runs; a sandbox limits what the action can reach if it does run. Permissions need you running [in the loop](#human-in-the-loop) — every prompt is an interruption — and a session that asks constantly is barely autonomous. A sandbox spends infrastructure instead of attention: the stronger the isolation, the fewer questions need asking.
+O sandbox e o [modo de permissão](#modo-de-permissão) resolvem o mesmo problema por lados opostos. As permissões perguntam antes de uma ação rodar; o sandbox limita até onde a ação chega se ela rodar. As permissões exigem que você esteja [no loop](#humano-no-loop) — cada pedido é uma interrupção — e uma sessão que pergunta o tempo todo quase não é autônoma. O sandbox gasta infraestrutura em vez de atenção: quanto mais forte o isolamento, menos perguntas precisam ser feitas.
 
-Isolation comes in grades:
+O isolamento vem em níveis:
 
-| Grade            | What it is                                                 | What it contains                           |
-| ---------------- | ---------------------------------------------------------- | ------------------------------------------ |
-| Restricted shell | OS-level confinement around each command                   | Writes outside the project, network access |
-| Container        | Fresh filesystem, no credentials mounted, discarded after  | Anything the agent does to its own machine |
-| VM / cloud       | A separate machine entirely, often provided by the harness | Everything, including kernel-level escapes |
+| Nível          | O que é                                                               | O que contém                                    |
+| -------------- | --------------------------------------------------------------------- | ----------------------------------------------- |
+| Shell restrito | Confinamento no nível do SO em torno de cada comando                  | Gravações fora do projeto, acesso à rede        |
+| Contêiner      | Sistema de arquivos novo, sem credenciais montadas, descartado depois | Tudo o que o agente fizer com a própria máquina |
+| VM / nuvem     | Uma máquina separada, muitas vezes fornecida pelo harness             | Tudo, inclusive fugas no nível do kernel        |
 
-What no sandbox contains: actions that leave it legitimately. An agent with your git credentials can push; one with network access can call production APIs. Decide what crosses the boundary before deciding how thick to make it.
+O que nenhum sandbox contém: ações que saem dele de forma legítima. Um agente com suas credenciais do git consegue fazer push; um com acesso à rede consegue chamar APIs de produção. Decida o que atravessa a fronteira antes de decidir quão grossa ela deve ser.
 
-_Usage:_
+_Uso:_
 
-"I want to let it run [bypass-permissions](#agent-mode) overnight but I'm not ready for that."
+"Quero deixar rodando a noite toda em [bypass-permissions](#modo-de-agente), mas não me sinto pronto pra isso."
 
-"Put it in a sandbox — fresh container, no credentials mounted, no network out. Worst case it nukes its own filesystem and you discard the container."
+"Bota ele num sandbox — contêiner novo, sem credenciais montadas, sem rede de saída. No pior caso ele destrói o próprio sistema de arquivos e você descarta o contêiner."
 
-## Section 4 — Failure Modes
+## Seção 4 — Modos de Falha
 
-### Sycophancy
+### Bajulação
 
-Confidently agreeable [model](#model) output. Caused by [training](#training): the model was shaped to favor answers humans liked, and humans tend to like agreement more than they like being told they're wrong. So the model learned that agreeing is rewarded — even when the agreement is incorrect.
+_Em inglês: Sycophancy_
 
-_Surfaces as:_
+Saída de [modelo](#modelo) que concorda com segurança. A causa é o [treinamento](#treinamento): o modelo foi moldado para favorecer respostas de que humanos gostaram, e humanos tendem a gostar mais de concordância do que de ouvir que estão errados. Assim, o modelo aprendeu que concordar é recompensado — mesmo quando a concordância está errada.
 
-- _Caving under pushback_ — reverses a correct answer when you say "are you sure?".
-- _Praising bad input_ — agrees your broken plan is brilliant before analysing it.
-- _Biased framing_ — review skews positive when you signal you wrote it; negative when you signal someone else did. Same artifact, different verdict.
-- _Mimicry_ — repeats your mistakes back to you as confirmation.
+_Aparece como:_
 
-_Diagnostic test:_ would the model have said this without your steer? If the only thing that changed was your tone or framing, it's sycophancy, not a real shift in analysis.
+- _Ceder sob pressão_ — inverte uma resposta correta quando você diz "tem certeza?".
+- _Elogiar uma entrada ruim_ — diz que seu plano furado é brilhante antes de analisá-lo.
+- _Enquadramento enviesado_ — a revisão fica positiva quando você indica que foi você quem escreveu e negativa quando indica que foi outra pessoa. Mesmo artefato, veredito diferente.
+- _Imitação_ — devolve seus erros para você como se fossem confirmação.
 
-_Fix:_ hide your preferences. Phrase prompts neutrally — "review this code" not "is this code good?".
+_Teste diagnóstico:_ o modelo teria dito isso sem o seu direcionamento? Se a única coisa que mudou foi o seu tom ou o seu enquadramento, é bajulação, não uma mudança real na análise.
 
-_Avoid:_ using "sycophancy" for any wrong answer that happens to please you. Without the diagnostic test, the term has no more value than "wrong."
+_Correção:_ esconda suas preferências. Escreva os prompts de forma neutra — "revise este código" e não "este código está bom?".
 
-_Usage:_
+_Evite:_ usar "bajulação" para qualquer resposta errada que por acaso agrade você. Sem o teste diagnóstico, o termo não vale mais do que "errado".
 
-"It said my refactor plan looked great, then I asked 'are you sure?' and it walked the whole thing back."
+_Uso:_
 
-"Classic sycophancy — it agreed first because you sounded confident, then caved because you sounded doubtful. The plan's quality didn't change, your tone did. [Clear](#clearing) and re-ask without signalling either way."
+"Ele disse que meu plano de refactor estava ótimo, aí eu perguntei 'tem certeza?' e ele voltou atrás em tudo."
 
-### Hallucination
+"Bajulação clássica — ele concordou primeiro porque você parecia confiante, depois cedeu porque você parecia em dúvida. A qualidade do plano não mudou, o seu tom mudou. [Limpe o contexto](#limpeza-de-contexto) e pergunte de novo sem dar pista para nenhum dos lados."
 
-Confidently-wrong [model](#model) output. Two flavors with different causes and fixes:
+### Alucinação
 
-| Flavor         | What goes wrong                                                                                                        | Cause                                                                                                                | Fix                                                                |
-| -------------- | ---------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| _Factuality_   | Invented or wrong facts about the world — a function that doesn't exist, a wrong API signature, a fake citation        | [Parametric knowledge](#parametric-knowledge) gaps, often past the [knowledge cutoff](#knowledge-cutoff) | Load the right [contextual knowledge](#contextual-knowledge) |
-| _Faithfulness_ | Output drifts from the contextual knowledge that's loaded, the user's instructions, or the model's own prior reasoning | [Attention degradation](#attention-degradation); worsens in the [dumb zone](#smart-zone)                 | [Clear](#clearing) or [compact](#compaction)               |
+_Em inglês: Hallucination_
 
-[Next-token prediction](#next-token-prediction) produces fluent output whether or not the underlying fact is real — the model has no internal signal that it doesn't know something, so an invented method arrives in the same assured register as a correct one. Hallucinated code is plausible by construction: it's what the API _would_ look like if it existed, which is exactly what makes it slip past a skim-level review and fail only when run.
+Saída errada de um [modelo](#modelo), apresentada com confiança. Há dois tipos, com causas e correções diferentes:
 
-You need to know which flavor you're looking at, because the fix for one makes the other worse. Factuality means missing knowledge: the fix is adding context — the docs, the type definitions, the file. Faithfulness means the knowledge is present but losing the competition for attention: the fix is removing context. Misdiagnose faithfulness as factuality and you paste in more docs, which grows the context and makes the drift worse. When the agent gets something wrong, check whether the correct information was already in context before deciding which problem you have.
+| Tipo                     | O que dá errado                                                                                                               | Causa                                                                                                                                                                           | Correção                                                                                     |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| _Factualidade_           | Fatos inventados ou errados sobre o mundo — uma função que não existe, uma assinatura de API errada, uma citação falsa        | Lacunas no [conhecimento paramétrico](#conhecimento-paramétrico), muitas vezes depois da [data de corte do conhecimento](#data-de-corte-do-conhecimento) | Carregar o [conhecimento contextual](#conhecimento-contextual) certo                   |
+| _Fidelidade ao contexto_ | A saída se afasta do conhecimento contextual carregado, das instruções do usuário ou do raciocínio anterior do próprio modelo | [Degradação de atenção](#degradação-de-atenção); piora na [zona burra](#zona-inteligente)                                                     | [Limpar o contexto](#limpeza-de-contexto) ou [compactar](#compactação) |
 
-_Avoid:_ "hallucination" as a bare synonym for "wrong" — without naming the flavor, the term has no diagnostic value.
+A [previsão do próximo token](#previsão-do-próximo-token) produz texto fluente, seja o fato real ou não. O modelo não tem sinal interno de que não sabe algo, então um método inventado chega no mesmo tom seguro de um método correto. O código alucinado é plausível por construção: é como a API _seria_ se existisse, e é isso que faz o código passar por uma leitura rápida na revisão e falhar só na execução.
 
-_Usage:_
+Você precisa saber com qual dos tipos está lidando, porque a correção de um piora o outro. Factualidade significa conhecimento ausente: a correção é adicionar contexto — a documentação, as definições de tipos, o arquivo. Fidelidade ao contexto significa que o conhecimento está presente, mas perde a disputa por atenção: a correção é remover contexto. Se você confunde um problema de fidelidade com factualidade e cola mais documentação, o contexto cresce e o desvio piora. Quando o agente errar algo, verifique se a informação correta já estava no contexto antes de decidir qual dos dois problemas você tem.
 
-"It hallucinated a `parseAsync` method on the schema."
+_Evite:_ "alucinação" como sinônimo genérico de "errado" — sem nomear o tipo, o termo perde o valor diagnóstico.
 
-"Factuality or faithfulness?"
+_Uso:_
 
-"The method exists in the docs I pasted — it just stopped reading them after [turn](#turn) forty."
+"Ele alucinou um método `parseAsync` no schema."
 
-"Faithfulness then. Compact and reload, don't bother adding more docs."
+"Factualidade ou fidelidade ao contexto?"
 
-### Parametric knowledge
+"O método existe na documentação que eu colei — ele só parou de ler depois do [turno](#turno) quarenta."
 
-What the [model](#model) "knows" from [training](#training), stored in its [parameters](#parameters). Frozen at training time — the model can't see its own parameters or update them. Detail is lost in the squeeze: billions of facts cram into a fixed number of parameters, and the rare ones blur. Source of fluency on common topics, and of fabrication on uncommon ones. Counterpart to [contextual knowledge](#contextual-knowledge).
+"Então é fidelidade. Compacta e recarrega, não adianta colar mais documentação."
 
-Parametric knowledge is not stored as facts. Training never gives the model a database to look things up in; it adjusts parameters until the model predicts text well, and a model that predicts text about a topic well behaves as if it knows the topic. How reliable the knowledge is tracks how often something appeared in the training data: a topic with millions of examples is reproduced accurately, for a topic with only a handful, the model guesses based on what similar topics look like. Reproducing and guessing are the same process to the model, so it can't tell which one it's doing. A fabricated answer arrives with the same fluency as a correct one. [Hallucination](#hallucination) is the model guessing wrong.
+### Conhecimento paramétrico
 
-Parametric knowledge also ages. The parameters stop changing at the [knowledge cutoff](#knowledge-cutoff), so a library released or renamed after that date doesn't exist in them, and an API that changed is remembered in its old form.
+_Em inglês: Parametric knowledge_
 
-For both gaps — too rare and too recent — the remedy is the same: the knowledge can't be added to the parameters, so it has to be supplied as contextual knowledge instead.
+O que o [modelo](#modelo) "sabe" a partir do [treinamento](#treinamento), guardado nos seus [parâmetros](#parâmetros). Congelado no momento do treinamento — o modelo não enxerga os próprios parâmetros nem consegue atualizá-los. Detalhes se perdem na compressão: bilhões de fatos são comprimidos em um número fixo de parâmetros, e os raros ficam borrados. É a fonte da fluência em assuntos comuns e de invenção nos incomuns. Par do [conhecimento contextual](#conhecimento-contextual).
 
-_Usage:_
+O conhecimento paramétrico não é armazenado como fatos. O treinamento nunca dá ao modelo um banco de dados para consultar; ele ajusta os parâmetros até o modelo prever bem o texto, e um modelo que prevê bem o texto sobre um tema se comporta como se conhecesse o tema. A confiabilidade do conhecimento acompanha a frequência com que algo apareceu nos dados de treinamento: um tema com milhões de exemplos é reproduzido com precisão, já num tema com poucos exemplos o modelo chuta com base no que costuma valer para temas parecidos. Para o modelo, reproduzir e chutar são o mesmo processo, então ele não sabe dizer qual dos dois está fazendo. Uma resposta inventada chega com a mesma fluência de uma correta. [Alucinação](#alucinação) é o modelo chutando errado.
 
-"It writes flawless React but invents methods on our internal SDK."
+O conhecimento paramétrico também envelhece. Os parâmetros param de mudar na [data de corte do conhecimento](#data-de-corte-do-conhecimento), então uma biblioteca lançada ou renomeada depois dessa data não existe neles, e uma API que mudou é lembrada na forma antiga.
 
-"React is dense in the parametric knowledge — millions of training examples. Your SDK isn't, so the model fills in plausible-looking shapes. Load the SDK docs into [context](#context)."
+Nas duas lacunas — raro demais e recente demais — o remédio é o mesmo: o conhecimento não pode ser adicionado aos parâmetros, então precisa ser fornecido como conhecimento contextual.
 
-### Knowledge cutoff
+_Uso:_
 
-The date past which a [model](#model) has no [parametric knowledge](#parametric-knowledge). Libraries, APIs, and events from after the cutoff are fabrication traps unless their docs are loaded as [contextual knowledge](#contextual-knowledge). Each model release ships with its own cutoff.
+"Ele escreve React impecável, mas inventa métodos no nosso SDK interno."
 
-The cutoff exists because of how models are made: [training](#training) bakes a snapshot of text into the model's [parameters](#parameters), and after that the parameters are frozen. The model doesn't know its knowledge has an edge — asked about something past the cutoff, it doesn't refuse, it extrapolates from the nearest thing it does know. That's what makes the trap quiet: code written against an old version of a library looks plausible, often compiles, and fails on the parts that changed.
+"O React está bem representado no conhecimento paramétrico: são milhões de exemplos de treinamento. O SDK interno não está, então o modelo preenche com formatos que parecem plausíveis. Carregue a documentação do SDK no [contexto](#contexto)."
 
-The fix is always the same: get current information into [context](#context). Load the changelog, point at the installed version's type definitions, or have the agent read the docs from the web. Anything in context outranks nothing-in-parameters.
+### Data de corte do conhecimento
 
-_Usage:_
+_Em inglês: Knowledge cutoff_
 
-"It keeps writing the v3 SDK syntax — we're on v5."
+A data após a qual um [modelo](#modelo) não tem [conhecimento paramétrico](#conhecimento-paramétrico). Bibliotecas, APIs e eventos posteriores ao corte são armadilhas de invenção, a menos que a documentação seja carregada como [conhecimento contextual](#conhecimento-contextual). Cada lançamento de modelo tem o seu próprio corte.
 
-"v5 shipped after the knowledge cutoff. Load the v5 changelog as contextual knowledge, otherwise it'll keep fabricating from the older parametric version."
+O corte existe por causa do modo como os modelos são feitos: o [treinamento](#treinamento) grava um instantâneo do texto nos [parâmetros](#parâmetros) do modelo e, depois disso, os parâmetros ficam congelados. O modelo não sabe que o seu conhecimento tem um limite. Se você pergunta sobre algo posterior ao corte, ele não recusa: extrapola a partir do que conhece de mais próximo. É isso que torna a armadilha silenciosa: o código escrito para uma versão antiga de uma biblioteca parece plausível, muitas vezes compila e falha nas partes que mudaram.
 
-### Contextual knowledge
+A correção é sempre a mesma: colocar informação atual no [contexto](#contexto). Carregue o changelog, aponte para as definições de tipos da versão instalada ou peça ao agente que leia a documentação na web. Qualquer coisa no contexto vale mais do que nada nos parâmetros.
 
-Facts the [agent](#agent) can read directly from the [context](#context) right now — the user's task, files the agent has read in, [tool results](#tool-result), [AGENTS.md](#agentsmd) content loaded at [session](#session) start. Counterpart to [parametric knowledge](#parametric-knowledge): parametric is _recalled_ from the parameters; contextual is _read_ from the [window](#context-window). [Hallucinations](#hallucination) are much less common when the agent works from contextual knowledge — the answer is right in front of it, not dredged up from a blurred memory.
+_Uso:_
 
-Of the two kinds of knowledge, only contextual knowledge is in your control. The parameters are frozen, so the only way to give the [model](#model) knowledge it lacks — an internal SDK, a library released after the [knowledge cutoff](#knowledge-cutoff), a decision made yesterday — is to put it in the context. A lot of practical [AI](#ai) coding work reduces to this: getting the right facts in front of the model at the moment it needs them.
+"Ele continua escrevendo a sintaxe do SDK v3 — a gente está na v5."
 
-When contextual and parametric knowledge conflict, the contextual usually wins. Paste the current API docs and the model follows them rather than its stale memory of the old API — though the old version can still bleed through, especially deep into a long session. If the agent keeps reverting to an outdated pattern despite the docs being loaded, that's parametric knowledge leaking past the contextual; restating the correction or moving it closer to the work helps.
+"A v5 saiu depois da data de corte. Carrega o changelog da v5 como conhecimento contextual, senão ele vai continuar inventando a partir da versão paramétrica mais antiga."
 
-Unlike parametric knowledge, contextual knowledge costs something to use. Everything loaded into the window spends [tokens](#token) and competes for the model's [attention budget](#attention-budget), so loading more is not automatically better — the aim is the relevant facts in the window, not all the facts.
+### Conhecimento contextual
 
-_Reach for this term_ only when contrasting with parametric knowledge; otherwise just say **context**.
+_Em inglês: Contextual knowledge_
 
-_Avoid:_ "working memory" — contextual knowledge is what's in the window _now_; a [memory system](#memory-system) is what gets cross-session content into it. Different scales, don't conflate.
+Fatos que o [agente](#agente) pode ler diretamente do [contexto](#contexto) neste momento — a tarefa do usuário, arquivos que o agente leu, [resultados de ferramenta](#resultado-de-ferramenta), o conteúdo do [AGENTS.md](#agentsmd) carregado no início da [sessão](#sessão). Contrapartida do [conhecimento paramétrico](#conhecimento-paramétrico): o paramétrico é _lembrado_ a partir dos parâmetros; o contextual é _lido_ da [janela de contexto](#janela-de-contexto). [Alucinações](#alucinação) são bem menos comuns quando o agente trabalha com conhecimento contextual — a resposta está bem na frente dele, e não tirada de uma lembrança vaga.
 
-_Usage:_
+Dos dois tipos de conhecimento, só o contextual está sob o seu controle. Os parâmetros são fixos, então a única forma de dar ao [modelo](#modelo) um conhecimento que ele não tem — um SDK interno, uma biblioteca lançada depois da [data de corte do conhecimento](#data-de-corte-do-conhecimento), uma decisão tomada ontem — é colocá-lo no contexto. Boa parte do trabalho prático de programação com [IA](#ia) se resume a isto: pôr os fatos certos na frente do modelo no momento em que ele precisa deles.
 
-"Why does it nail the API when I paste the docs and fabricate it when I don't?"
+Quando o conhecimento contextual e o paramétrico entram em conflito, o contextual geralmente vence. Cole a documentação atual da API e o modelo a segue, em vez de usar a lembrança desatualizada que tem da API antiga — embora a versão antiga ainda possa vazar, principalmente no fim de uma sessão longa. Se o agente insiste em voltar a um padrão desatualizado mesmo com a documentação carregada, é o conhecimento paramétrico se sobrepondo ao contextual; repetir a correção ou colocá-la mais perto do trabalho ajuda.
 
-"With the docs in, it's contextual knowledge — reading off the page. Without, it's parametric and the rare endpoints blur."
+Ao contrário do conhecimento paramétrico, usar o conhecimento contextual tem custo. Tudo o que é carregado na janela gasta [tokens](#token) e disputa o [orçamento de atenção](#orçamento-de-atenção) do modelo, então carregar mais não é automaticamente melhor — o objetivo é ter os fatos relevantes na janela, não todos os fatos.
 
-### Attention relationship
+_Use este termo_ só quando estiver contrastando com o conhecimento paramétrico; nos demais casos, diga apenas **contexto**.
 
-When predicting each [token](#token), the [model](#model) factors in every other token in the [context](#context) — some heavily, others barely at all. The pairing between two tokens is an **attention relationship**, and meaningful pairs ("her" with "Sarah", or a `getUser()` call with its `function getUser` definition) influence each other more than unrelated ones. A context of N tokens has on the order of N² relationships.
+_Evite:_ "memória de trabalho" — o conhecimento contextual é o que está na janela _agora_; um [sistema de memória](#sistema-de-memória) é o que leva conteúdo entre sessões para dentro dela. São escalas diferentes, não misture.
 
-The pairings are where the model's apparent understanding lives. When it resolves a pronoun, it's because the attention relationship between "her" and "Sarah" is strong. When it calls a function with the right arguments, the relationship between the call site and the definition it read earlier is doing the work. None of this is looked up — it's computed fresh on every [model provider request](#model-provider-request), for every pair.
+_Uso:_
 
-The N² figure is worth sitting with, because it grows faster than intuition suggests:
+"Por que ele acerta a API quando eu colo a documentação e inventa quando eu não colo?"
 
-| Context size   | Pairings (~N²) |
-| -------------- | -------------- |
-| 1,000 tokens   | ~1 million     |
-| 10,000 tokens  | ~100 million   |
-| 100,000 tokens | ~10 billion    |
+"Com a documentação colada, é conhecimento contextual — ele lê direto da página. Sem ela, é paramétrico e os endpoints menos comuns ficam vagos."
 
-Each pairing is also computed more than once. Models have multiple attention heads — exact counts for frontier models are unpublished, but fifty to a hundred is a reasonable guess — and each head computes its own version of every relationship. So every pairing in the table above is duplicated across every head. That's a lot of pairings.
+### Relação de atenção
 
-Only a small number of these relationships matter for any given task. The pairing between your instruction and the code it governs is one of a handful that count; almost everything else in the pool is noise. And the two grow at different rates: the relationships that matter stay roughly constant, while the total pool grows quadratically with context size. At 1,000 tokens, the pairing you care about is one in a million; at 100,000 tokens, it's one in ten billion. This is the arithmetic underneath the [attention budget](#attention-budget), and [attention degradation](#attention-degradation) is what it feels like when the relationships that matter get too thin a share.
+_Em inglês: Attention relationship_
 
-_Usage:_
+Ao prever cada [token](#token), o [modelo](#modelo) leva em conta todos os outros tokens do [contexto](#contexto) — alguns com muito peso, outros quase nenhum. O par formado por dois tokens é uma **relação de atenção**, e os pares com sentido ("ela" com "Sarah", ou uma chamada `getUser()` com a definição `function getUser`) influenciam-se mais do que os pares sem relação. Um contexto de N tokens tem da ordem de N² relações.
 
-"It keeps confusing the two `user` symbols across the diff — sounds like we're in the [dumb zone](#smart-zone)."
+É nos pares que fica a aparente compreensão do modelo. Quando ele resolve um pronome, é porque a relação de atenção entre "ela" e "Sarah" é forte. Quando ele chama uma função com os argumentos certos, quem faz o trabalho é a relação entre o ponto de chamada e a definição que ele leu antes. Nada disso é buscado em lugar nenhum — é calculado do zero a cada [requisição ao provedor de modelo](#requisição-ao-provedor-de-modelo), para cada par.
 
-"Yeah, the attention relationship between each call site and its declaration is fighting the other one — same token shape, different bindings. Rename one and the pairings sharpen."
+O N² cresce mais rápido do que a intuição sugere:
 
-### Attention budget
+| Tamanho do contexto | Pares (~N²)  |
+| ------------------- | ------------ |
+| 1.000 tokens        | ~1 milhão    |
+| 10.000 tokens       | ~100 milhões |
+| 100.000 tokens      | ~10 bilhões  |
 
-Each [token](#token) has a finite amount of influence to distribute across the rest of the [context](#context). Heavy influence on [one relationship](#attention-relationship) leaves less for others. The budget is per-token and doesn't grow when the context does, which is why long [sessions](#session) dilute.
+Cada par também é calculado mais de uma vez. Os modelos têm várias cabeças de atenção — os números exatos dos modelos de ponta não são publicados, mas entre cinquenta e cem é um palpite razoável — e cada cabeça calcula a sua própria versão de cada relação. Ou seja, cada par da tabela acima se repete em todas as cabeças. São muitos pares.
 
-Think of it as signal and noise. Your instruction is a signal at fixed volume; every other token in the [context window](#context-window) is competing sound. The instruction never gets quieter — it's still there, character for character — but as the context grows, the room gets louder around it, and the signal-to-noise ratio drops. An instruction that was the loudest thing at 10k tokens of context is background hum at 150k. This is the mechanism behind [attention degradation](#attention-degradation): the model doesn't forget; the signal gets lost in the noise.
+Só um número pequeno dessas relações importa para cada tarefa. O par entre a sua instrução e o código que ela governa é um dos poucos que contam; quase todo o resto do conjunto é ruído. E os dois crescem em ritmos diferentes: as relações que importam ficam mais ou menos constantes, enquanto o total do conjunto cresce quadraticamente com o tamanho do contexto. Com 1.000 tokens, o par que interessa é um em um milhão; com 100.000 tokens, é um em dez bilhões. Essa é a aritmética por trás do [orçamento de atenção](#orçamento-de-atenção), e a [degradação de atenção](#degradação-de-atenção) é o que você percebe quando as relações que importam ficam com uma fatia pequena demais.
 
-The symptom reads as disobedience — the agent agreed to a constraint early on and then drifts from it, and re-pasting the constraint helps only briefly. The cause isn't the instruction; it's everything else in the window competing with it.
+_Uso:_
 
-What you can control is what goes into the context. Content that doesn't serve the task isn't neutral — it's noise over everything that does. Keep the window small, [clear](#clearing) when the accumulated context stops paying for itself, and restate the constraints that matter instead of trusting their early mention to hold.
+"Ele fica confundindo os dois símbolos `user` ao longo do diff — parece que a gente caiu na [zona burra](#zona-inteligente)."
 
-_Usage:_
+"É, a relação de atenção entre cada ponto de chamada e a sua declaração compete com a do outro símbolo — mesmo formato de token, vínculos diferentes. Renomeia um dos dois e os pares ficam mais nítidos."
 
-"Why does it keep ignoring the schema I pasted at the top?"
+### Orçamento de atenção
 
-"We're well into the [dumb zone](#smart-zone) — every token's attention budget is fixed, but the context kept growing. The signal on the schema is now competing with thousands of newer tokens."
+_Em inglês: Attention budget_
 
-### Attention degradation
+Cada [token](#token) tem uma quantidade finita de influência para distribuir pelo resto do [contexto](#contexto). Dar muita influência a [uma relação de atenção](#relação-de-atenção) deixa menos para as outras. O orçamento é por token e não cresce quando o contexto cresce, e é por isso que [sessões](#sessão) longas diluem a instrução.
 
-As a [session](#session) grows, each [token](#token)'s [attention budget](#attention-budget) is spread across more competitors. The signal on any one [meaningful relationship](#attention-relationship) shrinks; noise from irrelevant [context](#context) crowds in. Same [model](#model), same [parameters](#parameters) — just more mouths to feed from the same plate. Cause of the smart zone / dumb [zone effect](#smart-zone).
+Pense nisso como sinal e ruído. Sua instrução é um sinal em volume fixo; todos os outros tokens na [janela de contexto](#janela-de-contexto) são som competindo com ela. A instrução nunca fica mais baixa — continua lá, caractere por caractere —, mas, conforme o contexto cresce, o ambiente fica mais barulhento ao redor dela, e a relação sinal-ruído cai. Uma instrução que era o som mais alto com 10 mil tokens de contexto vira ruído de fundo com 150 mil. Esse é o mecanismo por trás da [degradação de atenção](#degradação-de-atenção): o modelo não esquece; o sinal se perde no ruído.
 
-It presents as the model getting worse mid-session: constraints it followed for an hour start slipping, it re-asks things it was told, it writes code that ignores a file it read earlier. Nothing about the model changed — the only variable is how much context it's now attending over.
+O sintoma parece desobediência — o agente concordou com uma restrição no começo e depois se desvia dela, e colar a restrição de novo só ajuda por pouco tempo. A causa não é a instrução; é tudo o mais na janela competindo com ela.
 
-It's gradual, which is what makes it hard to catch from inside the session. There's no error and no threshold; each [turn](#turn) is only slightly worse than the last, and by the time the slips are obvious you've been in the dumb zone for a while.
+O que você controla é o que entra no contexto. Conteúdo que não serve à tarefa não é neutro — é ruído sobre tudo o que serve. Mantenha a janela pequena, [limpe o contexto](#limpeza-de-contexto) quando o que se acumulou deixar de compensar e reafirme as restrições que importam em vez de confiar que a menção inicial vai se manter.
 
-You recover by removing context, not adding more. Re-pasting the ignored instruction adds another competitor to the same crowded window and helps only briefly. What works: [clear](#clearing) and reload only what the task needs, or [compact](#compaction), or [hand off](#handoff) to a fresh session. Treat declining instruction-following as a signal about context length, not about the model.
+_Uso:_
 
-_Usage:_
+"Por que ele continua ignorando o schema que colei lá no começo?"
 
-"It's deep in the dumb zone — inventing generics that aren't in the type file."
+"Já estamos bem dentro da [zona burra](#zona-inteligente) — o orçamento de atenção de cada token é fixo, mas o contexto continuou crescendo. O sinal do schema agora compete com milhares de tokens mais novos."
 
-"Attention degradation. The type definitions are still in context, but the signal on them is buried under everything we've added since. Clear and reload."
+### Degradação de atenção
 
-### Smart zone
+_Em inglês: Attention degradation_
 
-Early in a [session](#session) the [agent](#agent) is in a "smart zone" — sharp, focused, recall is good. As the session grows it drifts into a "dumb zone": sloppier, forgetful, more mistakes — and more faithfulness [hallucinations](#hallucination). Same [model](#model), same [harness](#harness) — just more [context](#context). The felt effect of [attention degradation](#attention-degradation). On frontier models, the dumb zone commonly begins around 125K-150K [tokens](#token) — though this is debated. [Clear](#clearing) or [compact](#compaction) when the session bloats; don't push through.
+À medida que uma [sessão](#sessão) cresce, o [orçamento de atenção](#orçamento-de-atenção) de cada [token](#token) é dividido entre mais concorrentes. O sinal de qualquer [relação de atenção](#relação-de-atenção) significativa diminui, e o ruído do [contexto](#contexto) irrelevante ganha espaço. É o mesmo [modelo](#modelo), com os mesmos [parâmetros](#parâmetros) — só que com mais bocas para alimentar no mesmo prato. É a causa do efeito [zona inteligente / zona burra](#zona-inteligente).
 
-The decline is gradual, which makes it easy to miss. There's no error message and no visible boundary; the agent just starts performing slightly worse, then noticeably worse. Common signs: it forgets an instruction you gave twenty turns ago, repeats a mistake it had already corrected, or confidently asserts something the context contradicts. Because the slide is smooth, the usual response is to push through and re-explain — which adds more context and makes the problem worse.
+Aparece como o modelo piorando no meio da sessão: restrições que ele seguiu por uma hora começam a escapar, ele pergunta de novo coisas que já ouviu, escreve código que ignora um arquivo lido antes. Nada mudou no modelo — a única variável é a quantidade de contexto sobre a qual ele distribui atenção agora.
 
-The zones don't track the [context window](#context-window) limit. A session can be deep in the dumb zone with most of the window still free: the limit is where the harness refuses to continue, but quality falls off long before that. Plan around the smart zone, not the window — the practical budget for a task is the tokens the agent works well within, not the tokens it can technically hold.
+A piora é gradual, e por isso é difícil de notar de dentro da sessão. Não há erro nem limite definido; cada [turno](#turno) é só um pouco pior do que o anterior, e quando as falhas ficam óbvias você já está na zona burra há um tempo.
 
-The smart zone is a budget, and unrelated work spends it. Every task done in a session uses up tokens, so starting a second task in the same session means starting it closer to the dumb zone. Doing one task per session gives each task the sharpest part of the session. When a single task is bigger than one smart zone, split it: [hand off](#handoff) or compact at a natural boundary, and let a fresh session do the next piece.
+A recuperação vem de tirar contexto, não de acrescentar mais. Colar de novo a instrução ignorada põe mais um concorrente na mesma janela lotada e ajuda só por pouco tempo. O que funciona: [limpar](#limpeza-de-contexto) e recarregar só o que a tarefa precisa, ou [compactar](#compactação), ou [fazer handoff](#handoff) para uma sessão nova. Trate a queda no cumprimento das instruções como um sinal sobre o tamanho do contexto, não sobre o modelo.
 
-_Usage:_
+_Uso:_
 
-"It nailed the first three components and just butchered the fourth."
+"Ele está fundo na zona burra — inventando generics que não existem no arquivo de tipos."
 
-"You're out of the smart zone — same model, just deep into the dumb zone now. Compact and reload the plan, the next component will land."
+"Degradação de atenção. As definições de tipos ainda estão no contexto, mas o sinal sobre elas está soterrado por tudo que acrescentamos depois. Limpa e recarrega."
 
-## Section 5 — Handoffs
+### Zona inteligente
 
-### Clearing
+_Em inglês: Smart zone_
 
-Ending the current [session](#session) and starting a fresh one. The next message begins with an empty session and an empty [context window](#context-window). Usually user-driven.
+No início de uma [sessão](#sessão) o [agente](#agente) está numa "zona inteligente": preciso, focado, com boa memória. Conforme a sessão cresce, ele desliza para uma "zona burra": mais descuidado, esquecido, com mais erros e com mais [alucinações](#alucinação) de fidelidade ao [contexto](#contexto). É o mesmo [modelo](#modelo) e o mesmo [harness](#harness), só que com mais contexto. É o efeito percebido da [degradação de atenção](#degradação-de-atenção). Em modelos de ponta, a zona burra costuma começar por volta de 125 mil a 150 mil [tokens](#token), embora isso seja debatido. [Limpe o contexto](#limpeza-de-contexto) ou [compacte](#compactação) quando a sessão engordar; não insista.
 
-Clearing is the cure for a polluted context. A session accumulates everything: failed attempts, wrong turns, stale [tool results](#tool-result), abandoned plans. The [model](#model) re-reads all of it on every [turn](#turn), and bad history drags on new work. Deep into a long session the [agent](#agent) gets vaguer and less obedient — instructions you gave clearly get ignored, quality slips, and prodding it to do better doesn't help, because the noise it's wading through is still in its [context](#context). Clearing removes the noise.
+A queda é gradual, e por isso é fácil não notar. Não há mensagem de erro nem fronteira visível; o agente só passa a render um pouco pior e, depois, claramente pior. Sinais comuns: ele esquece uma instrução dada vinte turnos atrás, repete um erro que já tinha corrigido ou afirma com convicção algo que o contexto contradiz. Como a descida é suave, a reação usual é insistir e explicar de novo, o que acrescenta mais contexto e piora o problema.
 
-Clearing doesn't erase the conversation. Most [harnesses](#harness) keep session history on your computer, so the transcript is still there to read or resume. What's gone is the agent's working state: the model is [stateless](#stateless), so the new session knows nothing the old one knew. If the session holds decisions or progress the next one will need, have the agent write a [handoff artifact](#handoff-artifact) first, then start the new session by pointing at it.
+As zonas não acompanham o limite da [janela de contexto](#janela-de-contexto). Uma sessão pode estar bem dentro da zona burra com a maior parte da janela ainda livre: o limite é o ponto em que o harness se recusa a continuar, mas a qualidade cai muito antes disso. Planeje pela zona inteligente, não pela janela: o orçamento prático de uma tarefa é a quantidade de tokens com que o agente trabalha bem, não a quantidade que ele consegue manter tecnicamente.
 
-Compare [compaction](#compaction), which summarises the session into the new context instead of starting empty. Clearing is the blunter tool: nothing carries over, including the junk.
+A zona inteligente é um orçamento, e trabalho não relacionado o gasta. Cada tarefa feita na sessão consome tokens, então começar uma segunda tarefa na mesma sessão é começá-la mais perto da zona burra. Fazer uma tarefa por sessão dá a cada uma o trecho da sessão em que o agente rende melhor. Quando uma única tarefa é maior que uma zona inteligente, divida-a: faça [handoff](#handoff) ou compacte num ponto de corte natural e deixe uma sessão nova cuidar da próxima parte.
 
-_Usage:_
+_Uso:_
 
-"It's stuck looping on the failing test."
+"Ele mandou bem nos três primeiros componentes e estragou o quarto."
 
-"Just clear it — start a fresh session with the plan doc and the test file. No point fighting the existing context."
+"Você saiu da zona inteligente: mesmo modelo, só que agora lá no fundo da zona burra. Compacta e recarrega o plano, que o próximo componente sai."
+
+## Seção 5 — Handoffs
+
+### Limpeza de contexto
+
+_Em inglês: Clearing_
+
+Encerrar a [sessão](#sessão) atual e começar uma nova. A próxima mensagem começa com uma sessão vazia e uma [janela de contexto](#janela-de-contexto) vazia. Geralmente é uma ação do usuário.
+
+A limpeza de contexto é a solução para um contexto poluído. Uma sessão acumula tudo: tentativas que falharam, caminhos errados, [resultados de ferramenta](#resultado-de-ferramenta) desatualizados, planos abandonados. O [modelo](#modelo) relê tudo isso a cada [turno](#turno), e um histórico ruim atrapalha o trabalho novo. No meio de uma sessão longa, o [agente](#agente) fica mais vago e menos obediente — instruções que você deu com clareza são ignoradas, a qualidade cai, e insistir para ele fazer melhor não adianta, porque o ruído em que ele está atolado continua no [contexto](#contexto). A limpeza remove o ruído.
+
+Limpar não apaga a conversa. A maioria dos [harnesses](#harness) guarda o histórico das sessões no seu computador, então a transcrição continua lá para ler ou retomar. O que se perde é o estado de trabalho do agente: o modelo é [stateless](#stateless), então a sessão nova não sabe nada do que a antiga sabia. Se a sessão contém decisões ou progresso de que a próxima vai precisar, peça ao agente que escreva um [artefato de handoff](#artefato-de-handoff) antes e inicie a sessão nova apontando para ele.
+
+Compare com a [compactação](#compactação), que resume a sessão no novo contexto, em vez de começar vazio. A limpeza é o recurso menos seletivo: nada é levado adiante, nem o lixo.
+
+_Uso:_
+
+"Ele está preso em loop no teste que falha."
+
+"Limpa e abre uma sessão nova só com o documento de plano e o arquivo de teste. Não adianta brigar com o contexto que está aí."
 
 ### Handoff
 
-Transferring [agent](#agent) [context](#context) from one [session](#session) to another. The carry mechanism varies — a written [handoff artifact](#handoff-artifact), an in-memory summary ([compaction](#compaction)), and others. Distinct from [clearing](#clearing) (no transfer at all). Reasons vary: switching roles (planner → implementer), kicking off an [AFK](#afk) run, fanning out to parallel sessions, or freeing up [context window](#context-window) room.
+Handoff (em português, repasse ou transferência) é a passagem do [contexto](#contexto) de um [agente](#agente) de uma [sessão](#sessão) para outra. O mecanismo de transporte varia: um [artefato de handoff](#artefato-de-handoff) escrito, um resumo em memória ([compactação](#compactação)) e outros. Difere da [limpeza de contexto](#limpeza-de-contexto), em que não há transferência nenhuma. Os motivos variam: trocar de papel (planejador → implementador), iniciar uma execução [AFK](#afk) (longe do teclado), abrir sessões em paralelo ou liberar espaço na [janela de contexto](#janela-de-contexto).
 
-The receiving session starts with zero context — the [model](#model) is [stateless](#stateless), and nothing from the old session is visible to the new one. Whatever the next session needs has to be carried explicitly; everything else is gone. "No return path" is the constraint that shapes the carry: the new session can't ask the old one what it meant, so the carried material has to stand on its own.
+A sessão que recebe começa com contexto zero: o [modelo](#modelo) é [stateless](#stateless) (sem estado), e nada da sessão antiga fica visível para a nova. Tudo o que a próxima sessão precisa tem de ser levado explicitamente; o resto se perde. "Sem caminho de volta" é a restrição que define como o material é levado: a sessão nova não pode perguntar à antiga o que ela quis dizer, então o material precisa se sustentar sozinho.
 
-| Mechanism        | Form                                        | Properties                                                                               |
-| ---------------- | ------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| Handoff artifact | File in the [environment](#environment) | You can read and correct it before anything depends on it; reusable across many sessions |
-| Compaction       | Summary in the context window               | Automatic and cheap; harder to inspect; feeds one successor                              |
+| Mecanismo           | Forma                                | Propriedades                                                                       |
+| ------------------- | ------------------------------------ | ---------------------------------------------------------------------------------- |
+| Artefato de handoff | Arquivo no [ambiente](#ambiente) | Dá para ler e corrigir antes que algo dependa dele; reutilizável em várias sessões |
+| Compactação         | Resumo na janela de contexto         | Automática e barata; mais difícil de inspecionar; alimenta uma só sessão sucessora |
 
-The visible failure of a bad handoff is relitigation: the new session re-opens decisions the old one had settled, because the carry recorded what was decided but not why. Judge a handoff by what a session with zero context could do with it.
+A falha visível de um handoff ruim é a rediscussão: a sessão nova reabre decisões que a antiga já tinha fechado, porque o que foi levado registra o que foi decidido, mas não o porquê. Avalie um handoff pelo que uma sessão com contexto zero conseguiria fazer com ele.
 
-_Usage:_
+_Uso:_
 
-"Planning session is getting heavy — should I just keep going?"
+"A sessão de planejamento está ficando pesada. Será que eu só continuo?"
 
-"Do a handoff. Write the decisions to a doc, clear, start the implementation in a fresh session reading from it."
+"Faz um handoff. Escreve as decisões num doc, limpa o contexto e começa a implementação numa sessão nova, lendo a partir dele."
 
-### Primary source
+### Fonte primária
 
-A source of truth in its original form — the code, the conversation transcript, the raw log, the actual API response. Not an account of the thing; the thing. Counterpart to [secondary source](#secondary-source).
+_Em inglês: Primary source_
 
-If you want to know what your codebase does, the code is the primary source. The docs, the architecture diagram, and the README are all descriptions of it — accurate when written, on their own schedule ever since. When an [agent](#agent) confidently asserts something wrong about your project, the question to ask is which source it was working from: an agent that read a doc inherits the doc's staleness; an agent that read the code is reading the current truth.
+Uma fonte da verdade em sua forma original — o código, a transcrição da conversa, o log bruto, a resposta real da API. Não é um relato da coisa; é a coisa. Contraparte da [fonte secundária](#fonte-secundária).
 
-The cost is what keeps primary sources from being the default. Loading one into the [context window](#context-window) is expensive — the full file, the full transcript, every [token](#token) billed as [input](#input-tokens) and competing for [attention budget](#attention-budget). What you get for the cost is completeness: nothing has been pre-filtered by someone else's judgement about what mattered. A summary written last month can't contain the detail that turned out to matter today; the primary source still does.
+Se você quer saber o que sua base de código faz, o código é a fonte primária. A documentação, o diagrama de arquitetura e o README são descrições dele — precisos quando foram escritos e, desde então, desatualizados no ritmo que lhes convém. Quando um [agente](#agente) afirma com confiança algo errado sobre o seu projeto, a pergunta a fazer é de qual fonte ele estava partindo: um agente que leu um documento herda a defasagem do documento; um agente que leu o código está lendo a verdade atual.
 
-Reach for the primary source when precision matters — the exact signature, the actual error, the line that throws. Much of managing [context](#context) is deciding when to pay for the primary source and when a secondary source is good enough.
+O custo é o que impede as fontes primárias de serem o padrão. Carregar uma na [janela de contexto](#janela-de-contexto) é caro — o arquivo inteiro, a transcrição inteira, cada [token](#token) cobrado como [token de entrada](#tokens-de-entrada) e disputando o [orçamento de atenção](#orçamento-de-atenção). O que você recebe em troca do custo é completude: nada foi pré-filtrado pelo julgamento de outra pessoa sobre o que importava. Um resumo escrito no mês passado não consegue conter o detalhe que acabou importando hoje; a fonte primária ainda contém.
 
-_Usage:_
+Recorra à fonte primária quando a precisão importa — a assinatura exata, o erro real, a linha que lança a exceção. Boa parte de gerenciar o [contexto](#contexto) é decidir quando vale pagar pela fonte primária e quando uma fonte secundária basta.
 
-"The agent says the retry logic backs off exponentially, but I'm watching it hammer the endpoint."
+_Uso:_
 
-"It read that out of the design doc. Point it at the actual retry module — work from the primary source when the behaviour matters."
+"O agente diz que a lógica de retry faz backoff exponencial, mas estou vendo ele martelar o endpoint."
 
-### Secondary source
+"Ele leu isso no design doc. Aponta ele para o módulo de retry de verdade — quando o comportamento importa, trabalha com a fonte primária."
 
-An account of a [primary source](#primary-source), one step removed — documentation describing code, a summary describing a transcript, a report describing search results. Cheaper to load into the [context window](#context-window) than the source it describes, and lossy by construction: whoever wrote it decided what mattered, and whatever they dropped is invisible to a reader who only has the summary.
+### Fonte secundária
 
-A lot of [context](#context) engineering is the manufacture of secondary sources. [Compaction](#compaction) turns the [session](#session) history into a summary that seeds the next session. A [subagent](#subagent) burns its own context on a noisy search and returns a short report. A [handoff artifact](#handoff-artifact) condenses a session's decisions into a document the next session reads. [Memory systems](#memory-system) distil what a session learned into notes. Each makes the same trade: fidelity for headroom.
+_Em inglês: Secondary source_
 
-Secondary sources fail in two ways. They're lossy — the compaction summary that lost the schema decision, the report that didn't mention the edge case. And they drift — the primary source changes and the account doesn't follow, so docs describe last quarter's architecture with this quarter's confidence. When an [agent](#agent) acts on a secondary source that has failed either way, it works confidently from wrong information; the fix is sending it back to the primary source.
+Relato de uma [fonte primária](#fonte-primária), a um passo de distância dela — documentação que descreve código, um resumo que descreve uma transcrição, um relatório que descreve resultados de busca. É mais barato de carregar na [janela de contexto](#janela-de-contexto) do que a fonte que descreve, e tem perdas por construção: quem o escreveu decidiu o que importava, e o que ficou de fora é invisível para quem só tem o resumo.
 
-Neither failure makes secondary sources a mistake. The context window is finite, and primary sources are expensive; without summaries, reports, and handoff documents, nothing large fits. The skill is knowing which details can survive the loss — and verifying against the primary source when one can't. A well-made secondary source carries a [context pointer](#context-pointer) back to its original — the summary that names the transcript it came from, the doc that names the file it describes — so when the account isn't enough, the reader can follow the pointer rather than work from the loss.
+Boa parte da engenharia de [contexto](#contexto) consiste em produzir fontes secundárias. A [compactação](#compactação) transforma o histórico da [sessão](#sessão) em um resumo que inicia a próxima sessão. Um [subagente](#subagente) gasta o próprio contexto numa busca ruidosa e devolve um relatório curto. Um [artefato de handoff](#artefato-de-handoff) condensa as decisões de uma sessão num documento que a sessão seguinte lê. [Sistemas de memória](#sistema-de-memória) destilam em notas o que uma sessão aprendeu. Todos fazem a mesma troca: fidelidade por folga.
 
-_Usage:_
+Fontes secundárias falham de duas formas. Têm perdas — o resumo de compactação que perdeu a decisão sobre o schema, o relatório que não mencionou o caso de borda. E ficam desatualizadas — a fonte primária muda e o relato não acompanha, então a documentação descreve a arquitetura do trimestre passado com a confiança deste trimestre. Quando um [agente](#agente) age com base numa fonte secundária que falhou de qualquer uma das duas formas, ele trabalha com confiança a partir de informação errada; a correção é mandá-lo de volta à fonte primária.
 
-"The handoff doc says auth is done, but the new session keeps finding broken token refresh."
+Nenhuma das duas falhas torna as fontes secundárias um erro. A janela de contexto é finita e as fontes primárias são caras; sem resumos, relatórios e documentos de handoff, nada grande cabe. O que importa é saber quais detalhes sobrevivem à perda — e verificar na fonte primária quando não sobrevivem. Uma fonte secundária bem feita traz um [ponteiro de contexto](#ponteiro-de-contexto) que leva de volta ao original — o resumo que cita a transcrição de onde veio, o doc que cita o arquivo que descreve — para que, quando o relato não bastar, o leitor siga o ponteiro em vez de trabalhar em cima da perda.
 
-"The doc's a secondary source — the last session wrote down what it believed, not what's true. Have the new session run the auth tests and trust the primary source."
+_Uso:_
 
-### Handoff artifact
+"O doc de handoff diz que a autenticação está pronta, mas a sessão nova continua encontrando o refresh de token quebrado."
 
-A document used as the carry mechanism for a [handoff](#handoff) — written to the [environment](#environment) by one [session](#session) to be read by another. [Specs](#spec), [tickets](#ticket), and plan docs are all handoff artifacts.
+"O doc é uma fonte secundária — a última sessão anotou o que achava, não o que é verdade. Manda a sessão nova rodar os testes de autenticação e confiar na fonte primária."
 
-The reason to write one: the [model](#model) is [stateless](#stateless), so nothing in a session survives [clearing](#clearing) it. Decisions, constraints, half-finished plans — all gone with the [context](#context) that held them. The environment persists. Writing the important state into a file moves it somewhere the next session can read it back from.
+### Artefato de handoff
 
-The artifact is a [secondary source](#secondary-source) — an account of the session's work, not the work itself. That's what makes it small enough to brief a fresh session, and also why it can mislead one: it records what the writing session believed, and anything it left out or got wrong is invisible to the reader. Where a claim matters, the next session should verify it against the [primary source](#primary-source) — the code, the tests — rather than inherit it.
+_Em inglês: Handoff artifact_
 
-A good artifact is written to be read into a session that has zero context. Concrete file paths rather than "the file we discussed". What was decided and why, so the next session doesn't relitigate it. What's done and what's left. It helps to tell the writing session where the artifact is headed: "write a handoff doc for a fresh session that knows nothing about this work".
+Um documento usado como mecanismo de transporte de um [handoff](#handoff) — escrito no [ambiente](#ambiente) por uma [sessão](#sessão) para ser lido por outra. [Especificações](#especificação), [tickets](#ticket) e documentos de plano são todos artefatos de handoff.
 
-The alternative carry mechanism is [compaction](#compaction), which summarises in-memory. The artifact has two advantages: it lives on disk where you can read and correct it before anything depends on it, and it can be reused — the same spec can brief five parallel sessions.
+O motivo para escrever esse documento: o [modelo](#modelo) é [stateless](#stateless), então nada em uma sessão sobrevive à [limpeza de contexto](#limpeza-de-contexto) dela. Decisões, restrições, planos pela metade — tudo some junto com o [contexto](#contexto) que os continha. O ambiente persiste. Escrever o estado importante em um arquivo o move para um lugar de onde a próxima sessão pode lê-lo de volta.
 
-_Usage:_
+O artefato é uma [fonte secundária](#fonte-secundária) — um relato do trabalho da sessão, não o trabalho em si. É isso que o deixa pequeno o bastante para orientar uma sessão nova, e também o motivo de ele poder enganá-la: registra o que a sessão que o escreveu acreditava, e tudo o que ficou de fora ou saiu errado é invisível para quem lê. Quando uma afirmação importa, a próxima sessão deve verificá-la na [fonte primária](#fonte-primária) — o código, os testes — em vez de herdá-la.
 
-"How do I split this between the planning [agent](#agent) and the implementing one?"
+Um bom artefato é escrito para ser lido por uma sessão sem nenhum contexto. Caminhos de arquivo concretos em vez de "o arquivo que discutimos". O que foi decidido e por quê, para a próxima sessão não rediscutir decisões já tomadas. O que está pronto e o que falta. Ajuda informar à sessão que escreve qual é o destino do artefato: "escreva um documento de handoff para uma sessão nova que não sabe nada sobre este trabalho".
 
-"Have the planner write a handoff artifact — file paths, decisions, constraints. The implementer's session opens with a pointer to the artifact and works from it as its brief."
+O outro mecanismo de transporte é a [compactação](#compactação), que resume o trabalho na memória. O artefato tem duas vantagens: fica no disco, onde você pode lê-lo e corrigi-lo antes que qualquer coisa dependa dele, e pode ser reutilizado — a mesma especificação pode orientar cinco sessões em paralelo.
 
-### Spec
+_Uso:_
 
-A [handoff artifact](#handoff-artifact) describing a multi-[session](#session) piece of work — what's being built, not how each session does its share. Mutates as work progresses. Made of [tickets](#ticket).
+"Como eu divido isso entre o [agente](#agente) de planejamento e o de implementação?"
 
-The spec exists because sessions are disposable and big work isn't. Anything that takes more than one [context window](#context-window) of effort needs a home outside the [context](#context) — somewhere in the agent's [environment](#environment) that survives [clearing](#clearing), whether that's a file in the repo, a GitHub issue, or an issue tracker the agent can reach. The spec is that home: the goal, the constraints, the decisions made so far, and the list of tickets with their status. Any fresh session can read it and know where the work stands without inheriting the previous session's accumulated noise.
+"Pede pro planejador escrever um artefato de handoff — caminhos de arquivo, decisões, restrições. A sessão do implementador abre com um ponteiro pro artefato e trabalha a partir dele, usando-o como guia."
 
-Specs come in recognisable styles, mostly inherited from how teams already write things down. A _product requirements document_ (PRD) leans toward the user-facing what and why — features, behaviour, acceptance criteria. A _design doc_ or _RFC_ leans technical — the chosen approach, the alternatives rejected, the trade-offs. At the small end, a plain `plan.md` with a checklist of tickets does the same job for a multi-session feature. The style matters less than the role: for the [agent](#agent), each of these is the same thing — the durable statement of intent it reads at the start of every session.
+### Especificação
 
-_Usage:_
+_Em inglês: Spec_
 
-"Should this all be one session?"
+Um [artefato de handoff](#artefato-de-handoff) que descreve um trabalho de várias [sessões](#sessão) — o que está sendo construído, não como cada sessão faz a sua parte. Muda conforme o trabalho avança. É composta de [tickets](#ticket).
 
-"No, write it up as a spec — break it into tickets, run each one in its own session. Trying to do the whole thing in a single context will hit the [dumb zone](#smart-zone) before you're halfway."
+A especificação existe porque sessões são descartáveis e trabalho grande não é. Qualquer trabalho que exija mais esforço do que cabe em uma [janela de contexto](#janela-de-contexto) precisa de um lugar fora do [contexto](#contexto), em algum ponto do [ambiente](#ambiente) do agente que sobreviva à [limpeza de contexto](#limpeza-de-contexto): um arquivo no repositório, uma issue do GitHub ou um issue tracker ao qual o agente tenha acesso. A especificação é esse lugar. Ela guarda o objetivo, as restrições, as decisões tomadas até agora e a lista de tickets com o status de cada um. Qualquer sessão nova pode lê-la e saber em que pé está o trabalho, sem herdar o ruído acumulado da sessão anterior.
+
+Especificações aparecem em estilos reconhecíveis, em geral herdados da forma como as equipes já registram as coisas por escrito. Um _documento de requisitos do produto_ (PRD) tende ao quê e ao porquê voltados ao usuário: funcionalidades, comportamento, critérios de aceitação. Um design doc ou RFC tende ao lado técnico: a abordagem escolhida, as alternativas descartadas, as contrapartidas. No caso mais simples, um `plan.md` com uma lista de verificação de tickets faz o mesmo trabalho numa funcionalidade que ocupa várias sessões. O estilo importa menos que o papel: para o [agente](#agente), todos cumprem a mesma função, a de declaração durável de intenção que ele lê no início de cada sessão.
+
+_Uso:_
+
+"Isso tudo deveria ser uma sessão só?"
+
+"Não, escreve como uma spec: quebra em tickets e roda cada um na sua própria sessão. Se tentar fazer tudo num único contexto, você cai na [zona burra](#zona-inteligente) antes de chegar na metade."
 
 ### Ticket
 
-A [handoff artifact](#handoff-artifact) scoping one [session](#session) of work. Stands alone, or hangs off a [spec](#spec) as one of its children. Tickets can block or be blocked by sibling tickets, so the order of work falls out of their dependency graph rather than a linear plan.
+Ticket é um [artefato de handoff](#artefato-de-handoff) que delimita o trabalho de uma [sessão](#sessão). Pode ser avulso ou ficar sob uma [especificação](#especificação), como um de seus filhos. Tickets podem bloquear ou ser bloqueados por tickets irmãos, então a ordem do trabalho decorre do grafo de dependências entre eles, e não de um plano linear.
 
-The defining constraint is the size: one session. A ticket should be completable before the session drifts out of the [smart zone](#smart-zone) — and that constraint is testable. If sessions on your tickets routinely degrade before the work is done, the tickets are too big; split them. If each session spends most of its [context](#context) on setup before doing five minutes of work, they're too small; merge them.
+A restrição que define o ticket é o tamanho: uma sessão. Um ticket deve poder ser concluído antes que a sessão saia da [zona inteligente](#zona-inteligente), e essa restrição é testável. Se as sessões dos seus tickets costumam se degradar antes de o trabalho terminar, os tickets são grandes demais; divida-os. Se cada sessão gasta a maior parte do [contexto](#contexto) com preparação antes de trabalhar por cinco minutos, eles são pequenos demais; junte-os.
 
-A good ticket is written for a reader with no other context. The goal, the acceptance criteria, and [context pointers](#context-pointer) to the relevant files and decisions — enough that the session can start working without re-deriving what the last one knew.
+Um bom ticket é escrito para um leitor sem nenhum outro contexto. Ele traz o objetivo, os critérios de aceitação e [ponteiros de contexto](#ponteiro-de-contexto) para os arquivos e as decisões relevantes, o bastante para a sessão começar a trabalhar sem precisar reconstruir o que a anterior sabia.
 
-The dependency graph is also what unlocks parallelism. Independent tickets — the leaves of the graph — can each run in their own session at the same time. This is an effective way of running multiple agents at once. In a [software factory](#software-factory), a ticket being marked ready is itself the trigger that starts its session.
+O grafo de dependências também é o que libera o paralelismo. Tickets independentes, as folhas do grafo, podem rodar cada um na sua própria sessão ao mesmo tempo. É um jeito eficaz de rodar vários agentes de uma vez. Em uma [fábrica de software](#fábrica-de-software), marcar um ticket como pronto é, por si só, o gatilho que inicia a sessão dele.
 
-_Usage:_
+_Uso:_
 
-"Where do I start on the migration spec?"
+"Por onde eu começo na spec da migração?"
 
-"Look at the ticket graph — the schema change blocks the backfill, the backfill blocks the API switch. Pick a leaf and run a session on it."
+"Olha o grafo de tickets — a mudança de schema bloqueia o backfill, e o backfill bloqueia a troca da API. Pega uma folha e abre uma sessão nela."
 
-### Compaction
+### Compactação
 
-A [handoff](#handoff) done in-memory: the previous [session](#session)'s history is summarised, and the summary seeds a fresh session. Lossy by design: the transcript is a [primary source](#primary-source), the summary a [secondary source](#secondary-source) — detail traded for headroom. Triggered manually by the user, or automatically via [autocompact](#autocompact).
+_Em inglês: Compaction_
 
-The mechanism: the [context window](#context-window) is finite, and a long session fills it — every [tool result](#tool-result), every file read, every wrong turn stays in history. When it gets heavy, the [harness](#harness) asks the [model](#model) to summarise the session, throws the original history away, and seeds a fresh session with the summary. Whatever didn't make it into the summary is gone from the context. Some harnesses soften this by keeping the old transcript on disk and leaving a [context pointer](#context-pointer) to it in the summary — the secondary source links back to its primary source, so a detail the summary lost can be recovered by re-reading the original.
+Um [handoff](#handoff) feito em memória: o histórico da [sessão](#sessão) anterior é resumido, e o resumo inicia uma sessão nova. Com perdas de propósito: a transcrição é uma [fonte primária](#fonte-primária), o resumo é uma [fonte secundária](#fonte-secundária) — detalhe trocado por folga. Acionada manualmente pelo usuário ou automaticamente via [autocompactação](#autocompactação).
 
-The summary is written by the model, so it can be prompted. "Preserve the schema decisions" makes the generated artifact more deliberate. Timing matters too — compact at a phase boundary, after the plan is settled, not mid-task.
+O mecanismo: a [janela de contexto](#janela-de-contexto) é finita, e uma sessão longa a enche — cada [resultado de ferramenta](#resultado-de-ferramenta), cada arquivo lido, cada caminho errado continua no histórico. Quando o histórico fica pesado, o [harness](#harness) pede ao [modelo](#modelo) que resuma a sessão, descarta o histórico original e inicia uma sessão nova com o resumo. O que não entrou no resumo some do contexto. Alguns harnesses suavizam isso mantendo a transcrição antiga em disco e deixando no resumo um [ponteiro de contexto](#ponteiro-de-contexto) para ela — a fonte secundária aponta de volta para a fonte primária, e um detalhe que o resumo perdeu pode ser recuperado relendo o original.
 
-Contrast with [clearing](#clearing), which drops everything and starts cold: compaction tries to carry the essentials across; clearing bets they're already written down somewhere better.
+O resumo é escrito pelo modelo, então dá para orientá-lo com um prompt. "Preserve as decisões de schema" deixa o resumo gerado mais deliberado. O momento também importa — compacte na virada de fase, depois que o plano está definido, não no meio de uma tarefa.
 
-_Usage:_
+Compare com a [limpeza de contexto](#limpeza-de-contexto), que descarta tudo e recomeça do zero: a compactação tenta levar o essencial para a sessão nova; a limpeza aposta que o essencial já está escrito em outro lugar, melhor.
 
-"[Context](#context)'s getting heavy and I still have the test pass to do."
+_Uso:_
 
-"Compact before you start — write what must survive into the summary prompt so the new session keeps the schema decisions and drops the exploration."
+"O [contexto](#contexto) está ficando pesado e eu ainda tenho a rodada de testes pela frente."
 
-### Autocompact
+"Compacta antes de começar — escreve no prompt do resumo o que precisa sobreviver, para a sessão nova manter as decisões de schema e largar a exploração."
 
-[Compaction](#compaction) triggered automatically by the [harness](#harness) when the [context window](#context-window) approaches full.
+### Autocompactação
 
-The harness watches how full the context window is. When it crosses a threshold — often around 80% — it pauses, asks the [model](#model) to summarise the [session](#session) so far, and seeds a fresh session with the summary. Work then continues as if nothing happened.
+_Em inglês: Autocompact_
 
-Except something did happen. Compaction is lossy, and autocompact is lossy at a moment you didn't choose. A manual compact happens at a phase boundary, when you can tell the model what to preserve. Autocompact fires mid-task, whenever the threshold is hit — possibly halfway through a refactor, with the summary deciding for itself which of your decisions were worth keeping. The classic symptom: the [agent](#agent) carries on confidently but has quietly forgotten a constraint you established an hour ago, and you only notice when its work starts contradicting it.
+[Compactação](#compactação) disparada automaticamente pelo [harness](#harness) quando a [janela de contexto](#janela-de-contexto) está quase cheia.
 
-The defence is to not let it fire. Watch the context indicator and compact manually at a natural boundary, or write decisions into a plan doc or [handoff artifact](#handoff-artifact) on disk, where no summary can lose them. Most harnesses also let you customise the buffer — moving the threshold earlier or later, or turning autocompact off entirely — so you can tune how much headroom you keep before it fires.
+O harness acompanha o quanto da janela de contexto está ocupado. Quando esse nível ultrapassa um limite — em geral perto de 80% — ele pausa, pede ao [modelo](#modelo) que resuma a [sessão](#sessão) até ali e inicia uma sessão nova com esse resumo. O trabalho continua como se nada tivesse acontecido.
 
-_Usage:_
+Só que algo aconteceu. A compactação tem perdas, e a autocompactação tem perdas num momento que você não escolheu. Uma compactação manual acontece na virada de fase, quando você pode dizer ao modelo o que preservar. A autocompactação dispara no meio da tarefa, sempre que o limite é atingido — possivelmente no meio de uma refatoração, com o resumo decidindo por conta própria quais das suas decisões vale a pena manter. O sintoma clássico: o [agente](#agente) segue em frente com confiança, mas esqueceu, sem avisar, uma restrição que você definiu uma hora atrás, e você só percebe quando o trabalho dele começa a contradizê-la.
 
-"It doesn't seem to remember what we decided about the schema earlier."
+A defesa é não deixar que ela dispare. Acompanhe o indicador de contexto e compacte manualmente numa virada natural, ou registre as decisões num documento de plano ou num [artefato de handoff](#artefato-de-handoff) em disco, onde nenhum resumo consegue perdê-las. A maioria dos harnesses também permite ajustar a margem de segurança — adiantando ou atrasando o limite, ou desligando a autocompactação por completo — para regular quanta folga sobra antes de ela disparar.
 
-"Autocompact fired between [turns](#turn) — the early decisions got summarised and we must have lost something. Reload the plan doc, or compact manually next time so you control what gets kept."
+_Uso:_
 
-## Section 6 — Memory and Steering
+"Parece que ele não lembra o que a gente decidiu sobre o schema lá atrás."
 
-### Memory system
+"A autocompactação disparou entre [turnos](#turno) — as decisões do começo viraram resumo e a gente deve ter perdido alguma coisa. Recarrega o documento de plano, ou compacta manualmente da próxima vez para controlar o que fica."
 
-A system that attempts to make an [agent](#agent) [stateful](#stateful) across [sessions](#session). Persists information into the [environment](#environment) during a session and reloads it into the [context window](#context-window) at the start of future ones, so the agent carries continuity beyond the user [clearing](#clearing) the session.
+## Seção 6 — Memória e Direcionamento
 
-A memory system has two halves. The write path: during a session, the agent records what it learned — a preference you stated, a fact about the project — as files in the environment. The read path: at session start, the [harness](#harness) loads those files, or an index of them, back into the context window. Many harnesses ship their own memory system — Claude Code's `/memory` is one — but you can also build one yourself: a directory of notes plus an instruction in [AGENTS.md](#agentsmd) to consult it.
+### Sistema de memória
 
-The same trade-offs as any always-loaded content apply. Memories accumulate, so most systems load a one-line index and leave the bodies behind [context pointers](#context-pointer) rather than inlining everything. And memories are [secondary sources](#secondary-source), so they drift: a fact recorded in March is loaded with equal confidence in June, after the project has moved on. A memory system needs pruning, the same way AGENTS.md does.
+_Em inglês: Memory system_
 
-_Usage:_
+Sistema que tenta tornar um [agente](#agente) [stateful](#stateful) entre [sessões](#sessão). Persiste informações no [ambiente](#ambiente) durante uma sessão e as recarrega na [janela de contexto](#janela-de-contexto) no início das sessões seguintes, de modo que o agente mantém continuidade mesmo depois de o usuário [limpar](#limpeza-de-contexto) a sessão.
 
-"I keep having to re-tell it I'm on Postgres, not MySQL."
+Um sistema de memória tem duas metades. No caminho de escrita, durante uma sessão, o agente registra o que aprendeu — uma preferência que você declarou, um fato sobre o projeto — como arquivos no ambiente. No caminho de leitura, no início da sessão, o [harness](#harness) carrega esses arquivos, ou um índice deles, de volta na janela de contexto. Muitos harnesses já trazem seu próprio sistema de memória — o `/memory` do Claude Code é um deles — mas você também pode montar o seu: um diretório de notas mais uma instrução no [AGENTS.md](#agentsmd) para consultá-lo.
 
-"Wire up a memory system — write what it learns to the [filesystem](#filesystem) on the first [turn](#turn), reload it at session start. The [model](#model) itself is [stateless](#stateless); the memory layer fakes continuity."
+Valem as mesmas contrapartidas de qualquer conteúdo sempre carregado. As memórias se acumulam, então a maioria dos sistemas carrega um índice de uma linha e deixa o conteúdo completo acessível por meio de [ponteiros de contexto](#ponteiro-de-contexto), em vez de incluir tudo direto no contexto. E memórias são [fontes secundárias](#fonte-secundária), então sofrem desvio: um fato registrado em março é carregado com a mesma confiança em junho, depois que o projeto já mudou. Um sistema de memória precisa de poda, do mesmo jeito que o AGENTS.md.
+
+_Uso:_
+
+"Toda hora tenho que repetir pra ele que eu uso Postgres, não MySQL."
+
+"Monta um sistema de memória — grava o que ele aprende no [sistema de arquivos](#sistema-de-arquivos) logo no primeiro [turno](#turno) e recarrega no início da sessão. O [modelo](#modelo) em si é [stateless](#stateless); a camada de memória só simula a continuidade."
 
 ### AGENTS.md
 
-A file in the [environment](#environment) that the [harness](#harness) loads into the [context window](#context-window) at [session](#session) start — the project's standing brief to the [agent](#agent). Cross-harness convention; some harnesses also have their own variant (Claude Code's is CLAUDE.md).
+Um arquivo no [ambiente](#ambiente) que o [harness](#harness) carrega na [janela de contexto](#janela-de-contexto) no início da [sessão](#sessão) — o briefing permanente do projeto para o [agente](#agente). É uma convenção comum a vários harnesses; alguns também têm uma variante própria (a do Claude Code é o CLAUDE.md).
 
-Because it loads automatically, it's one way to avoid repeating yourself across sessions. The [model](#model) is [stateless](#stateless) — a correction you give in one session is gone in the next, and you end up telling every fresh session that the project uses pnpm, that tests run with a particular flag, that a directory is generated and shouldn't be touched. When you've corrected the agent for the same thing twice, that correction is a candidate line for AGENTS.md.
+Por ser carregado automaticamente, ele evita que você se repita a cada sessão. O [modelo](#modelo) é [stateless](#stateless) (sem estado) — uma correção que você dá numa sessão some na seguinte, e você acaba avisando cada sessão nova de que o projeto usa pnpm, de que os testes rodam com determinada flag, de que um diretório é gerado e não deve ser mexido. Se você já corrigiu o agente duas vezes pela mesma coisa, essa correção é candidata a virar uma linha do AGENTS.md.
 
-Suitable content is whatever the agent can't derive from the code: build and test commands, conventions the codebase doesn't make obvious, hard constraints ("never edit the generated client"). Short and declarative — it's a brief, not documentation.
+O conteúdo adequado é o que o agente não consegue deduzir do código: comandos de build e de teste, convenções que a base de código não deixa óbvias, restrições rígidas ("nunca edite o client gerado"). Curto e declarativo — é um briefing, não documentação.
 
-The trade-off is that everything in it is always loaded. Instructions accumulate, most of them irrelevant to any given task, and a long AGENTS.md both costs tokens and dilutes itself — the more instructions in context, the less reliably the model follows any one of them.
+O custo é que tudo o que está nele fica sempre carregado. As instruções se acumulam, a maioria irrelevante para qualquer tarefa específica, e um AGENTS.md longo gasta tokens e se dilui: quanto mais instruções no contexto, menos confiável é a obediência do modelo a cada uma delas.
 
-_Avoid:_ using AGENTS.md for content that should be [progressively disclosed](#progressive-disclosure) — anything in it pays a [token](#token) cost every [turn](#turn), in every session, whether or not that session needs it. A style guide can go behind a [skill](#skill) or a [context pointer](#context-pointer) instead; keep AGENTS.md for the lines that apply everywhere.
+_Evite:_ usar o AGENTS.md para conteúdo que deveria ser [divulgado progressivamente](#divulgação-progressiva) — tudo o que está nele gera um custo em [tokens](#token) a cada [turno](#turno), em toda sessão, quer aquela sessão precise do conteúdo ou não. Um guia de estilo pode ficar atrás de uma [skill](#skill) ou de um [ponteiro de contexto](#ponteiro-de-contexto); reserve o AGENTS.md para as linhas que valem em qualquer lugar.
 
-_Usage:_
+_Uso:_
 
-"Why is every session starting with 4k tokens already burned?"
+"Por que toda sessão já começa com 4 mil tokens queimados?"
 
-"Check AGENTS.md — someone pasted the entire style guide in there instead of putting it behind a skill."
+"Olha o AGENTS.md — alguém colou o guia de estilo inteiro ali em vez de deixar atrás de uma skill."
 
-### Progressive disclosure
+### Divulgação progressiva
 
-Loading only the [context](#context) an [agent](#agent) needs right now, with [context pointers](#context-pointer) to the rest. Borrowed from UI design, where it means showing users only the controls relevant to their current task and hiding the rest behind a click.
+_Em inglês: Progressive disclosure_
 
-The technique exists because context is a cost twice over. Every [token](#token) loaded up front is billed as [input tokens](#input-tokens) on every [turn](#turn), and every token spends [attention budget](#attention-budget) whether the agent needs it or not. An [AGENTS.md](#agentsmd) stuffed with the full style guide, deployment runbook, and database conventions makes the agent worse at all of them — the instructions that matter for the current task are diluted by the ones that don't. The tell is an agent that ignores rules you know are in its context: they're in there, but buried.
+Carregar apenas o [contexto](#contexto) de que um [agente](#agente) precisa agora, com [ponteiros de contexto](#ponteiro-de-contexto) para o resto. Técnica emprestada do design de interfaces, onde consiste em mostrar ao usuário só os controles relevantes para a tarefa atual e esconder o restante atrás de um clique.
 
-Progressive disclosure inverts this. Keep the always-loaded layer small — a sentence per topic and a pointer to where the detail lives. The agent reads the style guide when it's writing a component, the deployment runbook when it's deploying, and neither when it's fixing a test. [Skills](#skill) are the pattern built into the [harness](#harness): a short description loaded every [session](#session), the full instructions only when triggered.
+A técnica existe porque o contexto custa duas vezes. Cada [token](#token) carregado de antemão é cobrado como [tokens de entrada](#tokens-de-entrada) a cada [turno](#turno), e cada token gasta [orçamento de atenção](#orçamento-de-atenção), quer o agente precise dele ou não. Um [AGENTS.md](#agentsmd) lotado com o guia de estilo completo, o runbook de deploy e as convenções do banco de dados deixa o agente pior em todos eles — as instruções que importam para a tarefa atual ficam diluídas pelas que não importam. O indício é um agente que ignora regras que você sabe que estão no contexto dele: elas estão lá, mas enterradas.
 
-_Usage:_
+A divulgação progressiva inverte isso. Mantenha pequena a camada sempre carregada — uma frase por tópico e um ponteiro para onde o detalhe está. O agente lê o guia de estilo quando escreve um componente, o runbook de deploy quando faz deploy e nenhum dos dois quando corrige um teste. As [skills](#skill) são o padrão incorporado ao [harness](#harness): uma descrição curta carregada a cada [sessão](#sessão) e as instruções completas só quando disparadas.
 
-"Should I dump the entire style guide into AGENTS.md?"
+_Uso:_
 
-"No — progressive disclosure. Reference the style guide as a skill the agent loads when it actually needs to write a component. AGENTS.md pays the token cost every turn."
+"Devo jogar o guia de estilo inteiro no AGENTS.md?"
 
-### Context pointer
+"Não — divulgação progressiva. Referencie o guia de estilo como uma skill, que o agente carrega quando realmente for escrever um componente. O AGENTS.md paga esse custo em tokens a cada turno."
 
-A mention in one document that points to another, so the [agent](#agent) can pull it into the [context window](#context-window) only when the task calls for it. The unit [progressive disclosure](#progressive-disclosure) is built from.
+### Ponteiro de contexto
 
-The reason to use a pointer (instead of inlining the content) is cost. A pointer is one line in the context window. The document behind it might be thousands of [tokens](#token), but those tokens cost nothing until the agent actually follows the pointer. Inline a 2,000-token runbook in [AGENTS.md](#agentsmd) and every [session](#session) pays for it; replace it with "deploy process: see `internal/deploy.md`" and only the sessions that deploy ever load it. The agent follows the pointer with a [tool call](#tool-call) when the task matches.
+_Em inglês: Context pointer_
 
-A pointer needs two parts to work: a stable path, and enough description for the agent to know when following it is worth it. A bare path is a pointer the agent has no reason to follow; "see `internal/deploy.md`" with no hint of what's inside gets skipped by a session that needed it. Write the line so it matches how tasks present: "release, deploy, or rollback — read `internal/deploy.md` first".
+Menção em um documento que aponta para outro, para que o [agente](#agente) possa puxá-lo para a [janela de contexto](#janela-de-contexto) só quando a tarefa pedir. É a unidade de que a [divulgação progressiva](#divulgação-progressiva) é feita.
 
-Pointers are everywhere once you look: lines in AGENTS.md, [skill](#skill) descriptions (the harness loads the description; the skill body waits behind it), filenames in a directory listing, links between docs.
+O motivo para usar um ponteiro (em vez de colar o conteúdo) é o custo. Um ponteiro ocupa uma linha na janela de contexto. O documento por trás dele pode ter milhares de [tokens](#token), mas esses tokens não custam nada até o agente de fato seguir o ponteiro. Se você colar um runbook de 2.000 tokens no [AGENTS.md](#agentsmd), toda [sessão](#sessão) paga por ele; se você trocar por "processo de deploy: veja `internal/deploy.md`", só as sessões que fazem deploy chegam a carregá-lo. O agente segue o ponteiro com uma [chamada de ferramenta](#chamada-de-ferramenta) quando a tarefa combina.
 
-A pointer can also tie a [secondary source](#secondary-source) back to the [primary source](#primary-source) it was derived from — the compaction summary that names the original transcript, the doc that names the source file it describes. This makes the secondary source's lossiness recoverable: when the summary turns out not to be enough, the agent follows the pointer and reads the original, instead of working from whatever the summary kept.
+Um ponteiro precisa de duas partes para funcionar: um caminho estável e descrição suficiente para o agente saber quando vale a pena segui-lo. Um caminho solto é um ponteiro que o agente não tem motivo para seguir; "veja `internal/deploy.md`" sem nenhuma pista do que há dentro acaba ignorado por uma sessão que precisava dele. Escreva a linha conforme o modo como as tarefas chegam: "release, deploy ou rollback — leia `internal/deploy.md` primeiro".
 
-_Avoid:_ "reference" — too dry; doesn't convey that following it pulls more context in. "Portal" — too florid.
+Ponteiros estão em toda parte quando você começa a procurar: linhas no AGENTS.md, descrições de [skills](#skill) (o harness carrega a descrição; o corpo da skill fica esperando atrás dela), nomes de arquivo na listagem de um diretório, links entre documentos.
 
-_Usage:_
+Um ponteiro também pode ligar uma [fonte secundária](#fonte-secundária) à [fonte primária](#fonte-primária) de que ela foi derivada — o resumo de compactação que cita a transcrição original, o documento que cita o arquivo-fonte que descreve. Isso torna recuperável a perda de informação da fonte secundária: quando o resumo se mostra insuficiente, o agente segue o ponteiro e lê o original, em vez de trabalhar com o que o resumo preservou.
 
-"AGENTS.md is getting huge."
+_Evite:_ "referência" — seca demais; não deixa claro que segui-la traz mais contexto. "Portal" — floreado demais.
 
-"Most of it should be context pointers, not content. Keep the always-on rules inline; turn the deploy runbook and the style guide into skills and leave a context pointer behind."
+_Uso:_
+
+"O AGENTS.md está enorme."
+
+"Quase tudo ali deveria ser ponteiro de contexto, não conteúdo. Deixe as regras sempre carregadas inline; transforme o runbook de deploy e o guia de estilo em skills e deixe um ponteiro de contexto no lugar."
 
 ### Skill
 
-A teachable capability bundled as a unit — instructions and resources for doing one task well, kept in the [environment](#environment) until a [context pointer](#context-pointer) pulls it into the [context window](#context-window) for the task at hand. The unit of [progressive disclosure](#progressive-disclosure) in a [harness](#harness).
+Uma skill (em português, "habilidade") é uma capacidade ensinável empacotada como unidade — instruções e recursos para fazer bem uma tarefa, mantida no [ambiente](#ambiente) até que um [ponteiro de contexto](#ponteiro-de-contexto) a leve para a [janela de contexto](#janela-de-contexto), para a tarefa em questão. É a unidade da [divulgação progressiva](#divulgação-progressiva) em um [harness](#harness).
 
-Skills are an open standard, defined at [agentskills.io](https://agentskills.io) — originally developed by Anthropic and since adopted by most major harnesses, so a skill written once works across them. The format is a folder containing:
+As skills são um padrão aberto, definido em [agentskills.io](https://agentskills.io) — desenvolvido originalmente pela Anthropic e depois adotado pela maioria dos principais harnesses, de modo que uma skill escrita uma vez funciona em todos eles. O formato é uma pasta que contém:
 
-- A `SKILL.md` file — metadata (a name and description, at minimum) plus the instructions themselves
-- Optionally, scripts the [agent](#agent) can run
-- Optionally, templates and reference material the instructions point to
+- Um arquivo `SKILL.md` — metadados (no mínimo um nome e uma descrição) mais as instruções em si
+- Opcionalmente, scripts que o [agente](#agente) pode executar
+- Opcionalmente, templates e material de referência para os quais as instruções apontam
 
-Only the name and description sit in [context](#context) by default. When the agent's task matches, it loads the rest. Until then, the skill takes up almost no room — a sentence or two of [tokens](#token), however large its full instructions are.
+Apenas o nome e a descrição ficam no [contexto](#contexto) por padrão. Quando a tarefa do agente combina com a skill, ele carrega o resto. Até lá, a skill ocupa quase nenhum espaço — uma ou duas frases de [tokens](#token), por maiores que sejam as instruções completas.
 
-This distinguishes skills from [AGENTS.md](#agentsmd), which is loaded into every [session](#session) regardless of the task. A skill is read when a particular kind of work comes up — releasing, scaffolding a new service, writing a migration — and ignored the rest of the time.
+Isso diferencia as skills do [AGENTS.md](#agentsmd), que é carregado em toda [sessão](#sessão), seja qual for a tarefa. Uma skill é lida quando surge um tipo específico de trabalho — fazer um release, criar a estrutura de um novo serviço, escrever uma migração — e ignorada no resto do tempo.
 
-_Avoid:_ "[tool](#tool)" — a tool is what the agent _calls_; a skill is instructions it _reads_.
+_Evite:_ "[ferramenta](#ferramenta)" — uma ferramenta é o que o agente _chama_; uma skill são instruções que ele _lê_.
 
-_Usage:_
+_Uso:_
 
-"Where should I put the deploy runbook?"
+"Onde eu coloco o runbook de deploy?"
 
-"As a skill — the agent loads it only when the task involves deploys. In AGENTS.md it'd burn tokens on every [turn](#turn) for something we use weekly."
+"Como skill — o agente só carrega quando a tarefa envolve deploy. No AGENTS.md ele gastaria tokens em todo [turno](#turno) por algo que a gente usa uma vez por semana."
 
-### Subagent
+### Subagente
 
-An [agent](#agent) spawned by another agent via a [tool call](#tool-call). Runs in its own [session](#session) with its own [context window](#context-window), and reports a single [tool result](#tool-result) back. Distinct from a [handoff](#handoff) — the parent specifically expects a return; a handoff has no return path. **Cannot spawn further subagents** — the tree is one level deep. Subagents exist to isolate [context](#context), not to compose hierarchies.
+_Em inglês: Subagent_
 
-The point is to keep noisy work out of the parent's context. A broad search or a long file-reading expedition produces pages of tool results, most of which matter only long enough to find the answer. Run inside the parent and all of it stays in the parent's context for the rest of the session. Run inside a subagent and the noise fills a disposable window instead — only the final report lands in the parent's context. The report is a [secondary source](#secondary-source): the parent gets the subagent's account of what it found, not the raw results, so anything the report leaves out is invisible to the parent.
+Um [agente](#agente) criado por outro agente por meio de uma [chamada de ferramenta](#chamada-de-ferramenta). Roda em sua própria [sessão](#sessão), com sua própria [janela de contexto](#janela-de-contexto), e devolve um único [resultado de ferramenta](#resultado-de-ferramenta) ao agente pai. Difere de um [handoff](#handoff): o pai espera um retorno, e o handoff não tem caminho de volta. **Não pode criar outros subagentes**, então a árvore tem apenas um nível de profundidade. Subagentes existem para isolar [contexto](#contexto), não para compor hierarquias.
 
-Subagents also run concurrently — a parent can fan several out at once over independent pieces of work.
+O objetivo é manter o trabalho ruidoso fora do contexto do agente pai. Uma busca ampla ou uma longa sequência de leituras de arquivos produz páginas de resultados de ferramenta, e a maior parte só importa até o momento de achar a resposta. Rodando dentro do pai, tudo isso fica no contexto dele pelo resto da sessão. Rodando dentro de um subagente, o ruído enche uma janela descartável, e só o relatório final chega ao contexto do pai. Esse relatório é uma [fonte secundária](#fonte-secundária): o pai recebe o relato do subagente sobre o que ele encontrou, não os resultados brutos, então tudo o que o relatório deixa de fora fica invisível para o pai.
 
-_Usage:_
+Subagentes também rodam de forma concorrente: um pai pode abrir vários em paralelo, cada um numa parte independente do trabalho.
 
-"The grep results are blowing out my context."
+_Uso:_
 
-"Spawn a subagent to do the search — it'll burn its own context window on the noise and report back the two file paths you actually need."
+"Os resultados do grep estão estourando meu contexto."
 
-## Section 7 — Patterns of Work
+"Dispara um subagente pra fazer a busca — ele gasta a janela de contexto dele com o ruído e volta só com os dois caminhos de arquivo de que você precisa de verdade."
 
-### Human-in-the-loop
+## Seção 7 — Padrões de Trabalho
 
-A working pattern where one or more humans pair with the [agent](#agent) during a [session](#session) — reviewing, redirecting, or collaborating in real time. The human is present and engaged, not just gating individual actions.
+### Humano no loop
 
-The contrast is with [AFK](#afk) work, where the agent runs unattended and you judge the result afterwards. Human-in-the-loop means catching problems while they're still cheap: you see the agent reach for the wrong file, misread the requirement, or start down a dead end, and you redirect it in one sentence — rather than discovering twenty minutes of confident work built on that mistake. Agents don't reliably know when they're off track; left alone, they tend to push forward rather than stop and ask.
+_Em inglês: Human-in-the-loop_
 
-Which pattern fits depends on the work. Well-specified, low-risk, easy-to-verify tasks suit AFK. Tasks that are ambiguous, irreversible, or where you'd struggle to review the finished result — a schema migration, a tricky design decision, anything touching production — suit staying in the loop. The judgement call is essentially: how expensive is a wrong turn, and how late would you catch it?
+Um padrão de trabalho em que uma ou mais pessoas trabalham em par com o [agente](#agente) durante uma [sessão](#sessão) — revisando, redirecionando ou colaborando em tempo real. A pessoa está presente e engajada, não apenas como barreira para ações isoladas.
 
-Some work is in-the-loop by nature, because your reactions are the input. [Grilling](#grilling) only works with you there to answer the questions; [prototyping](#prototyping) only works with you there to react to the artifact.
+O contraste é com o trabalho [AFK](#afk), em que o agente roda sem supervisão e você avalia o resultado depois. Humano no loop significa detectar os problemas enquanto ainda custam pouco: você vê o agente pegar o arquivo errado, entender mal o requisito ou entrar num beco sem saída, e o redireciona com uma frase — em vez de descobrir vinte minutos de trabalho confiante construído em cima desse erro. Agentes nem sempre percebem quando saíram do rumo; sozinhos, tendem a seguir em frente em vez de parar e perguntar.
 
-Staying in the loop costs your attention, which is the scarce resource. Part of getting better with agents is moving more work safely out of the loop — with plans, [automated checks](#automated-check), and [human review](#human-review) at the end instead of supervision throughout. A [software factory](#software-factory) takes this further by starting sessions from triggers, so even kicking off the work doesn't need you.
+O padrão adequado depende do trabalho. Tarefas bem especificadas, de baixo risco e fáceis de verificar combinam com AFK. Tarefas ambíguas, irreversíveis ou difíceis de revisar depois de prontas — uma migração de schema, uma decisão de design delicada, qualquer coisa que toque produção — combinam com ficar no loop. A decisão depende de duas perguntas: quanto custa uma curva errada e com que atraso você a perceberia?
 
-_Usage:_
+Alguns trabalhos são de humano no loop por natureza, porque as suas reações são a entrada. A [sabatina](#sabatina) só funciona com você ali para responder às perguntas; a [prototipagem](#prototipagem) só funciona com você ali para reagir ao artefato.
 
-"Run this AFK overnight?"
+Ficar no loop custa a sua atenção, que é o recurso escasso. Parte de se sair melhor com agentes é tirar mais trabalho do loop com segurança — com planos, [verificações automatizadas](#verificação-automatizada) e [revisão humana](#revisão-humana) no fim, em vez de supervisão o tempo todo. Uma [fábrica de software](#fábrica-de-software) vai além ao iniciar sessões a partir de gatilhos, de modo que nem o início do trabalho precisa de você.
 
-"No, schema migration — keep it human-in-the-loop. I want to see each step and steer if it picks the wrong column to backfill from."
+_Uso:_
+
+"Roda isso AFK de madrugada?"
+
+"Não, é migração de schema — deixa com humano no loop. Quero ver cada passo e redirecionar se ele pegar a coluna errada como origem do backfill."
 
 ### AFK
 
-Away from keyboard. A working pattern where the user kicks off a [session](#session) and leaves the [agent](#agent) to run unattended. The throughput multiplier of [AI](#ai) coding — many AFK sessions can run in parallel while you sleep, eat, or work on something else. Usually requires a permissive [permission mode](#permission-mode) plus [sandboxing](#sandbox) to be safe.
+AFK (do inglês away from keyboard, longe do teclado). Um padrão de trabalho em que o usuário inicia uma [sessão](#sessão) e deixa o [agente](#agente) rodando sem supervisão. É o multiplicador de throughput da programação com [IA](#ia) — várias sessões AFK podem rodar em paralelo enquanto você dorme, come ou trabalha em outra coisa. Em geral exige um [modo de permissão](#modo-de-permissão) permissivo, combinado com o uso de [sandbox](#sandbox), para ser seguro.
 
-When you're not there, the agent handles ambiguity differently. While you're watching, an ambiguous decision surfaces as a question and you answer it; once you've walked away, the agent picks a default and keeps going, and every later decision builds on that guess. The characteristic failure is coming back to hours of finished, confident work built on a wrong call made in the first ten minutes. The work isn't sloppy — it's coherent, just coherent about the wrong thing.
+Quando você não está presente, o agente lida com a ambiguidade de outro jeito. Enquanto você está olhando, uma decisão ambígua aparece como pergunta e você responde; depois que você saiu, o agente escolhe uma opção padrão e segue em frente, e cada decisão seguinte se apoia nesse palpite. A falha característica é voltar e encontrar horas de trabalho pronto e confiante, construído sobre uma escolha errada feita nos primeiros dez minutos. O trabalho não é descuidado — é coerente, só que coerente em torno da coisa errada.
 
-Since you can't give input during the run, give it before and after instead. Before: resolve the ambiguity up front — a [grilling](#grilling) session, a written [spec](#spec) — so there are fewer gaps for the agent to fill alone. During: [automated checks](#automated-check) and [automated review](#automated-review) stand in for the attention you're not giving, failing fast on what can be caught mechanically. After: the run ends in something reviewable — a PR, not changes already merged. AFK doesn't remove [human review](#human-review); it defers all of it to the end, which is why what arrives at the end has to be worth reviewing. This is also why [AX](#ax) matters most in AFK runs — with no one watching, the environment is the only support the agent gets.
+Como você não pode responder durante a execução, dê as respostas antes e depois. Antes: resolva a ambiguidade de antemão — uma [sabatina](#sabatina), uma [especificação](#especificação) escrita — para que o agente tenha menos lacunas a preencher sozinho. Durante: [verificações automatizadas](#verificação-automatizada) e [revisão automatizada](#revisão-automatizada) fazem o papel da atenção que você não está dando, falhando cedo em tudo o que pode ser pego mecanicamente. Depois: a execução termina em algo revisável — um PR, não mudanças já mescladas. AFK não elimina a [revisão humana](#revisão-humana); ele adia toda ela para o fim, e é por isso que o que chega no fim precisa valer a pena ser revisado. É também por isso que a [AX](#ax) pesa mais nas execuções AFK — sem ninguém olhando, o ambiente é o único apoio que o agente recebe.
 
-_Avoid:_ "background agent" — centers the machine ("running in the background") rather than the human pattern ("user has walked away"). AFK names the fact that matters: the user isn't watching.
+_Evite:_ "agente em segundo plano" — centra na máquina ("rodando em segundo plano") em vez de no padrão humano ("o usuário se afastou"). AFK nomeia o fato que importa: o usuário não está acompanhando.
 
-_Usage:_
+_Uso:_
 
-"I'm running this AFK — three sandboxed agents on the refactor, reviewing the PRs in the morning."
+"Estou rodando isso AFK — três agentes em sandbox na refatoração, e eu reviso os PRs de manhã."
 
-"[Bypass permissions](#agent-mode)?"
+"[Bypass permissions](#modo-de-agente)?"
 
-"Yeah, read-only [filesystem](#filesystem), no network."
+"Isso, com [sistema de arquivos](#sistema-de-arquivos) somente leitura e sem rede."
 
-### Automated check
+### Verificação automatizada
 
-A deterministic verification that runs in the [environment](#environment) — tests, type checks, lints, build, pre-commit hooks. Pass/fail, no judgement. The signal an [agent](#agent) can self-correct from without involving anyone else. A flaky test is a broken check, not a non-check; automated checks are deterministic _by design_.
+_Em inglês: Automated check_
 
-Self-correction works as a loop. The agent makes a change, runs the check as a [tool call](#tool-call), and the failure output lands in its [context window](#context-window) — a type error with a file and line, a failing assertion with expected and actual values. That's enough for the agent to fix the problem and run the check again, around and around until it passes, with no human in the loop. Determinism is what makes the loop trustworthy: the same code always produces the same verdict, so a pass means something. A flaky check poisons this — the agent "fixes" code that was fine, or retries past a real failure.
+Uma verificação determinística executada no [ambiente](#ambiente) — testes, verificação de tipos, lint, build, hooks de pre-commit. Passa ou falha, sem julgamento. É o sinal a partir do qual um [agente](#agente) consegue se autocorrigir sem envolver mais ninguém. Um teste instável (flaky) é uma verificação quebrada, e não a ausência de verificação; verificações automatizadas são determinísticas _por definição_.
 
-This is why good checks are a large part of a codebase's [AX](#ax). An agent in a repo with strict types, a fast test suite, and a linter catches most of its own mistakes before you see them; an agent in a repo with none of those ships whatever it produces. The difference matters most in [AFK](#afk) runs, where checks are the only verification happening during the run. But a check only catches what it asserts — green checks mean the asserted properties hold, not that the code is right. The judgement-shaped gaps are what [automated review](#automated-review) and [human review](#human-review) are for.
+A autocorreção funciona como um loop. O agente faz uma mudança, roda a verificação como uma [chamada de ferramenta](#chamada-de-ferramenta) e a saída da falha chega à sua [janela de contexto](#janela-de-contexto) — um erro de tipo com arquivo e linha, uma asserção que falhou com o valor esperado e o obtido. Isso basta para o agente corrigir o problema e rodar a verificação de novo, e de novo, até passar, sem nenhum humano no loop. O determinismo é o que torna o loop confiável: o mesmo código sempre produz o mesmo veredito, então um "passou" quer dizer algo. Uma verificação instável compromete isso — o agente "corrige" código que estava certo, ou repete a execução até passar e deixa escapar uma falha real.
 
-_Avoid:_ "feedback loop" / "backpressure" — both lump checks together with review. _Avoid:_ "test" — tests are automated checks, but not all automated checks are tests.
+Por isso, boas verificações pesam bastante na [AX](#ax) de uma base de código. Um agente num repositório com tipagem estrita, um conjunto de testes rápido e um linter pega a maioria dos próprios erros antes de você vê-los; um agente num repositório sem nada disso entrega qualquer coisa que produza. A diferença pesa mais nas execuções [AFK](#afk), em que as verificações são a única conferência feita durante a execução. Mas uma verificação só pega o que ela afirma — verificações verdes significam que as propriedades afirmadas valem, não que o código está certo. As lacunas que exigem julgamento ficam para a [revisão automatizada](#revisão-automatizada) e a [revisão humana](#revisão-humana).
 
-_Usage:_
+_Evite:_ "loop de feedback" / "backpressure" — ambos misturam verificações com revisão. _Evite:_ "teste" — testes são verificações automatizadas, mas nem toda verificação automatizada é um teste.
 
-"The agent keeps shipping broken code in the AFK runs."
+_Uso:_
 
-"What automated checks are wired into the [sandbox](#sandbox)?"
+"O agente continua entregando código quebrado nas execuções AFK."
 
-"Just the unit tests."
+"Quais verificações automatizadas estão configuradas no [sandbox](#sandbox)?"
 
-"Add typecheck and lint — it'll self-correct from those before the PR ever lands."
+"Só os testes unitários."
 
-### Automated review
+"Adiciona typecheck e lint — ele se autocorrige com esses dois antes de o PR chegar."
 
-An [agent](#agent) reviewing another agent's work, often with a different [model](#model) or [system prompt](#system-prompt). Non-deterministic: it forms a judgement. Runs anywhere — pre-merge on a PR, post-hoc on commit history, mid-session as a [subagent](#subagent). An LLM-as-judge in CI is automated review, not an [automated check](#automated-check); what the assertion _does_ decides the category, not where it runs.
+### Revisão automatizada
 
-The separation from the working agent is what makes it work. Asking the agent that wrote the code to review its own work gets you very little — the [session](#session) that produced the bug also contains the reasoning that produced it, and the agent reads its own conclusions back as confirmation. A reviewer with a fresh [context window](#context-window) has none of that attachment: it sees the diff the way a stranger would, which is what review depends on. A different model or a review-specific system prompt sharpens this further — different blind spots, and a system prompt scoped to what you actually care about (security, API contracts, performance) rather than a vague "look for problems".
+_Em inglês: Automated review_
 
-It slots between the other review layers. Automated checks are deterministic and catch what can be asserted mechanically; [human review](#human-review) is expensive and scales worst. Automated review sits in the middle: it catches judgement-shaped problems — a misleading function name, a missed edge case — at machine cost. Because it's non-deterministic, it can miss things and flag non-issues; treat it as a filter that raises the floor before a human looks, not a gate that replaces one.
+Revisão do trabalho de um [agente](#agente) feita por outro agente, em geral com um [modelo](#modelo) diferente ou um [prompt de sistema](#prompt-de-sistema) diferente. Não determinística: forma um julgamento. Roda em qualquer lugar: antes do merge em um pull request, depois, sobre o histórico de commits, ou no meio de uma sessão, como [subagente](#subagente). Um LLM como juiz no CI é revisão automatizada, não uma [verificação automatizada](#verificação-automatizada); o que a asserção _faz_ define a categoria, não o lugar onde ela roda.
 
-_Avoid:_ "AI review" / "agent review" — too vague to distinguish from the working agent itself.
+A revisão funciona porque quem revisa é separado do agente que fez o trabalho. Pedir que o agente que escreveu o código revise o próprio trabalho rende muito pouco: a [sessão](#sessão) que produziu o bug também contém o raciocínio que o produziu, e o agente lê as próprias conclusões como confirmação. Um revisor com uma [janela de contexto](#janela-de-contexto) nova não tem esse apego. Ele vê o diff como um estranho veria, e é disso que a revisão depende. Um modelo diferente ou um prompt de sistema específico para revisão reforça essa separação: os pontos cegos são outros, e o prompt de sistema pode se concentrar no que você realmente quer verificar (segurança, contratos de API, desempenho) em vez de um genérico "procure problemas".
 
-_Usage:_
+A revisão automatizada fica entre as outras camadas de revisão. As verificações automatizadas são determinísticas e pegam o que pode ser afirmado de forma mecânica. A [revisão humana](#revisão-humana) é cara e é a que menos escala. A revisão automatizada fica no meio: pega problemas que dependem de julgamento, como um nome de função enganoso ou um caso de borda esquecido, com custo de máquina. Por ser não determinística, ela pode deixar problemas passarem e apontar problemas que não existem. Trate-a como um filtro que eleva o nível mínimo de qualidade antes de um humano olhar, não como uma etapa de bloqueio que substitui o humano.
 
-"We're getting too many bad PRs from the [AFK](#afk) runs."
+_Evite:_ "revisão por IA" / "revisão por agente", porque são vagos demais para distinguir a revisão do agente que fez o trabalho.
 
-"Add an automated review step before merge — different model, separate system prompt, scoped to security and contract changes."
+_Uso:_
 
-### Human review
+"Estamos recebendo PRs ruins demais das execuções [AFK](#afk)."
 
-The user reading the code the [agent](#agent) produced and forming a judgement on it. Reading the diff or the changed files counts; reading the agent's _description_ of what it did does not — narration is not the artifact. The description is a [secondary source](#secondary-source), written by the party being reviewed; the diff is the [primary source](#primary-source), and review means reading it.
+"Coloca uma etapa de revisão automatizada antes do merge: outro modelo, prompt de sistema separado, focado em segurança e mudanças de contrato."
 
-Agents raise the volume of code produced, so review becomes the bottleneck. One useful idea is layering different review strategies. [Automated checks](#automated-check) catch the mechanical failures, [automated review](#automated-review) catches the describable ones, and human review is reserved for what only you can judge — whether the change is the right change, whether the approach fits the codebase, whether this should exist at all.
+### Revisão humana
 
-Review is also cheaper earlier. Reading a plan before work starts, or a small diff mid-flight, takes minutes; excavating a finished branch after an [AFK](#afk) run takes longer. Where you place the review checkpoint is a [human-in-the-loop](#human-in-the-loop) decision, not an afterthought.
+_Em inglês: Human review_
 
-_Avoid:_ "code review" alone — ambiguous between human and automated.
+O usuário lendo o código que o [agente](#agente) produziu e formando um juízo sobre ele. Ler o diff ou os arquivos alterados conta; ler a _descrição_ que o agente fez do próprio trabalho não — narração não é o artefato. A descrição é uma [fonte secundária](#fonte-secundária), escrita pela parte que está sendo revisada; o diff é a [fonte primária](#fonte-primária), e revisar significa lê-lo.
 
-_Usage:_
+Agentes aumentam o volume de código produzido, então a revisão vira o gargalo. Uma ideia útil é combinar estratégias de revisão diferentes, em camadas. As [verificações automatizadas](#verificação-automatizada) pegam as falhas mecânicas, a [revisão automatizada](#revisão-automatizada) pega as que dá para descrever, e a revisão humana fica reservada para o que só você pode julgar — se a mudança é a mudança certa, se a abordagem combina com a base de código, se isso deveria mesmo existir.
 
-"I human-reviewed the AFK output."
+Revisar também custa menos quando é feito cedo. Ler um plano antes de o trabalho começar, ou um diff pequeno no meio do caminho, leva minutos; vasculhar uma branch pronta depois de uma execução [AFK](#afk) leva mais tempo. Onde colocar o ponto de revisão é uma decisão de [humano no loop](#humano-no-loop), não um detalhe de última hora.
 
-"You read the diff or just the summary?"
+_Evite:_ "code review" isolado — não distingue revisão humana de automatizada.
 
-"Diff. The summary said it deleted dead code — turned out the function was called from a generated file."
+_Uso:_
+
+"Fiz a revisão humana do que saiu da execução AFK."
+
+"Você leu o diff ou só o resumo?"
+
+"Li o diff. O resumo dizia que ele tinha apagado código morto — só que a função era chamada por um arquivo gerado."
 
 ### Vibe coding
 
-A working pattern where the user accepts the [agent](#agent)'s code without [human review](#human-review). The diff is treated as opaque — what matters is whether the program behaves, not what's inside. [Automated review](#automated-review) and [automated checks](#automated-check) may still run; vibe coding is silent on both.
+Vibe coding (algo como "programar no embalo") é um padrão de trabalho em que o usuário aceita o código do [agente](#agente) sem [revisão humana](#revisão-humana). O diff é tratado como opaco: o que importa é se o programa se comporta bem, não o que há dentro dele. [Revisão automatizada](#revisão-automatizada) e [verificações automatizadas](#verificação-automatizada) podem continuar rodando; o vibe coding não diz nada a respeito de nenhuma das duas.
 
-The term comes from Andrej Karpathy, who [coined it in early 2025](https://x.com/karpathy/status/1886192184808149383): you "fully give in to the vibes" and "forget that the code even exists" — describe what you want, accept what comes back, and judge it by running it.
+O termo vem de Andrej Karpathy, que o [cunhou no início de 2025](https://x.com/karpathy/status/1886192184808149383): você "se entrega por completo às vibes" e "esquece que o código sequer existe". Descreve o que quer, aceita o que volta e avalia rodando o programa.
 
-Vibe coding trades inspection for speed. Reading diffs is usually the slowest step in agent-driven work, so dropping it removes the main bottleneck. For code whose failures are cheap — [prototypes](#prototyping), one-off scripts, internal tools — that's a reasonable trade. The risk scales with the code's lifespan and stakes.
+O vibe coding troca inspeção por velocidade. Ler diffs costuma ser a etapa mais lenta do trabalho com agentes, então abrir mão dela remove o principal gargalo. Em código cujas falhas custam pouco, como [protótipos](#prototipagem), scripts descartáveis e ferramentas internas, a troca é razoável. O risco cresce com a vida útil do código e com o que está em jogo nele.
 
-The cost arrives later. Vibe-coded changes accumulate into a codebase nobody has read, and behaviour was the only thing checked — so anything behaviour doesn't surface, like a secret written to logs, a missing edge case, or quietly wrong data handling, ships unseen. The first time someone debugs the system is the first time anyone reads the code. With human review gone, whatever automated verification still runs — tests, types, automated review — is the only gate the code passes through. The same stance applied to a whole codebase, or part of one, whose changes come from a [software factory](#software-factory) is a [dark factory](#dark-factory).
+O custo chega depois. As mudanças feitas com vibe coding se acumulam numa base de código que ninguém leu, e o comportamento foi a única coisa checada. Por isso, tudo o que o comportamento não revela, como um segredo escrito nos logs, um caso de borda esquecido ou um tratamento de dados errado sem aviso, vai para produção sem que ninguém veja. A primeira vez que alguém depura o sistema é a primeira vez que alguém lê o código. Sem revisão humana, tudo o que ainda rodar de forma automática (testes, tipos, revisão automatizada) é a única barreira pela qual o código passa. Quando essa mesma postura vale para uma base de código inteira, ou para parte dela, e as mudanças vêm de uma [fábrica de software](#fábrica-de-software), o resultado é uma [fábrica escura](#fábrica-escura).
 
-_Avoid:_ "vibe coding" as a synonym for "low-quality AI coding" — the term names the review stance, not the resulting code.
+_Evite:_ "vibe coding" como sinônimo de "programação com IA de baixa qualidade". O termo nomeia a postura de revisão, não o código resultante.
 
-_Usage:_
+_Uso:_
 
-"Did you read what it changed in the auth flow?"
+"Você leu o que ele mudou no fluxo de autenticação?"
 
-"Vibe coded it — login still works, that's all I checked."
+"Fiz no vibe coding. O login continua funcionando, foi só isso que eu conferi."
 
-"Read the diff before you push, vibing on auth is how secrets leak into logs."
+"Leia o diff antes de dar push. Ir no embalo em autenticação é assim que segredo vaza nos logs."
 
-### Design concept
+### Conceito de design
 
-The shared understanding of what's being built, held in common between user and [agent](#agent) but separate from any asset. Brooks' term (_The Design of Design_): the conversation, [handoff artifacts](#handoff-artifact), and the code are all assets that try to capture or reach the design concept, but none of them _are_ it. Quality of the design concept is felt through the quality of the conversation that built it.
+_Em inglês: Design concept_
 
-The term names the gap behind a familiar frustration: the agent writes exactly what you asked for and it's still wrong. The usual cause is that you hadn't fully figured out what you wanted. The design concept wasn't finished in your own head — your prompt captured the parts you'd worked out, and was silent on the parts you hadn't. The agent filled those silences with its own assumptions, because there was nothing to align with. Nothing malfunctioned. There was no shared design concept, because there wasn't yet a whole one to share.
+O entendimento compartilhado do que está sendo construído, comum ao usuário e ao [agente](#agente), mas separado de qualquer ativo. Termo de Brooks (_The Design of Design_): a conversa, os [artefatos de handoff](#artefato-de-handoff) e o código são todos ativos que tentam capturar ou alcançar o conceito de design, mas nenhum deles _é_ o conceito. A qualidade do conceito de design se percebe pela qualidade da conversa que o construiu.
 
-You can tell a design concept is shared the same way you can with a colleague: the other party starts answering questions you haven't asked yet the way you would. Until then, the work is conversation — [grilling](#grilling) is the deliberate version — and writing a [spec](#spec) too early just captures the misalignment in a more durable asset. The design concept also moves as you learn; assets lag it, which is why a spec faithful to last week's understanding can still mislead this week's session.
+O termo dá nome à lacuna por trás de uma frustração conhecida: o agente escreve exatamente o que você pediu e ainda assim está errado. A causa usual é que você ainda não tinha definido por completo o que queria. O conceito de design não estava terminado na sua própria cabeça — seu prompt capturou as partes que você já tinha resolvido e não disse nada sobre as que não tinha. O agente preencheu esses silêncios com suposições próprias, porque não havia nada com que se alinhar. Nada falhou. Não havia conceito de design compartilhado, porque ainda não existia um conceito completo para compartilhar.
 
-_Usage:_
+Você percebe que um conceito de design é compartilhado do mesmo jeito que faz com um colega: o outro lado começa a responder, como você responderia, perguntas que você ainda não fez. Até lá, o trabalho é conversa — a [sabatina](#sabatina) é a versão deliberada — e escrever uma [especificação](#especificação) cedo demais só registra o desalinhamento num ativo mais durável. O conceito de design também muda conforme você aprende; os ativos ficam defasados, e por isso uma especificação fiel ao entendimento da semana passada ainda pode enganar a sessão desta semana.
 
-"It's writing exactly what I asked for and it's still wrong."
+_Uso:_
 
-"You don't share a design concept yet — it's filling gaps with assumptions. Keep talking until cancellation, refunds, and partial fulfilment all line up between you before you let it write a spec."
+"Ele escreve exatamente o que eu pedi e ainda assim fica errado."
 
-### Grilling
+"Você e ele ainda não compartilham um conceito de design — ele está preenchendo as lacunas com suposições. Continue conversando até cancelamento, reembolso e entrega parcial ficarem alinhados entre vocês dois, antes de deixar ele escrever uma spec."
 
-A technique for developing a [design concept](#design-concept) with an [agent](#agent): the agent interviews the user Socratically, one decision at a time, proposing a recommended answer for each. Slows the rush to a finished plan — no [handoff artifact](#handoff-artifact) is written until the concept stabilises.
+### Sabatina
 
-The technique exists because agents fill gaps silently. Asked to write a [spec](#spec) from a two-line prompt, the agent doesn't stop at the decisions you haven't made — it picks defaults and writes them in. The result looks complete, and the guesses are indistinguishable from the choices, so you discover them late: at review, or when the built feature handles an edge case in a way you never chose. Grilling inverts this — instead of guessing, the agent has to ask.
+_Em inglês: Grilling_
 
-It's a [human-in-the-loop](#human-in-the-loop) technique: your answers are the input. When a question can't be answered in conversation — you'd have to see the thing — switch to [prototyping](#prototyping).
+Técnica para desenvolver um [conceito de design](#conceito-de-design) com um [agente](#agente): o agente entrevista o usuário de forma socrática, uma decisão por vez, propondo uma resposta recomendada para cada uma. Freia a pressa de chegar a um plano final — nenhum [artefato de handoff](#artefato-de-handoff) é escrito até o conceito se estabilizar.
 
-_Usage:_
+A técnica existe porque agentes preenchem lacunas em silêncio. Se você pede uma [especificação](#especificação) a partir de um prompt de duas linhas, o agente não para nas decisões que você ainda não tomou — escolhe valores padrão e os escreve no documento. O resultado parece completo, e os palpites ficam indistinguíveis das escolhas, então você só os descobre tarde: na revisão, ou quando a funcionalidade pronta trata um caso de borda de um jeito que você nunca escolheu. A sabatina inverte isso — em vez de supor, o agente precisa perguntar.
 
-"It went straight to writing the spec and got the cancellation logic wrong."
+É uma técnica de [humano no loop](#humano-no-loop): suas respostas são a entrada. Quando uma pergunta não pode ser respondida na conversa, porque você precisaria ver a coisa funcionando, passe para a [prototipagem](#prototipagem).
 
-"Grill it first — make it ask you about partial cancels, refunds, and timing before it commits anything to the doc. Cheaper to resolve in conversation than in code."
+_Uso:_
 
-### Prototyping
+"Ele foi direto escrever a spec e errou a lógica de cancelamento."
 
-Having the [agent](#agent) build a quick, rough version of something, for when conversation is too low-fidelity and you need a real artifact to talk about.
+"Faz uma sabatina antes: obriga ele a te perguntar sobre cancelamento parcial, reembolso e prazo antes de gravar qualquer coisa no doc. Sai mais barato resolver na conversa do que no código."
 
-[Grilling](#grilling) resolves design decisions in conversation. Conversation is cheap, but it's low-fidelity: some questions can't be answered in words — how an interaction feels, whether an API shape is ergonomic in real calling code, whether the layout works at real data sizes. The interview hits a question and your honest answer is "I don't know, I'd have to see it." Past that point the discussion circles. Instead, have the agent build the thing, look at it, and come back to the conversation with an answer.
+### Prototipagem
 
-Agents lower the cost of building, which is what makes this practical. A rough version that used to take a day to mock up now takes minutes, so it's worth doing routinely. It's a [human-in-the-loop](#human-in-the-loop) technique: the prototype is there for you to react to.
+_Em inglês: Prototyping_
 
-You usually don't stop at one look. Iterate with the prototype — react, ask for a change, react again — so each round resolves another decision against the real artifact, at a higher fidelity than conversation allows.
+Pedir ao [agente](#agente) uma versão rápida e rudimentar de algo, quando a conversa tem fidelidade baixa demais e você precisa de um artefato real para discutir.
 
-A prototype doesn't have to be all-scrappy. You can build the pieces you're actually evaluating to production quality, so when the decision lands, the component or API you reacted to can transfer into the real codebase. This makes prototyping essential material for the [spec](#spec) to reference.
+A [sabatina](#sabatina) resolve decisões de design na conversa. Conversar é barato, mas tem baixa fidelidade: algumas perguntas não se respondem com palavras — como uma interação se comporta na prática, se o formato de uma API é ergonômico em código real que a chama, se o layout funciona com volumes reais de dados. A entrevista chega a uma pergunta cuja resposta sincera é "não sei, teria que ver". Daí em diante a discussão fica andando em círculos. Em vez disso, peça ao agente para construir a coisa, olhe para ela e volte à conversa com uma resposta.
 
-_Usage:_
+Os agentes reduzem o custo de construir, e é isso que torna a prática viável. Uma versão rudimentar que antes levava um dia para ser montada agora leva minutos, então vale fazer isso com frequência. É uma técnica de [humano no loop](#humano-no-loop): o protótipo existe para você reagir a ele.
 
-"We've spent half an hour arguing about whether the wizard should be one page or three steps."
+Normalmente você não para na primeira olhada. Itere com o protótipo — reaja, peça uma mudança, reaja de novo — de modo que cada rodada resolva mais uma decisão diante do artefato real, com fidelidade maior do que a conversa permite.
 
-"Words won't settle it — have the agent prototype both. We'll click through them and know in five minutes."
+Um protótipo não precisa ser todo improvisado. Você pode construir com qualidade de produção as partes que está de fato avaliando, para que, quando a decisão sair, o componente ou a API a que você reagiu possa passar para a base de código real. Por isso a prototipagem é um material essencial que a [especificação](#especificação) pode referenciar.
+
+_Uso:_
+
+"Faz meia hora que a gente discute se o wizard deve ser uma página só ou três etapas."
+
+"Na conversa não resolve — pede pro agente prototipar as duas. A gente clica nas duas e em cinco minutos a gente já sabe."
 
 ### DX
 
-Developer experience — how easy a codebase and its toolchain make it for humans to do good work. Good DX is fast feedback, clear error messages, documentation that answers the question you actually have, and setup that works on the first try. The term long predates AI coding; it's in this dictionary mainly as the contrast for [AX](#ax).
+DX (do inglês developer experience, experiência do desenvolvedor) — o quanto uma base de código e suas ferramentas facilitam o bom trabalho das pessoas. Boa DX é feedback rápido, mensagens de erro claras, documentação que responde à dúvida que você realmente tem e uma configuração que funciona de primeira. O termo é bem anterior à programação com IA; está neste dicionário principalmente como contraste para [AX](#ax).
 
-DX is the interaction between the human and the codebase — nothing more. The main difference between the two audiences is that humans are [stateful](#stateful) and agents are [stateless](#stateless). A human learns the codebase once and carries that knowledge into every day after, which is why poor DX is survivable: they route around slow CI by batching their pushes, around missing docs by asking in Slack once, around confusing structure by remembering where things live. The workarounds accumulate, and a team ends up productive in a codebase that fights them.
+A DX é a interação entre o humano e a base de código, nada além disso. A principal diferença entre os dois públicos é que os humanos são [stateful](#stateful) e os agentes são [stateless](#stateless). Um humano aprende a base de código uma vez e leva esse conhecimento para todos os dias seguintes, e por isso uma DX ruim é tolerável: a pessoa contorna o CI lento agrupando vários pushes, contorna a documentação que falta perguntando uma vez no Slack, contorna a estrutura confusa lembrando onde cada coisa fica. Os contornos se acumulam, e a equipe acaba produtiva numa base de código que trabalha contra ela.
 
-[Agents](#agent) face the same codebase with none of that accumulation. Stateless across [sessions](#session), an agent re-learns the codebase from scratch every time — it benefits from the fast test suite and the clear error messages, but anything it figured out yesterday is gone unless it was written into the [environment](#environment), which the agent only perceives through [tool results](#tool-result). That's the gap AX names: the parts of DX that survive when the developer is an agent, plus concerns humans don't have, like keeping the [context window](#context-window) free.
+Os [agentes](#agente) enfrentam a mesma base de código sem nada desse acúmulo. Stateless entre [sessões](#sessão), o agente reaprende a base de código do zero a cada vez. Ele se beneficia do conjunto de testes rápido e das mensagens de erro claras, mas tudo o que descobriu ontem se perde, a menos que tenha sido escrito no [ambiente](#ambiente), que o agente só percebe por meio de [resultados de ferramenta](#resultado-de-ferramenta). Essa é a lacuna que a AX nomeia: as partes da DX que sobrevivem quando quem desenvolve é um agente, além de preocupações que os humanos não têm, como manter a [janela de contexto](#janela-de-contexto) livre.
 
-The overlap means DX investment often improves AX for free — strict types, fast tests, and predictable structure help both. The divergence means it doesn't always: a beautiful onboarding doc helps a human for a week and an agent not at all unless it's reachable from [AGENTS.md](#agentsmd).
+A sobreposição significa que investir em DX muitas vezes melhora a AX de graça — tipos estritos, testes rápidos e estrutura previsível ajudam os dois. A divergência significa que nem sempre é assim: um bom documento de onboarding ajuda um humano por uma semana e não ajuda em nada um agente, a menos que dê para chegar a ele a partir do [AGENTS.md](#agentsmd).
 
-_Usage:_
+_Uso:_
 
-"Our DX is fine — new hires are productive in a week."
+"Nossa DX está boa — quem entra na empresa fica produtivo em uma semana."
 
-"Productive because someone sits with them for that week. The agent doesn't get that week; check the AX separately."
+"Fica produtivo porque alguém senta do lado dele nessa semana. O agente não ganha essa semana; avalie a AX separadamente."
 
 ### AX
 
-Agent experience — how well the [environment](#environment) is set up for an [agent](#agent) to do good work in a codebase. The agent-facing counterpart to [DX](#dx). When the same agent performs well in one repo and badly in another — same [model](#model), same [harness](#harness) — the difference is usually AX. The instinct is to blame the model or rewrite the prompt; the fix is more often in the repo.
+AX (do inglês agent experience, experiência do agente) — quão bem o [ambiente](#ambiente) está preparado para um [agente](#agente) trabalhar bem numa base de código. A contraparte da [DX](#dx) (experiência do desenvolvedor) voltada ao agente. Quando o mesmo agente se sai bem em um repositório e mal em outro — mesmo [modelo](#modelo), mesmo [harness](#harness) — a diferença costuma ser a AX. O instinto é culpar o modelo ou reescrever o prompt; a correção costuma estar no repositório.
 
-Good AX has three main dimensions:
+Uma boa AX tem três dimensões principais:
 
-| Dimension        | What good AX looks like                                                                                                                                                                                                                              |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Automated checks | Fast, deterministic [automated checks](#automated-check) — types, tests, lints — that the agent can self-correct from without a human                                                                                                          |
-| Architecture     | A codebase the agent can navigate without reading everything: predictable structure, a lot of behaviour behind small interfaces, names that say what things do                                                                                       |
-| Free context     | [AGENTS.md](#agentsmd), [skills](#skill), and [tools](#tool) kept lean, so most of the [context window](#context-window) is available for the task and the agent stays in the [smart zone](#smart-zone) instead of drowning |
+| Dimensão                   | Como é uma boa AX                                                                                                                                                                                                                                                                              |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Verificações automatizadas | [Verificações automatizadas](#verificação-automatizada) rápidas e determinísticas — tipos, testes, lints — a partir das quais o agente se autocorrige sem um humano                                                                                                            |
+| Arquitetura                | Uma base de código que o agente consegue navegar sem ler tudo: estrutura previsível, muito comportamento atrás de interfaces pequenas, nomes que dizem o que as coisas fazem                                                                                                                   |
+| Contexto livre             | [AGENTS.md](#agentsmd), [skills](#skill) e [ferramentas](#ferramenta) enxutos, para que a maior parte da [janela de contexto](#janela-de-contexto) fique disponível para a tarefa e o agente permaneça na [zona inteligente](#zona-inteligente) em vez de se afogar |
 
-AX and DX overlap — good checks and clean architecture help both audiences — but they diverge. Humans tolerate tribal knowledge, slow CI, and "ask Sarah about the billing module"; agents can't. Agents don't benefit from IDE tooltips or pretty dashboards; they need failures as text in a [tool result](#tool-result). A codebase can have good DX and poor AX.
+AX e DX se sobrepõem — boas verificações e uma arquitetura limpa ajudam os dois públicos — mas também divergem. Humanos toleram conhecimento tribal, CI lento e "pergunte à Sarah sobre o módulo de cobrança"; agentes não conseguem. Agentes não se beneficiam de dicas flutuantes da IDE nem de painéis bonitos; precisam das falhas como texto em um [resultado de ferramenta](#resultado-de-ferramenta). Uma base de código pode ter boa DX e AX ruim.
 
-_Avoid:_ treating AX as a synonym for DX — the audiences need different investments.
+_Evite:_ tratar AX como sinônimo de DX — os dois públicos exigem investimentos diferentes.
 
-_Usage:_
+_Uso:_
 
-"The agent writes great code in the API repo and garbage in the frontend."
+"O agente escreve código ótimo no repo da API e lixo no frontend."
 
-"The API repo has strict types and a fast test suite; the frontend has neither and forty always-loaded skills. That's an AX gap, not a model problem."
+"O repo da API tem tipos estritos e um conjunto de testes rápido; o frontend não tem nenhum dos dois e mantém quarenta skills sempre carregadas. Isso é uma lacuna de AX, não um problema do modelo."
 
-### Software factory
+### Fábrica de software
 
-A system of work where [agent](#agent) [sessions](#session) are started by triggers — an issue being created, a schedule, a CI failure, another session finishing — rather than by a human, so more work runs [AFK](#afk) and human attention is spent on the [human-in-the-loop](#human-in-the-loop) decisions that remain.
+_Em inglês: Software factory_
 
-Without a factory, every session starts because someone started it. Even fully AFK work waits on a person to open the session, point it at the [ticket](#ticket), and set it going. Teams want to ship more than that allows. A factory takes the human out of starting sessions, and not necessarily out of anything else.
+Um sistema de trabalho em que [sessões](#sessão) de [agentes](#agente) são iniciadas por gatilhos — uma issue criada, um agendamento, uma falha de CI, o fim de outra sessão — e não por um humano, de modo que mais trabalho roda [AFK](#afk) (longe do teclado) e a atenção humana vai para as decisões de [humano no loop](#humano-no-loop) que restam.
 
-Common triggers and the sessions they start:
+Sem uma fábrica, toda sessão começa porque alguém a iniciou. Mesmo o trabalho totalmente AFK depende de uma pessoa que abra a sessão, indique o [ticket](#ticket) e a ponha para rodar. Os times querem entregar mais do que isso permite. Uma fábrica tira o humano da tarefa de iniciar sessões, e não necessariamente de todo o resto.
 
-| Trigger                        | Session it starts                    | Example                                                                                                                   |
-| ------------------------------ | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
-| Issue created or labelled      | Exploration, bug fix, implementation | An issue labelled `ready-for-agent` gets a session that opens a PR                                                        |
-| Schedule (cron)                | Recurring maintenance                | One lint rule fixed per night                                                                                             |
-| CI failure or monitoring alert | Diagnosis, fix attempt               | A failing build on main gets a session that finds the breaking commit and proposes a fix                                  |
-| Another session finishing      | Follow-on work                       | A PR opened by one agent triggers an [automated review](#automated-review), whose comments trigger a fix-up session |
+Gatilhos comuns e as sessões que eles iniciam:
 
-A factory doesn't have to cover the whole software process. One cron job that runs one kind of session and opens one reviewable PR is a factory. Starting that small is useful: a narrow loop produces small, similar PRs, and reviewing them shows how far the loop can be trusted before it's widened.
+| Gatilho                                | Sessão que ele inicia                      | Exemplo                                                                                                                                          |
+| -------------------------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Issue criada ou com label aplicada     | Exploração, correção de bug, implementação | Uma issue com a label `ready-for-agent` ganha uma sessão que abre um PR                                                                          |
+| Agendamento (cron)                     | Manutenção recorrente                      | Uma regra de lint corrigida por noite                                                                                                            |
+| Falha de CI ou alerta de monitoramento | Diagnóstico, tentativa de correção         | Um build quebrado na main ganha uma sessão que encontra o commit responsável e propõe uma correção                                               |
+| Fim de outra sessão                    | Trabalho de continuação                    | Um PR aberto por um agente dispara uma [revisão automatizada](#revisão-automatizada), cujos comentários disparam uma sessão de ajuste |
 
-Humans can sit anywhere in a factory — writing and labelling the issues that trigger sessions, approving a plan before implementation starts, doing [human review](#human-review) before merge. Deciding which of those decisions stay human is the main design question. A codebase, or part of one, where no human reviews the factory's output is a [dark factory](#dark-factory).
+Uma fábrica não precisa cobrir o processo de software inteiro. Um único job do cron que roda um tipo de sessão e abre um PR revisável já é uma fábrica. Começar nessa escala é útil: um loop estreito produz PRs pequenos e parecidos, e revisá-los mostra até onde o loop merece confiança antes de ser ampliado.
 
-_Usage:_
+Humanos podem estar em qualquer ponto de uma fábrica — escrevendo e aplicando labels nas issues que disparam sessões, aprovando um plano antes de a implementação começar, fazendo [revisão humana](#revisão-humana) antes do merge. Decidir quais dessas decisões continuam humanas é a principal questão de projeto. Uma base de código, ou parte dela, em que nenhum humano revisa a saída da fábrica é uma [fábrica escura](#fábrica-escura).
 
-"Who fixed all the `no-floating-promises` violations?"
+_Uso:_
 
-"The factory. Cron job picks one lint rule a night, opens a PR. I just review it in the morning."
+"Quem corrigiu todas as violações de `no-floating-promises`?"
 
-### Dark factory
+"A fábrica. Tem um cron que pega uma regra de lint por noite e abre um PR. Eu só reviso de manhã."
 
-A codebase, or part of one, where a [software factory](#software-factory) writes the code and no human reads it. There is no [human review](#human-review). Humans can still write the issues that start the work. But nobody reads the code that comes out. The name comes from "lights-out" factories, which make things with no people on the floor.
+### Fábrica escura
 
-A dark factory is [vibe coding](#vibe-coding) for an area of code, not for one change. When you vibe code, you choose not to read a change that you asked for. But you know that the change exists. In a dark factory, the team makes that choice one time, for the full area. After that, no person asks for each change or sees it. Changes arrive as fast as the triggers start new work.
+_Em inglês: Dark factory_
 
-The problem shows when something breaks. You do not know what changed, because nobody read the changes. You must debug code that nobody on the team has read. The cause can be in any of many changes, and each one passed the checks.
+Uma base de código, ou parte dela, em que uma [fábrica de software](#fábrica-de-software) escreve o código e nenhum humano o lê. Não há [revisão humana](#revisão-humana). Humanos ainda podem escrever as issues que iniciam o trabalho. Mas ninguém lê o código que sai. O nome vem das fábricas "lights-out" (de luzes apagadas), que produzem sem ninguém no chão de fábrica.
 
-[Automated checks](#automated-check) and [automated review](#automated-review) are the only gates. If they do not find a problem, the problem goes into the code.
+Uma fábrica escura é [vibe coding](#vibe-coding) para uma área de código, e não para uma única mudança. Quando você faz vibe coding, decide não ler uma mudança que pediu. Mas sabe que a mudança existe. Numa fábrica escura, o time faz essa escolha uma única vez, para a área inteira. Depois disso, nenhuma pessoa pede cada mudança nem a vê. As mudanças chegam na velocidade em que os gatilhos iniciam novos trabalhos.
 
-_Avoid:_ calling a codebase "dark" only because its factory runs with nobody watching. If [agent](#agent) [sessions](#session) run [AFK](#afk) and a human reviews their PRs, that is a software factory. It is not a dark factory.
+O problema aparece quando algo quebra. Você não sabe o que mudou, porque ninguém leu as mudanças. Você tem que depurar um código que ninguém do time leu. A causa pode estar em qualquer uma das várias mudanças, e cada uma delas passou nas verificações.
 
-_Usage:_
+As [verificações automatizadas](#verificação-automatizada) e a [revisão automatizada](#revisão-automatizada) são as únicas barreiras. Se elas não encontram um problema, o problema entra no código.
 
-"Who changed the retry logic in the billing service? Nobody on the team remembers it."
+_Evite:_ chamar uma base de código de "escura" só porque a fábrica roda sem ninguém acompanhando. Se [sessões](#sessão) de [agente](#agente) rodam [AFK](#afk) e um humano revisa os PRs delas, isso é uma fábrica de software. Não é uma fábrica escura.
 
-"The billing service is a dark factory. The agents merge all changes that pass CI. Nobody read that change."
+_Uso:_
+
+"Quem mudou a lógica de retry do serviço de billing? Ninguém do time se lembra disso."
+
+"O serviço de billing é uma fábrica escura. Os agentes fazem merge de tudo o que passa no CI. Ninguém leu essa mudança."
 

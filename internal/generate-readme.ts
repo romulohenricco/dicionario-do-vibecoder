@@ -1,5 +1,5 @@
 #!/usr/bin/env -S npx tsx
-// Generate README.md from internal/Curriculum.md + dictionary/*.md + internal/README.template.md.
+// Gera o README.md a partir de internal/Curriculum.md + dictionary/*.md + internal/README.template.md.
 
 import { readFileSync, writeFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -14,9 +14,10 @@ const OUTPUT = join(ROOT, "README.md");
 const MARKER = "<!-- CURRICULUM -->";
 const TOC_MARKER = "<!-- TOC -->";
 
-const SECTION_RE = /^## Section \d+ — .+$/;
+const SECTION_RE = /^## Seção \d+ — .+$/;
 const BULLET_RE = /^- (.+)$/;
 const LINK_RE = /\[([^\]]+)\]\(\.\/([^)]+)\.md\)/g;
+const ORIGINAL_TERM_RE = /^termo_original:\s*(.+?)\s*$/m;
 
 type Section = { heading: string; terms: string[] };
 
@@ -25,10 +26,12 @@ function fail(msg: string): never {
   process.exit(1);
 }
 
-// Mirrors GitHub's heading slugger: lowercase, strip punctuation (keeping hyphens),
-// then replace spaces with hyphens. "Section 1 — Foundations" → "section-1--foundations".
+// Espelha o slugger de headings do GitHub: minúsculas, remove pontuação (mantendo hífens),
+// depois troca espaços por hífens. "Seção 1 — Fundamentos" → "seção-1--fundamentos".
+// Normaliza para NFC para que letras acentuadas não sejam decompostas (macOS).
 function headingSlug(heading: string): string {
   return heading
+    .normalize("NFC")
     .toLowerCase()
     .replace(/[^\p{L}\p{N} -]/gu, "")
     .replace(/ /g, "-");
@@ -46,44 +49,55 @@ function parseCurriculum(text: string): Section[] {
     if (line.startsWith("## ")) {
       if (!SECTION_RE.test(line)) {
         fail(
-          `Curriculum.md:${lineNo}: section heading must match "## Section N — Title" (em-dash required): ${line}`
+          `Curriculum.md:${lineNo}: o título da seção deve seguir "## Seção N — Título" (travessão em-dash obrigatório): ${line}`
         );
       }
-      current = { heading: line.slice(3), terms: [] };
+      current = { heading: line.slice(3).normalize("NFC"), terms: [] };
       sections.push(current);
       return;
     }
 
     if (line.startsWith("- ")) {
       if (!current)
-        fail(`Curriculum.md:${lineNo}: bullet before any section heading`);
+        fail(`Curriculum.md:${lineNo}: item de lista antes de qualquer seção`);
       const m = line.match(BULLET_RE);
       if (!m || !m[1])
-        fail(`Curriculum.md:${lineNo}: malformed bullet: ${line}`);
+        fail(`Curriculum.md:${lineNo}: item de lista malformado: ${line}`);
       const term = m[1];
       if (term.trim() !== term)
-        fail(`Curriculum.md:${lineNo}: term has surrounding whitespace`);
+        fail(`Curriculum.md:${lineNo}: o termo tem espaços nas pontas`);
       if (/[*_`\[]/.test(term))
         fail(
-          `Curriculum.md:${lineNo}: term must be plain text, no markdown: ${term}`
+          `Curriculum.md:${lineNo}: o termo deve ser texto simples, sem markdown: ${term}`
         );
-      current.terms.push(term);
+      current.terms.push(term.normalize("NFC"));
       return;
     }
 
     fail(
-      `Curriculum.md:${lineNo}: only "## Section N — Title" headings and "- Term" bullets are allowed: ${line}`
+      `Curriculum.md:${lineNo}: só são permitidos títulos "## Seção N — Título" e itens "- Termo": ${line}`
     );
   });
 
   return sections;
 }
 
-function stripFrontmatter(body: string): string {
-  if (!body.startsWith("---\n")) return body;
+function splitFrontmatter(body: string): { front: string; rest: string } {
+  if (!body.startsWith("---\n")) return { front: "", rest: body };
   const end = body.indexOf("\n---\n", 4);
-  if (end === -1) return body;
-  return body.slice(end + 5).replace(/^\n+/, "");
+  if (end === -1) return { front: "", rest: body };
+  return {
+    front: body.slice(4, end),
+    rest: body.slice(end + 5).replace(/^\n+/, ""),
+  };
+}
+
+// Lê o campo opcional `termo_original` do frontmatter (o termo em inglês
+// quando o título do verbete foi traduzido).
+function originalTerm(front: string): string | null {
+  const m = front.match(ORIGINAL_TERM_RE);
+  if (!m || !m[1]) return null;
+  return m[1].replace(/^(["'])(.*)\1$/, "$2");
 }
 
 function rewriteLinks(body: string): string {
@@ -94,9 +108,10 @@ function rewriteLinks(body: string): string {
 
 function main(): void {
   const template = readFileSync(TEMPLATE, "utf8");
-  if (!template.includes(MARKER)) fail(`Template missing ${MARKER} marker`);
+  if (!template.includes(MARKER))
+    fail(`O template não tem o marcador ${MARKER}`);
   if (!template.includes(TOC_MARKER))
-    fail(`Template missing ${TOC_MARKER} marker`);
+    fail(`O template não tem o marcador ${TOC_MARKER}`);
 
   const sections = parseCurriculum(readFileSync(CURRICULUM, "utf8"));
 
@@ -105,35 +120,32 @@ function main(): void {
   for (const section of sections) {
     parts.push(`## ${section.heading}`, "");
     for (const term of section.terms) {
-      if (seen.has(term)) fail(`Curriculum.md: duplicate term "${term}"`);
+      if (seen.has(term)) fail(`Curriculum.md: termo duplicado "${term}"`);
       seen.add(term);
       const entryPath = join(DICT_DIR, `${term}.md`);
       let body: string;
       try {
         body = readFileSync(entryPath, "utf8");
       } catch {
-        fail(
-          `Curriculum.md references "${term}" but ${entryPath} does not exist`
-        );
+        fail(`Curriculum.md referencia "${term}" mas ${entryPath} não existe`);
       }
-      parts.push(
-        `### ${term}`,
-        "",
-        rewriteLinks(stripFrontmatter(body).trimEnd()),
-        ""
-      );
+      const { front, rest } = splitFrontmatter(body);
+      const original = originalTerm(front);
+      parts.push(`### ${term}`, "");
+      if (original) parts.push(`_Em inglês: ${original}_`, "");
+      parts.push(rewriteLinks(rest.trimEnd()), "");
     }
   }
 
   const onDisk = new Set(
     readdirSync(DICT_DIR)
       .filter((n) => n.endsWith(".md"))
-      .map((n) => n.slice(0, -3))
+      .map((n) => n.normalize("NFC").slice(0, -3))
   );
   const orphans = [...onDisk].filter((t) => !seen.has(t)).sort();
   if (orphans.length)
     fail(
-      `dictionary/ entries not referenced by Curriculum.md: ${orphans.join(", ")}`
+      `Entradas em dictionary/ não referenciadas por Curriculum.md: ${orphans.join(", ")}`
     );
 
   const block = parts.join("\n").trimEnd() + "\n";
@@ -154,9 +166,9 @@ function main(): void {
     .join("\n\n");
   const banner =
     "<!--\n" +
-    "  GENERATED FILE — DO NOT EDIT.\n" +
-    "  Source: dictionary/*.md, internal/Curriculum.md, internal/README.template.md\n" +
-    "  Regenerate: npm run generate\n" +
+    "  ARQUIVO GERADO — NÃO EDITE.\n" +
+    "  Fonte: dictionary/*.md, internal/Curriculum.md, internal/README.template.md\n" +
+    "  Para regenerar: npm run generate\n" +
     "-->\n\n";
   writeFileSync(
     OUTPUT,

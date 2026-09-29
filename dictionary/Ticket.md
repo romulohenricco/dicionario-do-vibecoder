@@ -1,17 +1,17 @@
 ---
-description: A handoff artifact scoping one session of work. Stands alone or hangs off a spec. Can block or be blocked by sibling tickets.
+description: Artefato de handoff que delimita uma sessão de trabalho. Avulso ou filho de uma especificação, bloqueia ou é bloqueado por tickets irmãos.
 ---
 
-A [handoff artifact](./Handoff%20artifact.md) scoping one [session](./Session.md) of work. Stands alone, or hangs off a [spec](./Spec.md) as one of its children. Tickets can block or be blocked by sibling tickets, so the order of work falls out of their dependency graph rather than a linear plan.
+Ticket é um [artefato de handoff](./Artefato%20de%20handoff.md) que delimita o trabalho de uma [sessão](./Sess%C3%A3o.md). Pode ser avulso ou ficar sob uma [especificação](./Especifica%C3%A7%C3%A3o.md), como um de seus filhos. Tickets podem bloquear ou ser bloqueados por tickets irmãos, então a ordem do trabalho decorre do grafo de dependências entre eles, e não de um plano linear.
 
-The defining constraint is the size: one session. A ticket should be completable before the session drifts out of the [smart zone](./Smart%20zone.md) — and that constraint is testable. If sessions on your tickets routinely degrade before the work is done, the tickets are too big; split them. If each session spends most of its [context](./Context.md) on setup before doing five minutes of work, they're too small; merge them.
+A restrição que define o ticket é o tamanho: uma sessão. Um ticket deve poder ser concluído antes que a sessão saia da [zona inteligente](./Zona%20inteligente.md), e essa restrição é testável. Se as sessões dos seus tickets costumam se degradar antes de o trabalho terminar, os tickets são grandes demais; divida-os. Se cada sessão gasta a maior parte do [contexto](./Contexto.md) com preparação antes de trabalhar por cinco minutos, eles são pequenos demais; junte-os.
 
-A good ticket is written for a reader with no other context. The goal, the acceptance criteria, and [context pointers](./Context%20pointer.md) to the relevant files and decisions — enough that the session can start working without re-deriving what the last one knew.
+Um bom ticket é escrito para um leitor sem nenhum outro contexto. Ele traz o objetivo, os critérios de aceitação e [ponteiros de contexto](./Ponteiro%20de%20contexto.md) para os arquivos e as decisões relevantes, o bastante para a sessão começar a trabalhar sem precisar reconstruir o que a anterior sabia.
 
-The dependency graph is also what unlocks parallelism. Independent tickets — the leaves of the graph — can each run in their own session at the same time. This is an effective way of running multiple agents at once. In a [software factory](./Software%20factory.md), a ticket being marked ready is itself the trigger that starts its session.
+O grafo de dependências também é o que libera o paralelismo. Tickets independentes, as folhas do grafo, podem rodar cada um na sua própria sessão ao mesmo tempo. É um jeito eficaz de rodar vários agentes de uma vez. Em uma [fábrica de software](./F%C3%A1brica%20de%20software.md), marcar um ticket como pronto é, por si só, o gatilho que inicia a sessão dele.
 
-_Usage:_
+_Uso:_
 
-"Where do I start on the migration spec?"
+"Por onde eu começo na spec da migração?"
 
-"Look at the ticket graph — the schema change blocks the backfill, the backfill blocks the API switch. Pick a leaf and run a session on it."
+"Olha o grafo de tickets — a mudança de schema bloqueia o backfill, e o backfill bloqueia a troca da API. Pega uma folha e abre uma sessão nela."

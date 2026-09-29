@@ -1,17 +1,17 @@
 ---
-description: A protocol for plugging external tool servers into a harness — how an agent gets tools beyond what the harness ships with.
+description: Protocolo para conectar servidores de ferramentas externos a um harness, dando ao agente ferramentas além das que o harness já traz.
 ---
 
-**Model Context Protocol.** A protocol for plugging external tool servers into a [harness](./Harness.md) — how an [agent](./Agent.md) gets [tools](./Tool.md) beyond what the harness ships with. The agent never "calls MCP"; it calls a tool, and the harness happens to have gotten that tool from an MCP server. Also exposes resources (read-only data) and prompts (reusable templates), but tool provision is the primary use.
+**Model Context Protocol (protocolo de contexto de modelo).** Um protocolo para conectar servidores de ferramentas externos a um [harness](./Harness.md) — é como um [agente](./Agente.md) ganha [ferramentas](./Ferramenta.md) além das que o harness traz de fábrica. O agente nunca "chama o MCP"; ele chama uma ferramenta, e o harness acabou obtendo essa ferramenta de um servidor MCP. O protocolo também expõe recursos (dados somente leitura) e prompts (modelos reutilizáveis), mas o uso principal é fornecer ferramentas.
 
-The protocol solves an integration problem. Without a standard, every harness would need its own Linear integration, its own Slack integration, its own database integration — written and maintained separately for each. With MCP, the integration is written once as a server, and any MCP-compatible harness can use it. The harness connects to the server, the server advertises what tools it offers, and those tools become available to the agent alongside the built-in ones.
+O protocolo resolve um problema de integração. Sem um padrão, cada harness precisaria de uma integração própria com o Linear, outra com o Slack, outra com o banco de dados — escritas e mantidas separadamente para cada um. Com o MCP, a integração é escrita uma vez, como um servidor, e qualquer harness compatível com MCP consegue usá-la. O harness se conecta ao servidor, o servidor anuncia quais ferramentas oferece, e essas ferramentas ficam disponíveis para o agente junto com as embutidas.
 
-The cost is paid in [context](./Context.md). Every tool a server advertises arrives as a definition — name, description, parameter schema — and the [model](./Model.md) can only call tools it knows about. The naive approach loads every definition into the [context window](./Context%20window.md) up front: install a few generous servers and a [session](./Session.md) starts with thousands of [tokens](./Token.md) of tool schemas before you've typed anything, spending [attention budget](./Attention%20budget.md) on tools the task will never use.
+O custo é pago em [contexto](./Contexto.md). Cada ferramenta que um servidor anuncia chega como uma definição — nome, descrição, schema de parâmetros — e o [modelo](./Modelo.md) só consegue chamar ferramentas que conhece. A abordagem ingênua carrega todas as definições na [janela de contexto](./Janela%20de%20contexto.md) logo de início: instale alguns servidores com muitas ferramentas e uma [sessão](./Sess%C3%A3o.md) começa com milhares de [tokens](./Token.md) de schemas de ferramentas antes de você digitar qualquer coisa, gastando [orçamento de atenção](./Or%C3%A7amento%20de%20aten%C3%A7%C3%A3o.md) com ferramentas que a tarefa nunca vai usar.
 
-Many harnesses now mitigate this with tool search: instead of the full definitions, the context holds a [context pointer](./Context%20pointer.md) to the available tools — the agent searches for a tool by name or purpose and loads its definition only when it needs it. If your harness doesn't do this, the up-front cost still applies, and it's worth enabling only the servers a project actually needs.
+Muitos harnesses hoje reduzem esse custo com busca de ferramentas: em vez das definições completas, o contexto guarda um [ponteiro de contexto](./Ponteiro%20de%20contexto.md) para as ferramentas disponíveis — o agente procura uma ferramenta pelo nome ou pela finalidade e só carrega a definição quando precisa dela. Se o seu harness não faz isso, o custo inicial continua valendo, e vale a pena ativar só os servidores que o projeto realmente usa.
 
-_Usage:_
+_Uso:_
 
-"The agent needs to read tickets from Linear."
+"O agente precisa ler os tickets do Linear."
 
-"Configure the harness to use the Linear MCP server — it exposes the Linear API as tools the agent can call. Saves you writing custom tool wrappers."
+"Configura o harness pra usar o servidor MCP do Linear — ele expõe a API do Linear como ferramentas que o agente pode chamar. Poupa você de escrever wrappers de ferramenta na mão."

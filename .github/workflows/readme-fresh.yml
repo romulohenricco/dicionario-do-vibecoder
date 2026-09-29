@@ -1,4 +1,4 @@
-name: README freshness
+name: Atualização do README
 
 on:
   pull_request:
@@ -13,16 +13,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Install dependencies
+      - name: Instalar dependências
         run: npm install --no-audit --no-fund
-      - name: Typecheck generator
+      - name: Checar tipos do gerador
         run: npx tsc -p internal/tsconfig.json
-      - name: Regenerate README
+      - name: Regenerar o README
         run: npm run generate
-      - name: Fail if README.md is out of sync
+      - name: Falhar se o README.md estiver fora de sincronia
         run: |
           if ! git diff --exit-code -- README.md; then
-            echo "README.md is out of sync with dictionary/, internal/Curriculum.md, or internal/README.template.md."
-            echo "Run: npm run generate && commit the result."
+            echo "README.md está fora de sincronia com dictionary/, internal/Curriculum.md ou internal/README.template.md."
+            echo "Execute: npm run generate e faça commit do resultado."
             exit 1
           fi

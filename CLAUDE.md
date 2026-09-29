@@ -1,33 +1,45 @@
-README.md is a generated file, generated via internal/README.template.md.
+README.md é um arquivo gerado, produzido a partir de internal/README.template.md.
 
-Links to other entries should only have a link on the first occurrence. I.e. if session appears twice in the entry, only the first should have an outward link.
+Links para outros verbetes devem existir apenas na primeira ocorrência. Ou seja: se "sessão" aparece duas vezes no verbete, só a primeira leva link.
 
-New entries must be added to dictionary/, and found a place in internal/Curriculum.md
+Novos verbetes devem ser adicionados em dictionary/ e ganhar um lugar em internal/Curriculum.md.
 
-Each entry must have a `description` field in the frontmatter. Each description must be less than 140 characters long.
+Todo verbete precisa ter o campo `description` no frontmatter. Cada descrição deve ter menos de 140 caracteres.
 
-Co-locate each concept with the real-life problem it explains. Where a term has a recognisable symptom — a felt failure or surprise the reader has likely hit — weave that symptom into the prose near the definition, so the reader recognises their own incident in the entry. Woven prose, not a named section. Vocabulary/building-block terms (e.g. Token, Parameters) have no symptom; don't force a fake one.
+Associe cada conceito ao problema real que ele explica. Quando um termo tem um sintoma reconhecível — uma falha ou surpresa que o leitor provavelmente já viveu — encaixe esse sintoma na prosa, perto da definição, para que o leitor reconheça o próprio incidente no verbete. Prosa tecida, não uma seção nomeada. Termos de vocabulário/blocos de construção (por exemplo, Token, Parâmetros) não têm sintoma; não force um sintoma falso.
 
-Each entry should be at least 200 words long (counting the body and the Usage dialogue, not the frontmatter). Reach the minimum with substance — mechanism, symptom, what to do about it — never with padding.
+Cada verbete deve ter pelo menos 200 palavras (contando o corpo e o diálogo de Uso, sem o frontmatter). Chegue ao mínimo com substância — mecanismo, sintoma, o que fazer a respeito — nunca com enchimento.
 
-Prefer tables for structured material: lifecycles (step / who / what happens), ladders of options, and similar. See `dictionary/Tool call.md` and `dictionary/Permission mode.md` for examples. Don't force prose into a table when it isn't naturally stepped or comparative.
+Prefira tabelas para material estruturado: ciclos de vida (etapa / quem / o que acontece), escadas de opções e similares. Veja `dictionary/Chamada de ferramenta.md` e `dictionary/Modo de permissão.md` como exemplos. Não force em tabela uma prosa que não seja naturalmente em etapas ou comparativa.
 
-Write in a plain, de-hyped register. No selling the concept: avoid superlatives ("the cheapest medium there is"), dramatised moments ("You'll recognise the moment", "That's the signal to"), and emphasis words like "core", "whole value", "real power", "straight into". State what happens and what to do, flatly.
+Escreva em registro plano, sem exagero promocional. Sem vender o conceito: evite superlativos ("o meio mais barato que existe"), momentos dramatizados ("Você vai reconhecer o momento", "Esse é o sinal de que") e palavras de ênfase como "núcleo", "todo o valor", "poder real", "direto para". Diga o que acontece e o que fazer, de forma direta.
 
-The first sentence used in a paragraph must be extra-clear. Don't attempt to pre-hype the paragraph by using a clever phrase first.
+A primeira frase de um parágrafo precisa ser especialmente clara. Não tente aquecer o parágrafo com uma frase engenhosa logo de início.
 
-Whenever a new entry is added, search through all other entries to see if it can be referenced there. The presence of a new term may be able to reduce verbosity in other entries.
+Sempre que um novo verbete for adicionado, procure em todos os outros verbetes se ele pode ser referenciado ali. A presença de um novo termo pode reduzir a verbosidade de outros verbetes.
+
+## Convenções de tradução
+
+Este repositório é a tradução para português brasileiro de [mattpocock/dictionary-of-ai-coding](https://github.com/mattpocock/dictionary-of-ai-coding) (remote `upstream`). As regras acima valem também em PT-BR.
+
+- Traduza tudo, exceto nomes próprios (pessoas, empresas, produtos, protocolos), nomes de arquivos/comandos, código e identificadores que precisam ficar em inglês.
+- Os termos, plurais e rótulos padronizados estão em `internal/GLOSSARIO.md`. Use-os; se surgir um termo novo, registre-o lá.
+- O título do verbete em PT-BR é o nome do arquivo em `dictionary/`, o item em `internal/Curriculum.md` e o texto do link. Verbetes com título traduzido levam `termo_original: <termo em inglês>` no frontmatter; o README gerado mostra "Em inglês: …". Verbetes cujo título ficou em inglês não levam esse campo.
+- Links entre verbetes usam o nome do arquivo com percent-encoding: `[janela de contexto](./Janela%20de%20contexto.md)`, `[sessão](./Sess%C3%A3o.md)`.
+- Os títulos de seção em `internal/Curriculum.md` seguem o formato `## Seção N — Título` (com travessão).
+- Os limites de 140 caracteres na `description` e de 200 palavras por verbete valem para o texto em português.
+- Para acompanhar mudanças do original: `git fetch upstream` e compare com `upstream/main`.
 
 ## Agent skills
 
 ### Issue tracker
 
-Issues live in this repo's GitHub Issues, accessed via the `gh` CLI. See `internal/issue-tracker.md`.
+As issues ficam no GitHub Issues deste repositório, acessadas pela CLI `gh`. Veja `internal/issue-tracker.md`.
 
 ### Triage labels
 
-Default canonical label vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `internal/triage-labels.md`.
+Vocabulário canônico padrão de labels (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). Veja `internal/triage-labels.md`.
 
 ### Domain docs
 
-Single-context layout, nested under `internal/` (`internal/CONTEXT.md`, `internal/adr/`). See `internal/domain.md`.
+Layout de contexto único, dentro de `internal/` (`internal/CONTEXT.md`, `internal/adr/`). Veja `internal/domain.md`.
